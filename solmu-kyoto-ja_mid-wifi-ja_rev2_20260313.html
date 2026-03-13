@@ -1,0 +1,3856 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>solmu kyoto — モックアップ</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400;1,500&family=Shippori+Mincho:wght@400;500;600&family=Noto+Sans+JP:wght@200;300;400;500&display=swap" rel="stylesheet">
+<style>
+/* ════════════════════════════════════════
+   DESIGN TOKENS — from brand guidelines
+════════════════════════════════════════ */
+:root {
+  /* Core */
+  --cream:       #F0EDE6;
+  --warm-off:    #E8E3DA;
+  --shironeri:   #EDE8DF;
+  --charcoal:    #3A3530;
+  --mid:         #6E6560;
+  --light-line:  #D5CECC;
+  --ink-faint:   rgba(58,53,48,0.07);
+
+  /* Chigusa (Bukkoji) */
+  --chigusa:     #7A9E8E;
+  --chigusa-lt:  #A8C4B7;
+  --chigusa-dk:  #5A7E6E;
+  --chigusa-bg:  rgba(122,158,142,0.08);
+
+  /* Earth / Shironeri (Moto-Akuoji) */
+  --earth:       #B89C84;
+  --earth-dk:    #8A6E56;
+  --earth-lt:    #D4C8AE;
+  --earth-bg:    rgba(184,156,132,0.08);
+
+  /* Accent */
+  --accent-red:  #C0392B;
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+
+body {
+  background: var(--cream);
+  color: var(--charcoal);
+  font-family: 'Noto Sans JP', sans-serif;
+  font-weight: 300;
+  font-size: 15px;
+  line-height: 1.75;
+  overflow: hidden;
+  height: 100vh;
+}
+
+/* ════════════════════════════════════════
+   TAB SHELL
+════════════════════════════════════════ */
+.shell { display: flex; flex-direction: column; height: 100vh; overflow: hidden; }
+
+.tab-bar {
+  background: var(--charcoal);
+  display: flex; align-items: stretch;
+  overflow-x: auto; overflow-y: hidden;
+  flex-shrink: 0;
+  border-bottom: 1px solid rgba(255,255,255,0.06);
+  scrollbar-width: none;
+}
+.tab-bar::-webkit-scrollbar { display: none; }
+
+.tab-btn {
+  padding: 10px 16px;
+  font-family: 'Noto Sans JP', sans-serif;
+  font-size: 10px;
+  font-weight: 400;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.35);
+  background: transparent;
+  border: none;
+  border-right: 1px solid rgba(255,255,255,0.06);
+  white-space: nowrap;
+  cursor: pointer;
+  transition: color 0.2s;
+}
+.tab-btn span {
+  display: block;
+  font-size: 8px;
+  color: rgba(255,255,255,0.18);
+  margin-top: 2px;
+  font-weight: 300;
+  letter-spacing: 0.06em;
+}
+.tab-btn:hover { color: rgba(255,255,255,0.6); }
+.tab-btn.active {
+  background: var(--cream);
+  color: var(--charcoal);
+  border-bottom: none;
+}
+.tab-btn.active span { color: var(--mid); }
+.tab-btn.moto-tab { border-top: 2px solid var(--earth); }
+.tab-btn.bukko-tab { border-top: 2px solid var(--chigusa); }
+.tab-btn.moto-tab.active { background: var(--shironeri); }
+.tab-btn.bukko-tab.active { background: #EBF2EE; }
+
+.pages-container { flex: 1; overflow: hidden; position: relative; }
+.page { display: none; height: 100%; overflow-y: auto; background: var(--cream); }
+.page.active { display: block; }
+
+/* ════════════════════════════════════════
+   BROWSER CHROME
+════════════════════════════════════════ */
+.wf-frame {
+  max-width: 1320px;
+  margin: 24px auto;
+  background: var(--cream);
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 4px 40px rgba(58,53,48,0.12), 0 1px 4px rgba(58,53,48,0.06);
+}
+
+.browser-bar {
+  height: 40px;
+  background: #2C2925;
+  display: flex;
+  align-items: center;
+  padding: 0 16px;
+  gap: 12px;
+}
+.browser-dots { display: flex; gap: 6px; }
+.browser-dots span { width: 10px; height: 10px; border-radius: 50%; }
+.browser-dots span:nth-child(1) { background: #FF5F57; }
+.browser-dots span:nth-child(2) { background: #FEBC2E; }
+.browser-dots span:nth-child(3) { background: #28C840; }
+.browser-url {
+  flex: 1; max-width: 440px; margin: 0 auto;
+  background: rgba(255,255,255,0.07);
+  border-radius: 4px;
+  height: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 12px;
+  font-size: 10px;
+  color: rgba(255,255,255,0.4);
+  letter-spacing: 0.04em;
+  font-family: 'Noto Sans JP', sans-serif;
+}
+
+.page-meta {
+  max-width: 1320px;
+  margin: 0 auto 10px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 0 2px;
+}
+.pmeta-num {
+  background: var(--charcoal);
+  color: #fff;
+  font-size: 9px;
+  font-weight: 500;
+  padding: 3px 8px;
+  border-radius: 3px;
+  flex-shrink: 0;
+  letter-spacing: 0.08em;
+}
+.pmeta-name { font-size: 11px; font-weight: 500; letter-spacing: 0.04em; }
+.pmeta-route {
+  font-size: 9px;
+  color: var(--mid);
+  border: 1px solid var(--light-line);
+  background: var(--warm-off);
+  padding: 2px 8px;
+  border-radius: 3px;
+  letter-spacing: 0.04em;
+}
+.pmeta-line { flex: 1; height: 1px; background: var(--light-line); }
+
+/* ════════════════════════════════════════
+   NAVIGATION
+════════════════════════════════════════ */
+.wf-nav {
+  height: 64px;
+  border-bottom: 1px solid var(--light-line);
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  padding: 0 32px;
+  background: rgba(240,237,230,0.96);
+  backdrop-filter: blur(8px);
+  position: relative;
+  z-index: 20;
+}
+
+.nav-brand {
+  font-family: 'Shippori Mincho', serif;
+  font-size: 18px;
+  font-weight: 400;
+  letter-spacing: 0.14em;
+  margin-right: 16px;
+  padding-right: 20px;
+  border-right: 1px solid var(--light-line);
+  white-space: nowrap;
+  color: var(--charcoal);
+}
+
+.nav-link {
+  padding: 6px 12px;
+  font-size: 10px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--mid);
+  white-space: nowrap;
+  cursor: default;
+  font-weight: 400;
+  transition: color 0.2s;
+}
+.nav-link.on { color: var(--charcoal); font-weight: 500; }
+
+.nav-sp { flex: 1; }
+
+.nav-book {
+  background: var(--chigusa);
+  color: #fff;
+  border-radius: 3px;
+  padding: 8px 20px;
+  font-size: 10px;
+  font-weight: 500;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  white-space: nowrap;
+  cursor: default;
+}
+
+.nav-lang {
+  border: 1px solid var(--light-line);
+  border-radius: 3px;
+  padding: 7px 12px;
+  font-size: 10px;
+  color: var(--mid);
+  margin-left: 6px;
+  letter-spacing: 0.08em;
+}
+
+/* Moto nav variation */
+.wf-nav.moto-nav {
+  background: rgba(237,232,223,0.98);
+  border-bottom: 1px solid var(--earth-lt);
+}
+.wf-nav.moto-nav .nav-book { background: var(--earth); }
+
+/* Bukko nav variation */
+.wf-nav.bukko-nav {
+  background: rgba(235,242,238,0.98);
+  border-bottom: 1px solid var(--chigusa-lt);
+}
+
+/* Secondary nav */
+.sec-nav {
+  height: 44px;
+  border-bottom: 1px solid var(--light-line);
+  display: flex;
+  align-items: stretch;
+  background: var(--warm-off);
+}
+.sec-nav-item {
+  height: 100%;
+  padding: 0 24px;
+  font-size: 10px;
+  font-weight: 400;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  display: flex;
+  align-items: center;
+  border-right: 1px solid var(--light-line);
+  color: var(--mid);
+  cursor: default;
+  transition: color 0.2s;
+}
+.sec-nav-item.on {
+  background: var(--charcoal);
+  color: rgba(255,255,255,0.9);
+}
+
+/* ════════════════════════════════════════
+   HERO SECTIONS
+════════════════════════════════════════ */
+.hero-img {
+  position: relative;
+  overflow: hidden;
+  border-bottom: 1px solid var(--light-line);
+}
+
+/* Cinematic gradient overlay for hero */
+.hero-img::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    to bottom,
+    rgba(30,25,20,0.1) 0%,
+    rgba(30,25,20,0.05) 40%,
+    rgba(30,25,20,0.45) 100%
+  );
+  pointer-events: none;
+}
+
+.hero-img-bg {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+/* Warm noise texture overlay */
+.hero-img::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image:
+    url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+  opacity: 0.4;
+  mix-blend-mode: overlay;
+  pointer-events: none;
+  z-index: 1;
+}
+
+.hero-content {
+  position: absolute;
+  bottom: 52px;
+  left: 40px;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.hero-eyebrow {
+  font-size: 10px;
+  color: rgba(240,237,230,0.6);
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  font-family: 'Noto Sans JP', sans-serif;
+  font-weight: 300;
+}
+
+.hero-title {
+  font-family: 'Shippori Mincho', serif;
+  font-size: 52px;
+  font-weight: 300;
+  color: #F0EDE6;
+  line-height: 1.05;
+  letter-spacing: -0.01em;
+}
+
+.hero-title em {
+  font-style: italic;
+  color: var(--chigusa-lt);
+}
+
+.hero-sub {
+  font-size: 12px;
+  color: rgba(240,237,230,0.5);
+  line-height: 1.7;
+  max-width: 340px;
+  font-family: 'Noto Sans JP', sans-serif;
+  font-weight: 300;
+}
+
+.hero-btns {
+  display: flex;
+  gap: 10px;
+  margin-top: 6px;
+}
+
+/* 施設 toggle */
+.ht-float {
+  position: absolute;
+  top: 24px;
+  left: 40px;
+  z-index: 3;
+  display: flex;
+  gap: 2px;
+  background: rgba(30,25,20,0.4);
+  backdrop-filter: blur(8px);
+  border-radius: 4px;
+  padding: 3px;
+}
+.ht-pill {
+  padding: 6px 16px;
+  font-size: 10px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.5);
+  border-radius: 3px;
+  cursor: default;
+  font-family: 'Noto Sans JP', sans-serif;
+}
+.ht-pill.on {
+  background: rgba(255,255,255,0.15);
+  color: rgba(255,255,255,0.9);
+}
+
+/* Scroll indicator */
+.scroll-ind {
+  position: absolute;
+  right: 40px;
+  bottom: 40px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  z-index: 3;
+}
+.scroll-line {
+  width: 1px;
+  height: 48px;
+  background: linear-gradient(to bottom, transparent, rgba(240,237,230,0.4));
+}
+.scroll-txt {
+  font-size: 8px;
+  letter-spacing: 0.22em;
+  color: rgba(240,237,230,0.4);
+  text-transform: uppercase;
+  font-family: 'Noto Sans JP', sans-serif;
+  writing-mode: vertical-rl;
+}
+
+/* ════════════════════════════════════════
+   BUTTONS
+════════════════════════════════════════ */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 3px;
+  padding: 10px 24px;
+  font-size: 10px;
+  font-weight: 500;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  cursor: default;
+  font-family: 'Noto Sans JP', sans-serif;
+  transition: all 0.2s;
+  white-space: nowrap;
+}
+
+.btn-primary {
+  background: var(--chigusa);
+  color: #fff;
+  border: 1px solid transparent;
+}
+
+.btn-primary-earth {
+  background: var(--earth);
+  color: #fff;
+  border: 1px solid transparent;
+}
+
+.btn-outline {
+  background: transparent;
+  color: var(--charcoal);
+  border: 1px solid var(--charcoal);
+}
+
+.btn-outline-light {
+  background: transparent;
+  color: rgba(240,237,230,0.8);
+  border: 1px solid rgba(240,237,230,0.3);
+}
+
+.btn-ghost {
+  background: transparent;
+  color: var(--mid);
+  border: 1px solid var(--light-line);
+}
+
+/* ════════════════════════════════════════
+   IMAGE PLACEHOLDERS — refined
+════════════════════════════════════════ */
+.img-ph {
+  background: var(--warm-off);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  overflow: hidden;
+}
+
+.img-ph::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(var(--light-line) 1px, transparent 1px),
+    linear-gradient(90deg, var(--light-line) 1px, transparent 1px);
+  background-size: 32px 32px;
+  opacity: 0.35;
+}
+
+.img-ph label {
+  position: relative;
+  z-index: 1;
+  font-size: 10px;
+  color: var(--mid);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  font-family: 'Noto Sans JP', sans-serif;
+}
+
+.img-ph.dark { background: #B5AFA8; }
+.img-ph.dark::after { opacity: 0.15; }
+.img-ph.moto { background: #D8CEBC; }
+.img-ph.bukko { background: #BCCFCA; }
+.img-ph.both { background: #CAC9BE; } /* 両ホテル — moto と bukko の中間 */
+
+/* Cinematic hero placeholder */
+.img-ph.hero-ph {
+  background: linear-gradient(
+    160deg,
+    #4A413A 0%,
+    #3A3530 40%,
+    #2C2825 100%
+  );
+}
+.img-ph.hero-ph::after { opacity: 0.08; }
+
+/* Moto hero placeholder */
+.img-ph.hero-moto {
+  background: linear-gradient(
+    160deg,
+    #7A6A58 0%,
+    #5C4E3C 40%,
+    #3A3530 100%
+  );
+}
+.img-ph.hero-moto::after { opacity: 0.08; }
+
+/* Bukko hero placeholder */
+.img-ph.hero-bukko {
+  background: linear-gradient(
+    160deg,
+    #4A7A6A 0%,
+    #3A6558 40%,
+    #2C4038 100%
+  );
+}
+.img-ph.hero-bukko::after { opacity: 0.08; }
+
+/* ════════════════════════════════════════
+   SECTIONS
+════════════════════════════════════════ */
+.sec {
+  padding: 60px 40px;
+}
+
+.sec + .sec {
+  border-top: 1px solid var(--light-line);
+}
+
+.sec-surface {
+  background: var(--warm-off);
+}
+
+.sec-moto {
+  background: rgba(237,232,223,0.5);
+}
+
+.sec-bukko {
+  background: rgba(235,242,238,0.5);
+}
+
+/* Section header */
+.sh-eyebrow {
+  font-size: 10px;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  color: var(--mid);
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 16px;
+  font-weight: 400;
+}
+
+.sh-eyebrow::before {
+  content: '';
+  width: 24px;
+  height: 1px;
+  background: var(--earth);
+  display: block;
+  flex-shrink: 0;
+}
+
+.sh-eyebrow.chigusa::before { background: var(--chigusa); }
+
+.sh-title {
+  font-family: 'Shippori Mincho', serif;
+  font-size: 36px;
+  font-weight: 400;
+  line-height: 1.15;
+  margin-bottom: 16px;
+}
+
+.sh-title em { font-style: italic; color: var(--earth); }
+.sh-title em.chigusa { color: var(--chigusa); }
+
+.sh-body {
+  font-size: 14px;
+  color: var(--mid);
+  line-height: 1.85;
+  max-width: 520px;
+  font-weight: 300;
+}
+
+/* ════════════════════════════════════════
+   TYPOGRAPHY CONTENT
+════════════════════════════════════════ */
+.body-copy {
+  font-size: 14px;
+  color: var(--mid);
+  line-height: 1.9;
+  font-weight: 300;
+}
+
+.body-copy p + p { margin-top: 1.2em; }
+
+.quote-pull {
+  font-family: 'Shippori Mincho', serif;
+  font-size: 24px;
+  font-weight: 300;
+  font-style: italic;
+  color: var(--charcoal);
+  line-height: 1.5;
+  padding: 32px 0;
+  border-top: 1px solid var(--light-line);
+  border-bottom: 1px solid var(--light-line);
+}
+
+/* ════════════════════════════════════════
+   LAYOUT UTILITIES
+════════════════════════════════════════ */
+.row { display: flex; }
+.col { display: flex; flex-direction: column; }
+.f1 { flex: 1; } .f2 { flex: 2; } .f3 { flex: 3; }
+.g4{gap:4px} .g6{gap:6px} .g8{gap:8px} .g10{gap:10px} .g12{gap:12px}
+.g16{gap:16px} .g20{gap:20px} .g24{gap:24px} .g32{gap:32px}
+.g40{gap:40px} .g48{gap:48px} .g64{gap:64px}
+.sep { height: 1px; background: var(--light-line); }
+
+/* ════════════════════════════════════════
+   CARDS
+════════════════════════════════════════ */
+.room-card {
+  border-radius: 6px;
+  overflow: hidden;
+  background: #fff;
+  border: 1px solid var(--light-line);
+  box-shadow: 0 2px 12px rgba(58,53,48,0.06);
+}
+
+.room-card-body {
+  padding: 20px 20px 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.card-eyebrow {
+  font-size: 9px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--mid);
+  font-weight: 400;
+}
+
+.card-title {
+  font-family: 'Shippori Mincho', serif;
+  font-size: 20px;
+  font-weight: 400;
+  line-height: 1.2;
+}
+
+.card-body {
+  font-size: 12px;
+  color: var(--mid);
+  line-height: 1.7;
+}
+
+.card-price {
+  font-family: 'Shippori Mincho', serif;
+  font-size: 18px;
+  font-weight: 400;
+  color: var(--charcoal);
+  margin-top: 4px;
+}
+
+.card-price span {
+  font-family: 'Noto Sans JP', sans-serif;
+  font-size: 10px;
+  color: var(--mid);
+  font-weight: 300;
+}
+
+/* Experience card */
+.exp-card {
+  border-radius: 6px;
+  overflow: hidden;
+  background: #fff;
+  border: 1px solid var(--light-line);
+  box-shadow: 0 2px 8px rgba(58,53,48,0.04);
+}
+
+.exp-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 3px 10px;
+  border-radius: 20px;
+  font-size: 9px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  font-weight: 500;
+}
+
+.exp-tag.moto {
+  background: rgba(184,156,132,0.15);
+  color: var(--earth-dk);
+}
+
+.exp-tag.bukko {
+  background: rgba(122,158,142,0.15);
+  color: var(--chigusa-dk);
+}
+
+.exp-tag.both {
+  background: rgba(110,101,96,0.1);
+  color: var(--mid);
+}
+
+/* News card */
+.news-card {
+  border-radius: 6px;
+  overflow: hidden;
+  background: #fff;
+  border: 1px solid var(--light-line);
+}
+
+.news-card-body {
+  padding: 18px 20px;
+}
+
+.news-date {
+  font-size: 10px;
+  letter-spacing: 0.1em;
+  color: var(--mid);
+  margin-bottom: 8px;
+}
+
+.news-title {
+  font-family: 'Shippori Mincho', serif;
+  font-size: 18px;
+  font-weight: 400;
+  line-height: 1.35;
+  margin-bottom: 8px;
+}
+
+.news-excerpt {
+  font-size: 12px;
+  color: var(--mid);
+  line-height: 1.7;
+}
+
+/* ════════════════════════════════════════
+   PROPERTY IDENTITY BADGES
+════════════════════════════════════════ */
+.prop-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 14px;
+  border-radius: 3px;
+  font-size: 10px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  font-weight: 500;
+}
+
+.prop-badge.moto {
+  background: var(--shironeri);
+  color: var(--earth-dk);
+  border: 1px solid var(--earth-lt);
+}
+
+.prop-badge.bukko {
+  background: rgba(168,196,183,0.2);
+  color: var(--chigusa-dk);
+  border: 1px solid var(--chigusa-lt);
+}
+
+.prop-badge::before {
+  content: '';
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+}
+
+.prop-badge.moto::before { background: var(--earth); }
+.prop-badge.bukko::before { background: var(--chigusa); }
+
+/* ════════════════════════════════════════
+   ACCORDION
+════════════════════════════════════════ */
+.accordion-item {
+  border-bottom: 1px solid var(--light-line);
+}
+
+.accordion-q {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 18px 0;
+  font-size: 14px;
+  color: var(--charcoal);
+  cursor: default;
+  font-weight: 400;
+  line-height: 1.4;
+}
+
+.accordion-ico {
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  border: 1px solid var(--light-line);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 14px;
+  color: var(--mid);
+  flex-shrink: 0;
+  margin-left: 16px;
+}
+
+.accordion-a {
+  padding: 0 0 18px;
+  font-size: 13px;
+  color: var(--mid);
+  line-height: 1.8;
+}
+
+/* ════════════════════════════════════════
+   MAP
+════════════════════════════════════════ */
+.map-ph {
+  background: #D4DDD6;
+  position: relative;
+  overflow: hidden;
+  border-radius: 6px;
+}
+
+.map-ph::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(rgba(58,53,48,0.06) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(58,53,48,0.06) 1px, transparent 1px);
+  background-size: 36px 36px;
+}
+
+.map-streets {
+  position: absolute;
+  inset: 0;
+  opacity: 0.3;
+  background:
+    /* streets */
+    linear-gradient(rgba(255,255,255,0.6) 2px, transparent 2px),
+    linear-gradient(90deg, rgba(255,255,255,0.6) 2px, transparent 2px),
+    linear-gradient(rgba(255,255,255,0.3) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,255,255,0.3) 1px, transparent 1px);
+  background-size: 80px 80px, 80px 80px, 20px 20px, 20px 20px;
+}
+
+.map-pin {
+  position: absolute;
+  z-index: 3;
+  transform: translate(-50%, -100%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.map-pin-dot {
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  border: 2.5px solid #fff;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.3);
+}
+
+.map-pin-stem {
+  width: 2px;
+  height: 8px;
+  margin-top: -1px;
+}
+
+.map-pin.moto .map-pin-dot { background: var(--earth); }
+.map-pin.moto .map-pin-stem { background: var(--earth); }
+.map-pin.bukko .map-pin-dot { background: var(--chigusa); }
+.map-pin.bukko .map-pin-stem { background: var(--chigusa); }
+
+.map-label {
+  position: absolute;
+  bottom: 16px;
+  left: 16px;
+  z-index: 3;
+  background: rgba(58,53,48,0.85);
+  backdrop-filter: blur(4px);
+  color: rgba(240,237,230,0.9);
+  font-size: 10px;
+  padding: 5px 12px;
+  border-radius: 3px;
+  letter-spacing: 0.08em;
+}
+
+/* ════════════════════════════════════════
+   FEATURES LIST
+════════════════════════════════════════ */
+.feat-row {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  padding: 14px 0;
+  border-bottom: 1px solid var(--ink-faint);
+}
+
+.feat-icon {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  font-size: 12px;
+  margin-top: 2px;
+}
+
+.feat-icon.moto { background: var(--earth-bg); color: var(--earth-dk); border: 1px solid var(--earth-lt); }
+.feat-icon.bukko { background: var(--chigusa-bg); color: var(--chigusa-dk); border: 1px solid var(--chigusa-lt); }
+
+.feat-content {}
+.feat-title {
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--charcoal);
+  line-height: 1.3;
+}
+.feat-desc {
+  font-size: 12px;
+  color: var(--mid);
+  line-height: 1.7;
+  margin-top: 2px;
+}
+
+/* ════════════════════════════════════════
+   ROUTE ITEM
+════════════════════════════════════════ */
+.route-item {
+  padding: 20px 0;
+  border-bottom: 1px solid var(--light-line);
+}
+.route-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  margin-bottom: 8px;
+}
+.route-name {
+  font-size: 14px;
+  font-weight: 400;
+  color: var(--charcoal);
+}
+.route-time {
+  font-family: 'Shippori Mincho', serif;
+  font-size: 18px;
+  font-weight: 400;
+  color: var(--earth);
+}
+.route-desc {
+  font-size: 12px;
+  color: var(--mid);
+  line-height: 1.7;
+}
+
+/* ════════════════════════════════════════
+   FILTER TABS
+════════════════════════════════════════ */
+.fbar {
+  display: flex;
+  gap: 8px;
+  padding: 16px 40px;
+  border-bottom: 1px solid var(--light-line);
+  background: var(--warm-off);
+  flex-wrap: wrap;
+}
+
+.ftag {
+  border: 1px solid var(--light-line);
+  border-radius: 20px;
+  padding: 6px 18px;
+  font-size: 10px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  cursor: default;
+  color: var(--mid);
+  background: transparent;
+}
+
+.ftag.on {
+  background: var(--charcoal);
+  color: rgba(255,255,255,0.9);
+  border-color: transparent;
+}
+
+/* ════════════════════════════════════════
+   BOOKING FORM
+════════════════════════════════════════ */
+.booking-bar {
+  display: flex;
+  gap: 0;
+  border: 1px solid var(--light-line);
+  border-radius: 6px;
+  overflow: hidden;
+  background: #fff;
+  box-shadow: 0 2px 16px rgba(58,53,48,0.08);
+}
+
+.booking-field {
+  flex: 1;
+  padding: 16px 20px;
+  border-right: 1px solid var(--light-line);
+}
+
+.booking-field:last-of-type { border-right: none; }
+
+.booking-label {
+  font-size: 9px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--mid);
+  display: block;
+  margin-bottom: 4px;
+}
+
+.booking-value {
+  font-family: 'Shippori Mincho', serif;
+  font-size: 16px;
+  font-weight: 400;
+  color: var(--charcoal);
+}
+
+.booking-sub {
+  font-size: 11px;
+  color: var(--mid);
+}
+
+/* ════════════════════════════════════════
+   STEPS (BOOKING)
+════════════════════════════════════════ */
+.steps {
+  display: flex;
+  align-items: center;
+  padding: 14px 40px;
+  gap: 10px;
+  border-bottom: 1px solid var(--light-line);
+  background: var(--warm-off);
+}
+
+.step {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  border: 1.5px solid var(--light-line);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 10px;
+  font-weight: 500;
+  flex-shrink: 0;
+  color: var(--mid);
+  letter-spacing: 0;
+}
+
+.step.on {
+  background: var(--chigusa);
+  color: #fff;
+  border-color: var(--chigusa);
+}
+
+.step.done {
+  background: var(--charcoal);
+  color: #fff;
+  border-color: var(--charcoal);
+}
+
+.step-ln { flex: 1; height: 1px; background: var(--light-line); }
+
+.step-label {
+  font-size: 9px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--mid);
+  margin-top: 2px;
+}
+
+/* ════════════════════════════════════════
+   FOOTER
+════════════════════════════════════════ */
+.wf-footer {
+  background: var(--charcoal);
+  padding: 56px 40px 32px;
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr 1fr;
+  gap: 48px;
+}
+
+.ft-logo {
+  font-family: 'Shippori Mincho', serif;
+  font-size: 22px;
+  font-weight: 400;
+  color: rgba(240,237,230,0.9);
+  letter-spacing: 0.12em;
+  margin-bottom: 12px;
+}
+
+.ft-tagline {
+  font-size: 12px;
+  color: rgba(240,237,230,0.3);
+  line-height: 1.8;
+  max-width: 200px;
+  font-weight: 300;
+}
+
+.ft-col-title {
+  font-size: 9px;
+  font-weight: 500;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--earth-lt);
+  margin-bottom: 16px;
+}
+
+.ft-links {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.ft-link {
+  font-size: 12px;
+  color: rgba(240,237,230,0.35);
+  letter-spacing: 0.06em;
+  font-weight: 300;
+  line-height: 1;
+}
+
+.ft-bottom {
+  grid-column: 1/-1;
+  border-top: 1px solid rgba(255,255,255,0.07);
+  padding-top: 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.ft-copy {
+  font-size: 10px;
+  color: rgba(240,237,230,0.2);
+  letter-spacing: 0.08em;
+}
+
+.ft-socials { display: flex; gap: 8px; }
+.fsoc {
+  width: 32px;
+  height: 32px;
+  border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 9px;
+  color: rgba(255,255,255,0.25);
+  letter-spacing: 0;
+}
+
+/* ════════════════════════════════════════
+   MISC
+════════════════════════════════════════ */
+.divider-rule {
+  width: 40px;
+  height: 1px;
+  background: var(--earth);
+  margin: 24px 0;
+}
+
+.divider-rule.chigusa { background: var(--chigusa); }
+
+.compare-table {
+  border-radius: 6px;
+  overflow: hidden;
+  border: 1px solid var(--light-line);
+  box-shadow: 0 2px 12px rgba(58,53,48,0.06);
+}
+
+.cmp-header {
+  display: flex;
+}
+
+.cmp-header-cell {
+  padding: 16px 20px;
+  font-size: 11px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  font-weight: 500;
+  border-bottom: 1px solid var(--light-line);
+}
+
+.cmp-header-cell.label { flex: 1.2; background: var(--warm-off); border-right: 1px solid var(--light-line); color: var(--mid); }
+.cmp-header-cell.moto  { flex: 2; background: var(--shironeri); border-right: 1px solid var(--light-line); color: var(--earth-dk); }
+.cmp-header-cell.bukko { flex: 2; background: rgba(168,196,183,0.2); color: var(--chigusa-dk); }
+
+.cmp-row {
+  display: flex;
+  border-bottom: 1px solid var(--ink-faint);
+}
+
+.cmp-row:last-child { border-bottom: none; }
+
+.cmp-cell {
+  padding: 14px 20px;
+  font-size: 13px;
+}
+
+.cmp-cell.label { flex: 1.2; color: var(--mid); border-right: 1px solid var(--light-line); font-size: 11px; letter-spacing: 0.06em; text-transform: uppercase; background: rgba(240,237,230,0.4); font-weight: 400; }
+.cmp-cell.moto  { flex: 2; border-right: 1px solid var(--ink-faint); color: var(--charcoal); }
+.cmp-cell.bukko { flex: 2; color: var(--charcoal); }
+
+/* ════════════════════════════════════════
+   ADDRESS CARDS
+════════════════════════════════════════ */
+.addr-card {
+  border-radius: 6px;
+  padding: 20px 22px;
+  border: 1px solid;
+}
+
+.addr-card.moto {
+  border-color: var(--earth-lt);
+  background: rgba(237,232,223,0.4);
+}
+
+.addr-card.bukko {
+  border-color: var(--chigusa-lt);
+  background: rgba(168,196,183,0.1);
+}
+
+.addr-hotel-name {
+  font-family: 'Shippori Mincho', serif;
+  font-size: 18px;
+  font-weight: 400;
+  margin-bottom: 6px;
+}
+
+.addr-hotel-name.moto { color: var(--earth-dk); }
+.addr-hotel-name.bukko { color: var(--chigusa-dk); }
+
+.addr-kanji {
+  font-size: 11px;
+  color: var(--mid);
+  margin-bottom: 12px;
+  letter-spacing: 0.08em;
+}
+
+.addr-text {
+  font-size: 12px;
+  color: var(--mid);
+  line-height: 1.8;
+}
+
+/* ════════════════════════════════════════
+   LOGO MARK (inline SVG)
+════════════════════════════════════════ */
+.solmu-mark {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+}
+
+/* ════════════════════════════════════════
+   VALUE CARDS
+════════════════════════════════════════ */
+.value-card {
+  padding: 32px 28px;
+  background: #fff;
+  border: 1px solid var(--light-line);
+  border-radius: 6px;
+}
+
+.value-num {
+  font-family: 'Shippori Mincho', serif;
+  font-size: 48px;
+  font-weight: 300;
+  color: var(--light-line);
+  line-height: 1;
+  margin-bottom: 12px;
+}
+
+.value-title {
+  font-size: 11px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  font-weight: 500;
+  margin-bottom: 12px;
+  color: var(--charcoal);
+}
+
+.value-body {
+  font-size: 13px;
+  color: var(--mid);
+  line-height: 1.75;
+  font-weight: 300;
+}
+
+/* ════════════════════════════════════════
+   RESPONSIVE — TABLET  (≤ 1024px)
+════════════════════════════════════════ */
+@media (max-width: 1024px) {
+  .wf-frame { margin: 16px auto; }
+
+  .sec { padding: 48px 28px; }
+
+  .wf-nav { padding: 0 20px; gap: 2px; }
+  .nav-link { padding: 6px 8px; font-size: 9px; }
+  .nav-book { padding: 7px 14px; font-size: 9px; }
+
+  .hero-title { font-size: 40px; }
+  .sh-title { font-size: 28px; }
+
+  .wf-footer {
+    grid-template-columns: 1fr 1fr;
+    gap: 32px;
+    padding: 40px 28px 28px;
+  }
+  .ft-bottom { grid-column: 1/-1; }
+
+  .compare-table .cmp-cell,
+  .compare-table .cmp-header-cell { padding: 12px 14px; font-size: 12px; }
+}
+
+/* ════════════════════════════════════════
+   RESPONSIVE — MOBILE  (≤ 768px)
+════════════════════════════════════════ */
+@media (max-width: 768px) {
+
+  /* ── Shell & frame ── */
+  body { font-size: 14px; }
+
+  .wf-frame { margin: 0; border-radius: 0; box-shadow: none; }
+  .browser-bar { display: none; }
+
+  /* Page outer padding */
+  .page > div[style] { padding: 12px 16px 48px !important; }
+  .page-meta { display: none; }
+
+  /* ── Tab bar ── */
+  .tab-btn { padding: 10px 12px; font-size: 9px; }
+  .tab-btn span { display: none; }
+
+  /* ── Navigation ── */
+  .wf-nav {
+    height: auto;
+    flex-wrap: wrap;
+    padding: 12px 16px;
+    gap: 4px;
+    position: relative;
+  }
+  .nav-brand {
+    font-size: 16px;
+    margin-right: 8px;
+    padding-right: 12px;
+    flex-shrink: 0;
+  }
+  /* Hide all nav links on mobile — keep only brand + book + lang */
+  .nav-link { display: none; }
+  .nav-sp { display: none; }
+  .nav-book {
+    padding: 7px 14px;
+    font-size: 9px;
+    margin-left: auto;
+  }
+  .nav-lang { font-size: 9px; padding: 6px 8px; }
+
+  /* ── Secondary nav ── */
+  .sec-nav {
+    height: auto;
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    scrollbar-width: none;
+  }
+  .sec-nav::-webkit-scrollbar { display: none; }
+  .sec-nav-item { padding: 0 14px; font-size: 9px; white-space: nowrap; flex-shrink: 0; }
+
+  /* ── Hero sections ── */
+  .img-ph[style*="height:680px"],
+  .img-ph[style*="height:580px"] { height: 480px !important; }
+  .img-ph[style*="height:420px"],
+  .img-ph[style*="height:380px"],
+  .img-ph[style*="height:460px"] { height: 300px !important; }
+  .img-ph[style*="height:280px"] { height: 220px !important; }
+
+  .hero-content { bottom: 28px; left: 20px; right: 20px; }
+  .hero-title { font-size: 34px; }
+  .hero-sub { font-size: 12px; max-width: 100%; }
+  .hero-btns { flex-wrap: wrap; }
+  .scroll-ind { display: none; }
+  .ht-float { top: 16px; left: 20px; }
+
+  /* ── Sections ── */
+  .sec { padding: 36px 16px; }
+
+  /* ── Layout: collapse all multi-column rows to single column ── */
+  .row {
+    flex-direction: column !important;
+  }
+  /* Restore specific rows that should stay horizontal on mobile */
+  .hero-btns,
+  .browser-dots,
+  .fbar,
+  .steps,
+  .tab-bar,
+  .booking-bar,
+  .ft-socials,
+  .row.g8[style*="height:3px"],
+  .mini-swatches { flex-direction: row !important; }
+
+  .f1, .f2, .f3 { flex: unset; width: 100%; }
+
+  /* ── Section headers ── */
+  .sh-title { font-size: 28px; }
+  .sh-body { max-width: 100%; }
+
+  /* ── Hotel split hero (Hotels landing) ── */
+  .row[style*="min-height:600px"] > div,
+  .row[style*="min-height:640px"] > div {
+    border-right: none !important;
+    border-bottom: 1px solid rgba(255,255,255,0.1);
+    min-height: 320px;
+    padding: 40px 24px !important;
+  }
+
+  /* ── Cards ── */
+  .room-card,
+  .exp-card,
+  .news-card,
+  .value-card { width: 100%; }
+
+  /* Room detail horizontal layout → vertical */
+  .row.g0[style*="border-radius:8px"] {
+    flex-direction: column !important;
+  }
+  .row.g0[style*="border-radius:8px"] > div[style*="max-width:380px"] {
+    max-width: 100% !important;
+    height: 220px !important;
+  }
+
+  /* ── 比較 table ── */
+  .compare-table { overflow-x: auto; display: block; }
+  .cmp-header, .cmp-row { min-width: 520px; }
+
+  /* ── Map ── */
+  .map-ph[style*="height:300px"],
+  .map-ph[style*="height:340px"],
+  .map-ph[style*="height:380px"] { height: 220px !important; }
+
+  /* ── Bento gallery ── */
+  .row.g8[style*="height:380px"],
+  .row.g8[style*="height:360px"] {
+    flex-direction: column !important;
+    height: auto !important;
+  }
+  .row.g8[style*="height:380px"] > div,
+  .row.g8[style*="height:360px"] > div {
+    height: 180px !important;
+    width: 100% !important;
+    border-radius: 6px !important;
+  }
+  .row.g8[style*="height:380px"] .col,
+  .row.g8[style*="height:360px"] .col {
+    flex-direction: row !important;
+    height: 180px !important;
+  }
+  .row.g8[style*="height:380px"] .col > div,
+  .row.g8[style*="height:360px"] .col > div {
+    border-radius: 6px !important;
+    height: 100% !important;
+  }
+
+  /* ── Concept gallery carousel ── */
+  .row.g8[style*="height:240px"],
+  .row.g8[style*="height:220px"] {
+    flex-direction: row !important;
+    overflow-x: auto;
+    scrollbar-width: none;
+    gap: 8px;
+    height: 200px !important;
+    flex-wrap: nowrap;
+  }
+  .row.g8[style*="height:240px"] .f1,
+  .row.g8[style*="height:220px"] .f1 {
+    min-width: 70vw;
+    height: 100% !important;
+    flex-shrink: 0;
+  }
+
+  /* ── Experiences carousel ── */
+  .row.g8[style*="align-items:stretch"] {
+    flex-direction: row !important;
+    overflow-x: auto;
+    scrollbar-width: none;
+    gap: 12px;
+    flex-wrap: nowrap;
+    padding-bottom: 8px;
+  }
+  .row.g8[style*="align-items:stretch"] .exp-card {
+    min-width: 72vw;
+    flex-shrink: 0;
+  }
+  .row.g8[style*="align-items:stretch"] > div[style*="font-size:24px"] {
+    display: none;
+  }
+
+  /* ── News featured row ── */
+  .row.g32[style*="margin-bottom:40px"] { flex-direction: column !important; gap: 20px; }
+  .row.g32[style*="margin-bottom:40px"] .f2 { height: 220px !important; }
+
+  /* ── Booking bar ── */
+  .booking-bar {
+    flex-direction: column !important;
+    border-radius: 8px;
+  }
+  .booking-field { border-right: none !important; border-bottom: 1px solid var(--light-line); }
+  .booking-bar > div[style*="padding:12px 20px"] { padding: 12px 16px !important; }
+  .booking-bar .btn { width: 100%; }
+
+  /* ── Steps ── */
+  .steps { padding: 12px 16px; gap: 6px; overflow-x: auto; }
+  .steps > div[style*="font-size:9px"] { display: none; }
+  .step-label { display: none; }
+
+  /* ── Filter bar ── */
+  .fbar { padding: 12px 16px; gap: 6px; overflow-x: auto; flex-wrap: nowrap; }
+  .ftag { white-space: nowrap; flex-shrink: 0; }
+
+  /* ── Address cards side-by-side row ── */
+  .row.g16 > .addr-card { width: 100%; }
+
+  /* ── FAQ layout ── */
+  .sec .row.g48 { gap: 28px; }
+  .sec .col[style*="position:sticky"] { position: static !important; }
+
+  /* ── Footer ── */
+  .wf-footer {
+    grid-template-columns: 1fr;
+    gap: 24px;
+    padding: 36px 20px 24px;
+  }
+  .ft-bottom { flex-direction: column; gap: 12px; align-items: flex-start; }
+
+  /* ── Quote section ── */
+  .sec[style*="padding:72px 80px"] { padding: 48px 20px !important; }
+  .quote-pull { font-size: 20px !important; }
+
+  /* ── 施設 badge rows ── */
+  .row.g12[style*="flex-wrap:wrap"] { flex-direction: row !important; }
+
+  /* ── Prop toggle on book page ── */
+  .row.g12 > div[style*="border:2px solid"] { width: 100%; }
+
+  /* ── Area info sidebar map ── */
+  .col[style*="position:sticky;top:20px"] { position: static !important; }
+}
+
+/* ════════════════════════════════════════
+   RESPONSIVE — SMALL MOBILE  (≤ 480px)
+════════════════════════════════════════ */
+@media (max-width: 480px) {
+  .hero-title { font-size: 28px; }
+  .sh-title { font-size: 24px; }
+  .wf-nav { padding: 10px 12px; }
+  .nav-brand { font-size: 14px; }
+  .tab-btn { padding: 9px 10px; font-size: 8px; }
+  .sec { padding: 28px 14px; }
+  .page > div[style] { padding: 8px 10px 40px !important; }
+
+  .row.g8[style*="align-items:stretch"] .exp-card { min-width: 85vw; }
+  .row.g8[style*="height:240px"] .f1,
+  .row.g8[style*="height:220px"] .f1 { min-width: 85vw; }
+
+  .booking-bar { border-radius: 6px; }
+}
+
+
+/* ════════════════════════════════════════
+   BREADCRUMB
+════════════════════════════════════════ */
+.bcrumb {
+  padding: 10px 32px;
+  font-size: 11px;
+  color: var(--mid);
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px;
+  letter-spacing: 0.04em;
+}
+.bcrumb span { white-space: nowrap; }
+.bcrumb .bc-on { color: var(--charcoal); font-weight: 500; }
+</style>
+</head>
+<body>
+
+<div class="shell">
+
+<!-- ── TAB BAR ── -->
+<div class="tab-bar">
+  <button class="tab-btn active" onclick="go(0,this)">01 ホーム<span>/</span></button>
+  <button class="tab-btn" onclick="go(1,this)">02 コンセプト<span>/ABOUT</span></button>
+  <button class="tab-btn" onclick="go(2,this)">03 ホテル<span>/HOTELS</span></button>
+  <button class="tab-btn moto-tab" onclick="go(3,this)">04 元悪王子<span>/HOTELS/MOTO-AKUOJI</span></button>
+  <button class="tab-btn bukko-tab" onclick="go(4,this)">05 仏光寺<span>/HOTELS/BUKKOJI</span></button>
+  <button class="tab-btn" onclick="go(5,this)">06 客室一覧<span>/ROOMS</span></button>
+  <button class="tab-btn" onclick="go(6,this)">07 客室詳細<span>/ROOMS/[SLUG]</span></button>
+  <button class="tab-btn" onclick="go(7,this)">08 体験詳細<span>/EXPERIENCE/[SLUG]</span></button>
+  <button class="tab-btn" onclick="go(8,this)">09 施設詳細<span>/FACILITIES/[SLUG]</span></button>
+  <button class="tab-btn" onclick="go(9,this)">10 エリア情報<span>/AREA</span></button>
+  <button class="tab-btn" onclick="go(10,this)">11 ニュース<span>/NEWS</span></button>
+  <button class="tab-btn" onclick="go(11,this)">12 記事詳細<span>/NEWS/[SLUG]</span></button>
+  <button class="tab-btn" onclick="go(12,this)">13 よくある質問<span>/FAQS</span></button>
+  <button class="tab-btn" onclick="go(13,this)">14 アクセス<span>/ACCESS</span></button>
+</div>
+
+<div class="pages-container">
+<div class="page active" id="p0">
+<div style="padding:24px 40px 60px;">
+<div class="page-meta"><div class="pmeta-num">01</div><div class="pmeta-name">ホームページ</div><div class="pmeta-route">/</div><div class="pmeta-line"></div></div>
+<div class="wf-frame">
+<div class="browser-bar"><div class="browser-dots"><span></span><span></span><span></span></div><div class="browser-url">solmu-kyoto.jp</div></div>
+
+<!-- Nav -->
+<div class="wf-nav">
+  <div class="nav-brand">solmu kyoto</div>
+  <div class="nav-link on">ホーム</div>
+  <div class="nav-link">コンセプト</div>
+  <div class="nav-link">ホテル ▾</div>
+  <div class="nav-link">エリア情報</div>
+  <div class="nav-link">ニュース</div>
+  <div class="nav-link">よくある質問</div>
+  <div class="nav-link">アクセス</div>
+  <div class="nav-sp"></div>
+  <div class="nav-book">ご予約</div>
+  <div class="nav-lang">JP | EN</div>
+</div>
+
+<!-- Hero -->
+<div class="img-ph hero-ph" style="height:680px;position:relative;">
+  <div class="ht-float">
+    <div class="ht-pill on">元悪王子</div>
+    <div class="ht-pill">仏光寺</div>
+  </div>
+  <div class="hero-content">
+    <div class="hero-eyebrow">京都・二つの宿</div>
+    <div class="hero-title">この街が、<br><em>あなたのものになる。</em></div>
+    <div class="hero-sub">下京区に佇む二つの宿。それぞれが独自の世界を持ち、京都への生きた入口となる。</div>
+    <div class="hero-btns">
+      <div class="btn btn-primary">ご予約はこちら</div>
+      <div class="btn btn-outline-light">探索する ↓</div>
+    </div>
+  </div>
+  <div class="scroll-ind"><div class="scroll-line"></div><div class="scroll-txt">スクロール</div></div>
+  <label>ヒーロー画像または動画</label>
+</div>
+
+<!-- 施設 teasers -->
+<div class="sec sec-surface" style="border-bottom:1px solid var(--light-line);">
+  <div style="text-align:center;margin-bottom:40px;">
+    <div class="sh-eyebrow" style="justify-content:center;"><span>二つの宿</span></div>
+    <div class="sh-title" style="font-size:42px;margin-bottom:0;">あなたの<em>京都</em>を選ぶ</div>
+  </div>
+  <div class="row g24">
+    <!-- Moto-Akuoji card -->
+    <div class="col f1 g0" style="border-radius:8px;overflow:hidden;border:1px solid var(--light-line);background:#fff;box-shadow:0 2px 16px rgba(58,53,48,0.06);">
+      <div class="img-ph moto" style="height:300px;">
+        <label>元悪王子 画像</label>
+      </div>
+      <div style="padding:28px 28px 32px;display:flex;flex-direction:column;gap:14px;">
+        <div style="display:flex;align-items:baseline;gap:12px;">
+          <div class="sh-title" style="font-size:28px;margin:0;">元悪王子</div>
+          <div style="font-size:13px;color:var(--mid);font-family:'Noto Sans JP',sans-serif;">元悪王子</div>
+        </div>
+        <div class="divider-rule"></div>
+        <div class="body-copy">
+          温かな土の色と、町家のやわらかなリズム。陶芸家、織り職人、そして毎朝顔なじみの豆腐屋が暮らす街。
+        </div>
+        <div class="prop-badge moto" style="align-self:flex-start;">下京区</div>
+        <div class="btn btn-primary-earth" style="align-self:flex-start;margin-top:4px;">元悪王子を探索する →</div>
+      </div>
+    </div>
+    <!-- Bukkoji card -->
+    <div class="col f1 g0" style="border-radius:8px;overflow:hidden;border:1px solid var(--light-line);background:#fff;box-shadow:0 2px 16px rgba(58,53,48,0.06);">
+      <div class="img-ph bukko" style="height:300px;">
+        <label>仏光寺 画像</label>
+      </div>
+      <div style="padding:28px 28px 32px;display:flex;flex-direction:column;gap:14px;">
+        <div style="display:flex;align-items:baseline;gap:12px;">
+          <div class="sh-title" style="font-size:28px;margin:0;">仏光寺</div>
+          <div style="font-size:13px;color:var(--mid);font-family:'Noto Sans JP',sans-serif;">仏光寺</div>
+        </div>
+        <div class="divider-rule chigusa"></div>
+        <div class="body-copy">
+          鼠青色と静けさ。古寺の鐘が夕暮れに響き、街が目覚める前から小さなカフェが扉を開く路地。
+        </div>
+        <div class="prop-badge bukko" style="align-self:flex-start;">中京区</div>
+        <div class="btn btn-primary" style="align-self:flex-start;margin-top:4px;">仏光寺を探索する →</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Experiences teaser -->
+<div class="sec" style="border-bottom:1px solid var(--light-line);">
+  <div class="row" style="align-items:flex-end;margin-bottom:36px;">
+    <div class="col f1">
+      <div class="sh-eyebrow chigusa"><span>厳選された体験</span></div>
+      <div class="sh-title">solmuで<em class="chigusa">過ごす時間</em></div>
+      <div class="sh-body">自転車レンタルや季節の朝食から、地元職人との陶芸ワークショップまで——すべての体験が、あなたを京都の奥深くへと繋ぐ。</div>
+    </div>
+    <div class="btn btn-ghost" style="align-self:flex-end;">すべての体験を見る →</div>
+  </div>
+  <div class="row g16">
+    <div class="col f1 g10">
+      <div class="img-ph both" style="height:220px;border-radius:6px;"><label>自転車レンタル</label></div>
+      <div class="exp-tag both" style="align-self:flex-start;">両ホテル</div>
+      <div class="card-title" style="font-size:18px;">自転車レンタル</div>
+      <div class="card-body">下京区・中京区を、厳選されたルートマップを手にお好きなペースで探索できます。</div>
+    </div>
+    <div class="col f1 g10">
+      <div class="img-ph moto" style="height:220px;border-radius:6px;"><label>陶芸ワークショップ</label></div>
+      <div class="exp-tag moto" style="align-self:flex-start;">元悪王子</div>
+      <div class="card-title" style="font-size:18px;">陶芸ワークショップ</div>
+      <div class="card-body">四十年間この地で土を捏ねてきた下京の陶芸家との、朝のひとときを共に。</div>
+    </div>
+    <div class="col f1 g10">
+      <div class="img-ph both" style="height:220px;border-radius:6px;"><label>季節の朝食</label></div>
+      <div class="exp-tag both" style="align-self:flex-start;">両ホテル</div>
+      <div class="card-title" style="font-size:18px;">季節の朝食</div>
+      <div class="card-body">開業以来お付き合いのある、錦市場の馴染みの生産者から仕入れた食材で丁寧に仕立てる朝食。</div>
+    </div>
+    <div class="col f1 g10">
+      <div class="img-ph bukko" style="height:220px;border-radius:6px;"><label>寺院の朝散歩</label></div>
+      <div class="exp-tag bukko" style="align-self:flex-start;">仏光寺</div>
+      <div class="card-title" style="font-size:18px;">寺院の朝散歩</div>
+      <div class="card-body">観光客が来る前の仏光寺界隈を、ガイドとともに歩く40分間のモーニングウォーク。</div>
+    </div>
+  </div>
+</div>
+
+<!-- Area info teaser -->
+<div class="sec sec-surface" style="border-bottom:1px solid var(--light-line);">
+  <div class="row g48" style="align-items:center;">
+    <div class="col f1 g16">
+      <div class="sh-eyebrow"><span>町の記憶</span></div>
+      <div class="sh-title">エリアを<br><em>探索する</em></div>
+      <div class="sh-body">下京区・中京区こそが、京都の日常が息づく場所。錦市場や烏丸御池から徒歩5分以内——観光案内には載らない路地が、ここにある。</div>
+      <div class="btn btn-primary-earth" style="align-self:flex-start;">エリア情報を見る →</div>
+    </div>
+    <div class="map-ph f2" style="height:260px;">
+      <div class="map-streets"></div>
+      <div class="map-pin moto" style="top:48%;left:37%;">
+        <div class="map-pin-dot"></div>
+        <div class="map-pin-stem"></div>
+      </div>
+      <div class="map-pin bukko" style="top:40%;left:56%;">
+        <div class="map-pin-dot"></div>
+        <div class="map-pin-stem"></div>
+      </div>
+      <div class="map-label">下京区・中京区　京都</div>
+    </div>
+  </div>
+</div>
+
+<!-- Quote -->
+<div class="sec" style="text-align:center;padding:72px 80px;border-bottom:1px solid var(--light-line);">
+  <div class="quote-pull" style="border-left:none;border-right:none;padding:0;text-align:center;font-size:28px;max-width:680px;margin:0 auto;">
+    「旅人と街を結ぶ、縁の結び目。」
+  </div>
+  <div style="margin-top:24px;font-size:10px;letter-spacing:0.22em;text-transform:uppercase;color:var(--mid);">solmu kyoto — ブランド哲学</div>
+</div>
+
+<!-- Footer -->
+<div class="wf-footer">
+  <div>
+    <div class="ft-logo">solmu kyoto</div>
+    <div class="ft-tagline">京都の中心に佇む二つの宿。急かされることなく、ここにある時間を。</div>
+  </div>
+  <div>
+    <div class="ft-col-title">宿泊施設</div>
+    <div class="ft-links">
+      <div class="ft-link">元悪王子</div>
+      <div class="ft-link">仏光寺</div>
+      <div class="ft-link">ホテルを比較</div>
+    </div>
+  </div>
+  <div>
+    <div class="ft-col-title">ナビゲート</div>
+    <div class="ft-links">
+      <div class="ft-link">ホーム</div>
+      <div class="ft-link">コンセプト</div>
+      <div class="ft-link">体験プログラム</div>
+      <div class="ft-link">エリア情報</div>
+      <div class="ft-link">ニュース</div>
+    </div>
+  </div>
+  <div>
+    <div class="ft-col-title">お問い合わせ</div>
+    <div class="ft-links">
+      <div class="ft-link"><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="462f2820290635292a2b336b2d3f293229682c36">[email&#160;protected]</a></div>
+      <div class="ft-link">+81 75 — — ——</div>
+      <div class="ft-link">アクセス・道順</div>
+    </div>
+  </div>
+  <div class="ft-bottom">
+    <div class="ft-copy">© 2024 solmu kyoto / 今井建設株式会社. 全著作権所有。</div>
+    <div class="ft-socials">
+      <div class="fsoc">IG</div><div class="fsoc">FB</div><div class="fsoc">X</div>
+    </div>
+  </div>
+</div>
+
+</div><!-- /wf-frame -->
+</div><!-- /padding -->
+</div><!-- /page -->
+
+
+<!-- ═══════════════════════════════════
+  02 · ABOUT
+═══════════════════════════════════ -->
+
+<div class="page" id="p1">
+<div style="padding:24px 40px 60px;">
+<div class="page-meta"><div class="pmeta-num">02</div><div class="pmeta-name">コンセプトページ</div><div class="pmeta-route">/about</div><div class="pmeta-line"></div></div>
+<div class="wf-frame">
+<div class="browser-bar"><div class="browser-dots"><span></span><span></span><span></span></div><div class="browser-url">solmu-kyoto.jp/about</div></div>
+<div class="wf-nav">
+  <div class="nav-brand">solmu kyoto</div>
+  <div class="nav-link">ホーム</div><div class="nav-link on">コンセプト</div>
+  <div class="nav-link">ホテル ▾</div>
+  <div class="nav-link">エリア情報</div><div class="nav-link">ニュース</div><div class="nav-link">よくある質問</div><div class="nav-link">アクセス</div>
+  <div class="nav-sp"></div><div class="nav-book">ご予約</div><div class="nav-lang">JP | EN</div>
+</div>
+
+<div class="img-ph hero-ph" style="height:420px;position:relative;">
+  <div class="hero-content">
+    <div class="hero-eyebrow">私たちの哲学</div>
+    <div class="hero-title" style="font-size:42px;">solmu kyotoについて</div>
+  </div>
+  <label>ヒーロー画像</label>
+</div>
+
+<!-- Concept gallery -->
+<div class="sec" style="padding-top:48px;padding-bottom:48px;border-bottom:1px solid var(--light-line);">
+  <div style="font-size:10px;letter-spacing:0.24em;text-transform:uppercase;color:var(--mid);text-align:center;margin-bottom:20px;">コンセプトギャラリー</div>
+  <div class="row g8" style="height:240px;">
+    <div style="display:flex;align-items:center;color:var(--light-line);font-size:24px;padding:0 8px;">‹</div>
+    <div class="img-ph f1" style="border-radius:6px;"><label>画像</label></div>
+    <div class="img-ph f1" style="border-radius:6px;"><label>画像</label></div>
+    <div class="img-ph f1" style="border-radius:6px;"><label>画像</label></div>
+    <div class="img-ph f1" style="border-radius:6px;"><label>画像</label></div>
+    <div style="display:flex;align-items:center;color:var(--light-line);font-size:24px;padding:0 8px;">›</div>
+  </div>
+  <div class="row g6" style="justify-content:center;margin-top:16px;">
+    <div style="width:24px;height:3px;background:var(--charcoal);border-radius:2px;"></div>
+    <div style="width:8px;height:3px;background:var(--light-line);border-radius:2px;"></div>
+    <div style="width:8px;height:3px;background:var(--light-line);border-radius:2px;"></div>
+    <div style="width:8px;height:3px;background:var(--light-line);border-radius:2px;"></div>
+  </div>
+</div>
+
+<!-- Story -->
+<div class="sec" style="border-bottom:1px solid var(--light-line);">
+  <div class="row g64">
+    <div class="col f1 g24">
+      <div>
+        <div class="sh-eyebrow"><span>私たちのストーリー</span></div>
+        <div class="sh-title">ゆっくりと、<br>ここに<em>在ること。</em></div>
+      </div>
+      <div class="body-copy">
+        <p>海外資本のホテルのように観光名所へ誘うのではなく、solmu kyotoは「生きた紹介装置」として機能します——地元の人々と旅人が予期せぬ出会いを紡ぐ場所として。</p>
+        <p>両施設は下京区と中京区に位置します。寺院巡りや観光バスの京都ではなく、町のパン屋、老舗の織物工房、四代続く豆腐屋のある、京都の日常の中に。</p>
+        <p>ゲストはホテルを通じて街に出会い、街を通じてホテルを記憶する。</p>
+      </div>
+      <div class="btn btn-primary-earth" style="align-self:flex-start;">ホテルを探索する →</div>
+    </div>
+    <div class="col f1 g20">
+      <div class="img-ph dark" style="height:300px;border-radius:6px;"><label>コンセプト画像</label></div>
+      <div class="quote-pull" style="font-size:18px;">
+        「仏光寺から徒歩2分、街の表情が変わります。その出会いを届けるために、私たちはここにいる。」
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Values -->
+<div class="sec sec-surface" style="border-bottom:1px solid var(--light-line);">
+  <div style="text-align:center;margin-bottom:36px;">
+    <div class="sh-eyebrow" style="justify-content:center;"><span>価値観</span></div>
+    <div class="sh-title" style="font-size:36px;margin-bottom:0;">私たちが<em>大切にする</em>こと</div>
+  </div>
+  <div class="row g16">
+    <div class="value-card f1">
+      <div class="value-num">①</div>
+      <div class="value-title">縁 — つながり</div>
+      <div class="value-body">人と人、場所と世代の間に自然と生まれる絆を大切に。すべてのデザインの決断は、この見えない糸を強くするために。</div>
+    </div>
+    <div class="value-card f1">
+      <div class="value-num">②</div>
+      <div class="value-title">アクティブ × ローカル</div>
+      <div class="value-body">京都を「観る」のではなく、「動きながら発見する」旅人のために。リピーターも初めての方も同じく。</div>
+    </div>
+    <div class="value-card f1">
+      <div class="value-num">③</div>
+      <div class="value-title">時間を過ごす</div>
+      <div class="value-body">宿泊は「泊まる」ではなく「住む」感覚。朝食、ラウンジ、館内ウェアや自転車レンタルも、コミュニティへの窓口として。</div>
+    </div>
+    <div class="value-card f1">
+      <div class="value-num">④</div>
+      <div class="value-title">アーバン モダン</div>
+      <div class="value-body">node hotelやNOHAGA HOTELを参照したデザイン。余剰なき上質さ。京都の既存デザインの型から一線を画す。</div>
+    </div>
+  </div>
+</div>
+
+<div class="wf-footer">
+  <div><div class="ft-logo">solmu kyoto</div><div class="ft-tagline">京都の中心に佇む二つの宿。</div></div>
+  <div><div class="ft-col-title">宿泊施設</div><div class="ft-links"><div class="ft-link">元悪王子</div><div class="ft-link">仏光寺</div></div></div>
+  <div><div class="ft-col-title">ナビゲート</div><div class="ft-links"><div class="ft-link">ホーム</div><div class="ft-link">コンセプト</div><div class="ft-link">エリア情報</div></div></div>
+  <div><div class="ft-col-title">お問い合わせ</div><div class="ft-links"><div class="ft-link"><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="1871767e77586b7774756d357361776c77367268">[email&#160;protected]</a></div><div class="ft-link">+81 75 — — ——</div></div></div>
+  <div class="ft-bottom"><div class="ft-copy">© 2024 solmu kyoto. 全著作権所有。</div><div class="ft-socials"><div class="fsoc">IG</div><div class="fsoc">FB</div></div></div>
+</div>
+</div>
+</div>
+</div>
+
+
+<!-- ═══════════════════════════════════
+  03 · HOTELS LANDING
+═══════════════════════════════════ -->
+
+<div class="page" id="p2">
+<div style="padding:24px 40px 60px;">
+<div class="page-meta"><div class="pmeta-num">03</div><div class="pmeta-name">ホテル一覧ページ</div><div class="pmeta-route">/hotels</div><div class="pmeta-line"></div></div>
+<div class="wf-frame">
+<div class="browser-bar"><div class="browser-dots"><span></span><span></span><span></span></div><div class="browser-url">solmu-kyoto.jp/hotels</div></div>
+<div class="wf-nav">
+  <div class="nav-brand">solmu kyoto</div>
+  <div class="nav-link">ホーム</div><div class="nav-link">コンセプト</div>
+  <div class="nav-link on">ホテル ▾</div>
+  <div class="nav-link">エリア情報</div><div class="nav-link">ニュース</div><div class="nav-link">よくある質問</div><div class="nav-link">アクセス</div>
+  <div class="nav-sp"></div><div class="nav-book">ご予約</div><div class="nav-lang">JP | EN</div>
+</div>
+
+<!-- Split concept hero -->
+<div class="row" style="min-height:600px;border-bottom:1px solid var(--light-line);">
+  <!-- Moto panel -->
+  <div class="f1 col g20" style="background:linear-gradient(160deg,#A89070 0%,#7A6050 100%);padding:52px 44px;border-right:1px solid var(--light-line);position:relative;overflow:hidden;">
+    <div style="position:absolute;inset:0;background:linear-gradient(to bottom,transparent 40%,rgba(30,20,10,0.5));pointer-events:none;"></div>
+    <div class="prop-badge moto" style="position:relative;z-index:2;align-self:flex-start;background:rgba(237,232,223,0.9);">motoakuoji</div>
+    <div style="position:relative;z-index:2;margin-top:auto;">
+      <div style="font-family:'Shippori Mincho',serif;font-size:44px;font-weight:300;color:#F0EDE6;line-height:1.05;margin-bottom:6px;">元悪王子</div>
+      <div style="font-size:14px;color:rgba(240,237,230,0.5);margin-bottom:20px;letter-spacing:0.06em;">元悪王子</div>
+      <div style="font-size:13px;color:rgba(240,237,230,0.7);line-height:1.8;max-width:280px;margin-bottom:24px;font-weight:300;">温かな大地。町家の美学。信頼する友との会話のように、ゆっくりと姿を現す街。</div>
+      <div class="btn btn-primary-earth">このホテルを探索 →</div>
+    </div>
+    <div style="position:absolute;top:20px;right:16px;font-size:9px;color:rgba(240,237,230,0.25);letter-spacing:0.1em;z-index:2;">← BG: ホテル写真</div>
+  </div>
+  <!-- Bukko panel -->
+  <div class="f1 col g20" style="background:linear-gradient(160deg,#4A7A6A 0%,#2C5248 100%);padding:52px 44px;position:relative;overflow:hidden;">
+    <div style="position:absolute;inset:0;background:linear-gradient(to bottom,transparent 40%,rgba(10,30,25,0.5));pointer-events:none;"></div>
+    <div class="prop-badge bukko" style="position:relative;z-index:2;align-self:flex-start;background:rgba(235,242,238,0.9);">bukkoji</div>
+    <div style="position:relative;z-index:2;margin-top:auto;">
+      <div style="font-family:'Shippori Mincho',serif;font-size:44px;font-weight:300;color:#F0EDE6;line-height:1.05;margin-bottom:6px;">仏光寺</div>
+      <div style="font-size:14px;color:rgba(240,237,230,0.5);margin-bottom:20px;letter-spacing:0.06em;">仏光寺</div>
+      <div style="font-size:13px;color:rgba(240,237,230,0.7);line-height:1.8;max-width:280px;margin-bottom:24px;font-weight:300;">鼠青色と静謐。古寺の鐘が夕暮れに鳴り響き、街が目覚める前から個人経営のカフェが開く路地。</div>
+      <div class="btn btn-primary">このホテルを探索 →</div>
+    </div>
+    <div style="position:absolute;top:20px;right:16px;font-size:9px;color:rgba(240,237,230,0.25);letter-spacing:0.1em;z-index:2;">← BG: ホテル写真</div>
+  </div>
+</div>
+
+<!-- Comparison -->
+<div class="sec sec-surface" style="border-bottom:1px solid var(--light-line);">
+  <div style="text-align:center;margin-bottom:32px;">
+    <div class="sh-eyebrow" style="justify-content:center;"><span>一目でわかる</span></div>
+    <div class="sh-title" style="font-size:36px;margin-bottom:0;">比較 <em>宿泊施設</em></div>
+  </div>
+  <div class="compare-table">
+    <div class="cmp-header">
+      <div class="cmp-header-cell label">特徴</div>
+      <div class="cmp-header-cell moto">● Moto-Akuoji</div>
+      <div class="cmp-header-cell bukko">● Bukkoji</div>
+    </div>
+    <div class="cmp-row">
+      <div class="cmp-cell label">ロケーション</div>
+      <div class="cmp-cell moto">下京区、仏光寺近く</div>
+      <div class="cmp-cell bukko">中京区、烏丸御池エリア</div>
+    </div>
+    <div class="cmp-row">
+      <div class="cmp-cell label">客室数</div>
+      <div class="cmp-cell moto">室数未定</div>
+      <div class="cmp-cell bukko">室数未定</div>
+    </div>
+    <div class="cmp-row">
+      <div class="cmp-cell label">カラーパレット</div>
+      <div class="cmp-cell moto" style="display:flex;align-items:center;gap:8px;"><div style="width:16px;height:16px;border-radius:50%;background:var(--earth);"></div> 白練・アース</div>
+      <div class="cmp-cell bukko" style="display:flex;align-items:center;gap:8px;"><div style="width:16px;height:16px;border-radius:50%;background:var(--chigusa);"></div> 千草・セージ</div>
+    </div>
+    <div class="cmp-row">
+      <div class="cmp-cell label">コンセプト</div>
+      <div class="cmp-cell moto">町家の温もり、職人の街</div>
+      <div class="cmp-cell bukko">都市の静けさ、寺院の近く</div>
+    </div>
+    <div class="cmp-row">
+      <div class="cmp-cell label">見どころ</div>
+      <div class="cmp-cell moto">陶芸ワークショップ、織物工房が近隣に</div>
+      <div class="cmp-cell bukko">寺院モーニングウォーク、カフェ文化の街</div>
+    </div>
+  </div>
+</div>
+
+<!-- Map -->
+<div class="sec" style="border-bottom:1px solid var(--light-line);">
+  <div class="sh-eyebrow"><span>場所を探す</span></div>
+  <div class="sh-title" style="margin-bottom:28px;">両 <em>宿泊施設</em></div>
+  <div class="row g32">
+    <div class="map-ph f2" style="height:300px;">
+      <div class="map-streets"></div>
+      <div class="map-pin moto" style="top:48%;left:37%;">
+        <div class="map-pin-dot"></div>
+        <div class="map-pin-stem"></div>
+      </div>
+      <div class="map-pin bukko" style="top:40%;left:56%;">
+        <div class="map-pin-dot"></div>
+        <div class="map-pin-stem"></div>
+      </div>
+      <div class="map-label">下京区・中京区　京都</div>
+    </div>
+    <div class="col f1 g12">
+      <div class="addr-card moto">
+        <div class="addr-hotel-name moto">元悪王子</div>
+        <div class="addr-kanji">元悪王子 · 下京区</div>
+        <div class="addr-text">〒 600-8XXX<br>京都市下京区<br>仏光寺通、[番地]</div>
+        <div class="row g8" style="margin-top:12px;">
+          <div class="btn btn-ghost" style="padding:6px 14px;font-size:9px;">道順を見る</div>
+          <div class="btn btn-primary-earth" style="padding:6px 14px;font-size:9px;">このホテルを予約</div>
+        </div>
+      </div>
+      <div class="addr-card bukko">
+        <div class="addr-hotel-name bukko">仏光寺</div>
+        <div class="addr-kanji">仏光寺 · 中京区</div>
+        <div class="addr-text">〒 604-8XXX<br>京都市中京区<br>仏光寺通、[番地]</div>
+        <div class="row g8" style="margin-top:12px;">
+          <div class="btn btn-ghost" style="padding:6px 14px;font-size:9px;">道順を見る</div>
+          <div class="btn btn-primary" style="padding:6px 14px;font-size:9px;">このホテルを予約</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="wf-footer">
+  <div><div class="ft-logo">solmu kyoto</div><div class="ft-tagline">京都の中心に佇む二つの宿。</div></div>
+  <div><div class="ft-col-title">宿泊施設</div><div class="ft-links"><div class="ft-link">元悪王子</div><div class="ft-link">仏光寺</div></div></div>
+  <div><div class="ft-col-title">ナビゲート</div><div class="ft-links"><div class="ft-link">ホーム</div><div class="ft-link">コンセプト</div><div class="ft-link">エリア情報</div></div></div>
+  <div><div class="ft-col-title">お問い合わせ</div><div class="ft-links"><div class="ft-link"><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="3c55525a537c4f5350514911574553485312564c">[email&#160;protected]</a></div></div></div>
+  <div class="ft-bottom"><div class="ft-copy">© 2024 solmu kyoto.</div><div class="ft-socials"><div class="fsoc">IG</div><div class="fsoc">FB</div></div></div>
+</div>
+</div></div></div>
+
+
+<!-- ═══════════════════════════════════
+  04 · HOTEL MICROSITE — MOTO-AKUOJI
+═══════════════════════════════════ -->
+
+<div class="page" id="p3">
+<div style="padding:24px 40px 60px;">
+<div class="page-meta"><div class="pmeta-num">04</div><div class="pmeta-name">ホテルページ — 元悪王子</div><div class="pmeta-route">/hotels/moto-akuoji</div><div class="pmeta-line"></div></div>
+<div class="wf-frame">
+<div class="browser-bar"><div class="browser-dots"><span></span><span></span><span></span></div><div class="browser-url">solmu-kyoto.jp/hotels/moto-akuoji</div></div>
+
+<!-- Moto Nav — earth-toned -->
+<div class="wf-nav moto-nav">
+  <div class="nav-brand">solmu kyoto</div>
+  <div class="nav-link">ホーム</div><div class="nav-link">コンセプト</div>
+  <div class="nav-link on">ホテル ▾</div>
+  <div class="nav-link">エリア情報</div><div class="nav-link">ニュース</div><div class="nav-link">よくある質問</div><div class="nav-link">アクセス</div>
+  <div class="nav-sp"></div>
+  <!-- Moto-specific Book Now -->
+  <div class="nav-book" style="background:var(--earth);">元悪王子を予約</div>
+  <div class="nav-lang">JP | EN</div>
+</div>
+<!-- 施設 indicator strip -->
+<div style="height:3px;background:linear-gradient(90deg,var(--earth-lt),var(--earth),var(--earth-dk));"></div>
+<!-- Secondary nav -->
+<div class="sec-nav" style="background:var(--shironeri);border-bottom:1px solid var(--earth-lt);">
+  <div class="sec-nav-item on" style="background:var(--charcoal);">概要</div>
+  <div class="sec-nav-item">客室</div>
+  <div class="sec-nav-item">施設・サービス</div>
+  <div class="sec-nav-item">体験プログラム</div>
+</div>
+
+<!-- Hero -->
+<div class="img-ph hero-moto" style="height:580px;position:relative;">
+  <div class="hero-content">
+    <div class="prop-badge moto" style="background:rgba(237,232,223,0.85);margin-bottom:8px;">motoakuoji</div>
+    <div class="hero-title" style="font-size:56px;">元悪王子</div>
+    <div style="font-size:16px;color:rgba(237,232,223,0.45);letter-spacing:0.1em;margin-top:-4px;font-family:'Noto Sans JP',sans-serif;">元悪王子</div>
+    <div class="hero-sub" style="margin-top:12px;">温かな大地。町家建築の美学。陶芸家、織り職人、そして毎朝顔なじみの豆腐屋が暮らす、人情の街。</div>
+    <div class="hero-btns" style="margin-top:8px;">
+      <div class="btn btn-primary-earth">ご予約はこちら</div>
+      <div class="btn btn-outline-light">探索する ↓</div>
+    </div>
+  </div>
+  <div class="scroll-ind"><div class="scroll-line"></div><div class="scroll-txt">スクロール</div></div>
+  <label>ヒーロー画像 / 動画</label>
+</div>
+
+<!-- Overview + features -->
+<div class="sec sec-moto" style="border-bottom:1px solid var(--earth-lt);">
+  <div class="row g48">
+    <div class="col f2 g24">
+      <div>
+        <div class="sh-eyebrow"><span>ホテル概要</span></div>
+        <div class="sh-title"><em>町家の心</em>に宿る</div>
+      </div>
+      <div class="body-copy">
+        <p>元悪王子は下京区の静かな一角に位置し、京都の日常のリズムが今も息づく路地に佇んでいます。この街は自らを主張しない——角の店から漂う炒りごまの香りや、三軒先から聞こえてくる機織り機の音とともに、ゆっくりと自己紹介をしてくる。</p>
+        <p>ホテルの内装は伝統的な町家の温もりを参照しています。天然木の木目、陶器の表面、和紙のパネル、そして周辺の路地から仕入れたテキスタイル。</p>
+      </div>
+      <div class="divider-rule"></div>
+      <div class="row g12" style="flex-wrap:wrap;">
+        <div style="padding:10px 16px;background:rgba(184,156,132,0.1);border:1px solid var(--earth-lt);border-radius:4px;font-size:11px;color:var(--earth-dk);letter-spacing:0.08em;">天然素材</div>
+        <div style="padding:10px 16px;background:rgba(184,156,132,0.1);border:1px solid var(--earth-lt);border-radius:4px;font-size:11px;color:var(--earth-dk);letter-spacing:0.08em;">間接照明</div>
+        <div style="padding:10px 16px;background:rgba(184,156,132,0.1);border:1px solid var(--earth-lt);border-radius:4px;font-size:11px;color:var(--earth-dk);letter-spacing:0.08em;">職人の工芸品</div>
+        <div style="padding:10px 16px;background:rgba(184,156,132,0.1);border:1px solid var(--earth-lt);border-radius:4px;font-size:11px;color:var(--earth-dk);letter-spacing:0.08em;">季節の朝食</div>
+      </div>
+    </div>
+    <div class="col f1 g16">
+      <div class="img-ph moto" style="height:280px;border-radius:6px;"><label>ロビー / 内観</label></div>
+      <div style="padding:20px;background:#fff;border:1px solid var(--earth-lt);border-radius:6px;">
+        <div style="font-size:10px;letter-spacing:0.18em;text-transform:uppercase;color:var(--mid);margin-bottom:16px;">一目でわかる</div>
+        <div class="feat-row">
+          <div class="feat-icon moto">◎</div>
+          <div class="feat-content"><div class="feat-title">チェックイン / チェックアウト</div><div class="feat-desc">15:00 / 11:00</div></div>
+        </div>
+        <div class="feat-row">
+          <div class="feat-icon moto">⊞</div>
+          <div class="feat-content"><div class="feat-title">客室タイプs</div><div class="feat-desc">スペリオール・デラックス・スイート</div></div>
+        </div>
+        <div class="feat-row">
+          <div class="feat-icon moto">✦</div>
+          <div class="feat-content"><div class="feat-title">ロケーション</div><div class="feat-desc">下京区, Kyoto</div></div>
+        </div>
+        <div class="feat-row" style="border-bottom:none;">
+          <div class="feat-icon moto">◌</div>
+          <div class="feat-content"><div class="feat-title">対応言語</div><div class="feat-desc">日本語・英語・中国語</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Room preview -->
+<div class="sec" style="border-bottom:1px solid var(--earth-lt);">
+  <div class="row" style="align-items:flex-end;margin-bottom:32px;">
+    <div class="col f1">
+      <div class="sh-eyebrow"><span>お部屋</span></div>
+      <div class="sh-title" style="margin-bottom:0;">客室 &amp; <em>スイート</em></div>
+    </div>
+    <div class="btn btn-ghost" onclick="go(12,document.querySelectorAll('.tab-btn')[12])" style="cursor:pointer;">全客室を見る →</div>
+  </div>
+  <div class="row g20">
+    <div class="room-card f1">
+      <div class="img-ph moto" style="height:200px;"><label>客室画像</label></div>
+      <div class="room-card-body">
+        <div class="card-eyebrow">スペリオールルーム</div>
+        <div class="card-title">町家スペリオール</div>
+        <div class="card-body">温かなアーストーン、天然木、そして庭の眺め。元悪王子体験への入口となる客室。</div>
+        <div class="card-price">¥ — — ,000 <span>/ 泊</span></div>
+        <div class="btn btn-primary-earth" style="align-self:flex-start;padding:8px 18px;font-size:9px;margin-top:4px;">この客室を予約</div>
+      </div>
+    </div>
+    <div class="room-card f1">
+      <div class="img-ph moto" style="height:200px;"><label>客室画像</label></div>
+      <div class="room-card-body">
+        <div class="card-eyebrow">デラックスルーム</div>
+        <div class="card-title">アース デラックス</div>
+        <div class="card-body">隣の織物工房から仕入れた手織りテキスタイルに囲まれた、広々としたリビングスペース。</div>
+        <div class="card-price">¥ — — ,000 <span>/ 泊</span></div>
+        <div class="btn btn-primary-earth" style="align-self:flex-start;padding:8px 18px;font-size:9px;margin-top:4px;">この客室を予約</div>
+      </div>
+    </div>
+    <div class="room-card f1">
+      <div class="img-ph moto" style="height:200px;"><label>客室画像</label></div>
+      <div class="room-card-body">
+        <div class="card-eyebrow">スイート</div>
+        <div class="card-title">町家スイート</div>
+        <div class="card-body">個室の座敷と厳選された職人の工芸品が揃う、町家インスパイアの本格的な客室。</div>
+        <div class="card-price">¥ — — — ,000 <span>/ 泊</span></div>
+        <div class="btn btn-primary-earth" style="align-self:flex-start;padding:8px 18px;font-size:9px;margin-top:4px;">この客室を予約</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Features — Moto-Akuoji -->
+<div class="sec sec-moto" style="border-bottom:1px solid var(--earth-lt);">
+  <div class="sh-eyebrow" style="margin-bottom:12px;"><span>施設・サービス</span></div>
+  <div class="sh-title" style="margin-bottom:28px;">ホテルの特徴s<br>&amp; <em>施設案内</em></div>
+
+  <!-- Bento image gallery -->
+  <div class="row g8" style="height:380px;margin-bottom:24px;">
+    <div class="img-ph moto f2" style="height:100%;border-radius:6px 0 0 6px;"><label>施設画像 — ラウンジ</label></div>
+    <div class="col f1 g8">
+      <div class="img-ph moto f1" style="border-radius:0 6px 0 0;"><label>施設画像 — 朝食</label></div>
+      <div class="img-ph moto f1" style="border-radius:0 0 6px 0;"><label>施設画像 — 浴室</label></div>
+    </div>
+  </div>
+
+  <!-- Feature list -->
+  <div style="border:1px solid var(--earth-lt);border-radius:8px;overflow:hidden;background:#fff;">
+    <div class="feat-row" style="padding:16px 20px;">
+      <div class="feat-icon moto">⊙</div>
+      <div class="feat-content">
+        <div class="feat-title">季節の朝食</div>
+        <div class="feat-desc">開業以来お付き合いの続く錦市場の生産者から仕入れた食材で毎朝丁寧に仕立て、1階ダイニングにて7:30よりご提供しています。</div>
+      </div>
+      <div style="font-size:12px;color:var(--mid);margin-left:16px;flex-shrink:0;">›</div>
+    </div>
+    <div class="feat-row" style="padding:16px 20px;">
+      <div class="feat-icon moto">⊠</div>
+      <div class="feat-content">
+        <div class="feat-title">共有ラウンジ</div>
+        <div class="feat-desc">町家の座敷を模した低い家具のラウンジ。終日ご利用可能。自然光、手編みのラグ、地元の窯元の酒器。</div>
+      </div>
+      <div style="font-size:12px;color:var(--mid);margin-left:16px;flex-shrink:0;">›</div>
+    </div>
+    <div class="feat-row" style="padding:16px 20px;">
+      <div class="feat-icon moto">◎</div>
+      <div class="feat-content">
+        <div class="feat-title">自転車レンタル</div>
+        <div class="feat-desc">毎朝シティバイクをご用意。ホテルスタッフが厳選した印刷済みルートカード付き。下京の朝市ルートと、鴨川沿いの散策路の2コースをご用意しています。</div>
+      </div>
+      <div style="font-size:12px;color:var(--mid);margin-left:16px;flex-shrink:0;">›</div>
+    </div>
+    <div class="feat-row" style="padding:16px 20px;border-bottom:none;">
+      <div class="feat-icon moto">✦</div>
+      <div class="feat-content">
+        <div class="feat-title">館内浴衣・ウェア</div>
+        <div class="feat-desc">伝統的な京都の藍染め技法で染めた軽量浴衣と室内スリッパを全客室にご用意。チェックアウト時にフロントにてご購入いただけます。</div>
+      </div>
+      <div style="font-size:12px;color:var(--mid);margin-left:16px;flex-shrink:0;">›</div>
+    </div>
+  </div>
+</div>
+
+<!-- Experiences — Moto-Akuoji -->
+<div class="sec" style="border-bottom:1px solid var(--earth-lt);">
+  <div class="row" style="align-items:flex-end;margin-bottom:32px;">
+    <div class="col f1">
+      <div class="sh-eyebrow"><span>体験プログラム</span></div>
+      <div class="sh-title" style="margin-bottom:4px;">厳選された <em>体験プログラム</em></div>
+      <div class="sh-body">下京区に住み続けたくなる、人々と場所への紹介。</div>
+    </div>
+    <div class="btn btn-ghost">すべての体験を見る →</div>
+  </div>
+
+  <!-- Carousel -->
+  <div class="row g8" style="align-items:stretch;">
+    <div style="display:flex;align-items:center;color:var(--light-line);font-size:24px;padding:0 8px;cursor:default;">‹</div>
+
+    <!-- Card 1 -->
+    <div class="exp-card f1">
+      <div class="img-ph moto" style="height:180px;border-radius:6px 6px 0 0;"><label>陶芸ワークショップ</label></div>
+      <div style="padding:16px 18px 20px;display:flex;flex-direction:column;gap:10px;">
+        <div class="exp-tag moto" style="align-self:flex-start;">元悪王子</div>
+        <div class="card-title" style="font-size:17px;">陶芸ワークショップ</div>
+        <div class="card-body">ホテルから東へ2ブロック、下京の窯元での2時間の朝のセッション。この街で40年間土を捏ねてきた陶芸家と共に。</div>
+        <div class="btn btn-ghost" style="align-self:flex-start;padding:6px 14px;font-size:9px;margin-top:4px;">詳しく見る →</div>
+      </div>
+    </div>
+
+    <!-- Card 2 -->
+    <div class="exp-card f1">
+      <div class="img-ph both" style="height:180px;border-radius:6px 6px 0 0;"><label>自転車レンタル</label></div>
+      <div style="padding:16px 18px 20px;display:flex;flex-direction:column;gap:10px;">
+        <div class="exp-tag both" style="align-self:flex-start;">両ホテル</div>
+        <div class="card-title" style="font-size:17px;">厳選自転車ルート</div>
+        <div class="card-body">毎朝2枚の新しいルートカードをフロントに用意。下京の市場路地を巡るコースと、鴨川沿いを北へ向かうコースです。</div>
+        <div class="btn btn-ghost" style="align-self:flex-start;padding:6px 14px;font-size:9px;margin-top:4px;">詳しく見る →</div>
+      </div>
+    </div>
+
+    <!-- Card 3 -->
+    <div class="exp-card f1">
+      <div class="img-ph moto" style="height:180px;border-radius:6px 6px 0 0;"><label>織物工房訪問</label></div>
+      <div style="padding:16px 18px 20px;display:flex;flex-direction:column;gap:10px;">
+        <div class="exp-tag moto" style="align-self:flex-start;">元悪王子</div>
+        <div class="card-title" style="font-size:17px;">織物工房訪問</div>
+        <div class="card-body">ご希望の方には、路地を3軒先の西陣織の工房へのご案内もできます——ツアーではなく、プライベートな紹介として。</div>
+        <div class="btn btn-ghost" style="align-self:flex-start;padding:6px 14px;font-size:9px;margin-top:4px;">詳しく見る →</div>
+      </div>
+    </div>
+
+    <div style="display:flex;align-items:center;color:var(--light-line);font-size:24px;padding:0 8px;cursor:default;">›</div>
+  </div>
+</div>
+
+<div class="wf-footer">
+  <div><div class="ft-logo">solmu kyoto</div><div class="ft-tagline">元悪王子 · 下京区、京都</div></div>
+  <div><div class="ft-col-title">この施設</div><div class="ft-links"><div class="ft-link">概要</div><div class="ft-link">客室・スイート</div><div class="ft-link">施設・サービス</div><div class="ft-link">体験プログラム</div></div></div>
+  <div><div class="ft-col-title">solmuの他の施設</div><div class="ft-links"><div class="ft-link">仏光寺</div><div class="ft-link">コンセプト</div><div class="ft-link">エリア情報</div></div></div>
+  <div><div class="ft-col-title">ご予約</div><div class="ft-links"><div class="ft-link">元悪王子を予約</div><div class="ft-link"><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="cca5a2aaa38cbfa3a0a1b9e1a7b5a3b8a3e2a6bc">[email&#160;protected]</a></div></div></div>
+  <div class="ft-bottom"><div class="ft-copy">© 2024 solmu kyoto · 元悪王子、下京区、京都。</div><div class="ft-socials"><div class="fsoc">IG</div><div class="fsoc">FB</div></div></div>
+</div>
+</div></div></div>
+
+
+<!-- ═══════════════════════════════════
+  05 · HOTEL MICROSITE — BUKKOJI
+═══════════════════════════════════ -->
+
+<div class="page" id="p4">
+<div style="padding:24px 40px 60px;">
+<div class="page-meta"><div class="pmeta-num">05</div><div class="pmeta-name">ホテルページ — 仏光寺</div><div class="pmeta-route">/hotels/bukkoji</div><div class="pmeta-line"></div></div>
+<div class="wf-frame">
+<div class="browser-bar"><div class="browser-dots"><span></span><span></span><span></span></div><div class="browser-url">solmu-kyoto.jp/hotels/bukkoji</div></div>
+
+<!-- Bukko Nav -->
+<div class="wf-nav bukko-nav">
+  <div class="nav-brand">solmu kyoto</div>
+  <div class="nav-link">ホーム</div><div class="nav-link">コンセプト</div>
+  <div class="nav-link on">ホテル ▾</div>
+  <div class="nav-link">エリア情報</div><div class="nav-link">ニュース</div><div class="nav-link">よくある質問</div><div class="nav-link">アクセス</div>
+  <div class="nav-sp"></div>
+  <div class="nav-book">仏光寺を予約</div>
+  <div class="nav-lang">JP | EN</div>
+</div>
+<!-- 施設 indicator strip -->
+<div style="height:3px;background:linear-gradient(90deg,var(--chigusa-lt),var(--chigusa),var(--chigusa-dk));"></div>
+<!-- Secondary nav -->
+<div class="sec-nav" style="background:rgba(235,242,238,0.8);border-bottom:1px solid var(--chigusa-lt);">
+  <div class="sec-nav-item on" style="background:var(--charcoal);">概要</div>
+  <div class="sec-nav-item">客室</div>
+  <div class="sec-nav-item">施設・サービス</div>
+  <div class="sec-nav-item">体験プログラム</div>
+</div>
+
+<!-- Hero -->
+<div class="img-ph hero-bukko" style="height:580px;position:relative;">
+  <div class="hero-content">
+    <div class="prop-badge bukko" style="background:rgba(235,242,238,0.85);margin-bottom:8px;">bukkoji</div>
+    <div class="hero-title" style="font-size:56px;">仏光寺</div>
+    <div style="font-size:16px;color:rgba(237,232,223,0.45);letter-spacing:0.1em;margin-top:-4px;font-family:'Noto Sans JP',sans-serif;">仏光寺</div>
+    <div class="hero-sub" style="margin-top:12px;">鼠青色と静謐。古寺の鐘が夕暮れに鳴り響き、街が目覚める前から個人経営のカフェが開く路地。</div>
+    <div class="hero-btns" style="margin-top:8px;">
+      <div class="btn btn-primary">ご予約はこちら</div>
+      <div class="btn btn-outline-light">探索する ↓</div>
+    </div>
+  </div>
+  <div class="scroll-ind"><div class="scroll-line"></div><div class="scroll-txt">スクロール</div></div>
+  <label>ヒーロー画像 / 動画</label>
+</div>
+
+<!-- Overview -->
+<div class="sec sec-bukko" style="border-bottom:1px solid var(--chigusa-lt);">
+  <div class="row g48">
+    <div class="col f2 g24">
+      <div>
+        <div class="sh-eyebrow chigusa"><span>ホテル概要</span></div>
+        <div class="sh-title">静かな存在感、<br><em class="chigusa">この街に宿る。</em></div>
+      </div>
+      <div class="body-copy">
+        <p>仏光寺は中京区の路地に佇み、今も仏光寺が一日のリズムを刻んでいます。夜明けには寺の鐘の音。午前中には東隣の自家焙煎珈琲の香り。昼頃には、この場所を知る者たちの街に。</p>
+        <p>ホテルのパレットは千草色から着想を得ています——古来の日本の染色伝統が生んだ柔らかな葦の緑。陶器のタイル、染めのテキスタイル、光を反射するのではなく吸い込むような表面へと展開されています。</p>
+      </div>
+      <div class="divider-rule chigusa"></div>
+      <div class="row g12" style="flex-wrap:wrap;">
+        <div style="padding:10px 16px;background:rgba(122,158,142,0.1);border:1px solid var(--chigusa-lt);border-radius:4px;font-size:11px;color:var(--chigusa-dk);letter-spacing:0.08em;">千草カラーパレット</div>
+        <div style="padding:10px 16px;background:rgba(122,158,142,0.1);border:1px solid var(--chigusa-lt);border-radius:4px;font-size:11px;color:var(--chigusa-dk);letter-spacing:0.08em;">寺院へのアクセス</div>
+        <div style="padding:10px 16px;background:rgba(122,158,142,0.1);border:1px solid var(--chigusa-lt);border-radius:4px;font-size:11px;color:var(--chigusa-dk);letter-spacing:0.08em;">和紙パネル</div>
+        <div style="padding:10px 16px;background:rgba(122,158,142,0.1);border:1px solid var(--chigusa-lt);border-radius:4px;font-size:11px;color:var(--chigusa-dk);letter-spacing:0.08em;">季節の朝食</div>
+      </div>
+    </div>
+    <div class="col f1 g16">
+      <div class="img-ph bukko" style="height:280px;border-radius:6px;"><label>ロビー / 内観</label></div>
+      <div style="padding:20px;background:#fff;border:1px solid var(--chigusa-lt);border-radius:6px;">
+        <div style="font-size:10px;letter-spacing:0.18em;text-transform:uppercase;color:var(--mid);margin-bottom:16px;">一目でわかる</div>
+        <div class="feat-row">
+          <div class="feat-icon bukko">◎</div>
+          <div class="feat-content"><div class="feat-title">チェックイン / チェックアウト</div><div class="feat-desc">15:00 / 11:00</div></div>
+        </div>
+        <div class="feat-row">
+          <div class="feat-icon bukko">⊞</div>
+          <div class="feat-content"><div class="feat-title">客室タイプs</div><div class="feat-desc">スペリオール・デラックス・スイート</div></div>
+        </div>
+        <div class="feat-row">
+          <div class="feat-icon bukko">✦</div>
+          <div class="feat-content"><div class="feat-title">ロケーション</div><div class="feat-desc">中京区, Kyoto</div></div>
+        </div>
+        <div class="feat-row" style="border-bottom:none;">
+          <div class="feat-icon bukko">◌</div>
+          <div class="feat-content"><div class="feat-title">対応言語</div><div class="feat-desc">日本語・英語・中国語</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Room preview -->
+<div class="sec" style="border-bottom:1px solid var(--chigusa-lt);">
+  <div class="row" style="align-items:flex-end;margin-bottom:32px;">
+    <div class="col f1">
+      <div class="sh-eyebrow chigusa"><span>お部屋</span></div>
+      <div class="sh-title" style="margin-bottom:0;">客室 &amp; <em class="chigusa">スイート</em></div>
+    </div>
+    <div class="btn btn-ghost" onclick="go(12,document.querySelectorAll('.tab-btn')[12])" style="cursor:pointer;">全客室を見る →</div>
+  </div>
+  <div class="row g20">
+    <div class="room-card f1">
+      <div class="img-ph bukko" style="height:200px;"><label>客室画像</label></div>
+      <div class="room-card-body">
+        <div class="card-eyebrow">スペリオールルーム</div>
+        <div class="card-title">千草スペリオール</div>
+        <div class="card-body">セージトーンの壁と手染めのテキスタイルアクセント。仏光寺の世界への入口となる客室。</div>
+        <div class="card-price">¥ — — ,000 <span>/ 泊</span></div>
+        <div class="btn btn-primary" style="align-self:flex-start;padding:8px 18px;font-size:9px;margin-top:4px;">この客室を予約</div>
+      </div>
+    </div>
+    <div class="room-card f1">
+      <div class="img-ph bukko" style="height:200px;"><label>客室画像</label></div>
+      <div class="room-card-body">
+        <div class="card-eyebrow">デラックスルーム</div>
+        <div class="card-title">セージ デラックス</div>
+        <div class="card-body">和紙の天井パネルと仏光寺の屋根を望む眺め。ゆとりある空間。</div>
+        <div class="card-price">¥ — — ,000 <span>/ 泊</span></div>
+        <div class="btn btn-primary" style="align-self:flex-start;padding:8px 18px;font-size:9px;margin-top:4px;">この客室を予約</div>
+      </div>
+    </div>
+    <div class="room-card f1">
+      <div class="img-ph bukko" style="height:200px;"><label>客室画像</label></div>
+      <div class="room-card-body">
+        <div class="card-eyebrow">スイート</div>
+        <div class="card-title">千草スイート</div>
+        <div class="card-body">窯焼きの陶器の意匠と中庭を望むプライベートラウンジを備えた、本格スイート。</div>
+        <div class="card-price">¥ — — — ,000 <span>/ 泊</span></div>
+        <div class="btn btn-primary" style="align-self:flex-start;padding:8px 18px;font-size:9px;margin-top:4px;">この客室を予約</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Features — Bukkoji -->
+<div class="sec sec-bukko" style="border-bottom:1px solid var(--chigusa-lt);">
+  <div class="sh-eyebrow chigusa" style="margin-bottom:12px;"><span>施設・サービス</span></div>
+  <div class="sh-title" style="margin-bottom:28px;">ホテルの特徴s<br>&amp; <em class="chigusa">施設案内</em></div>
+
+  <!-- Bento image gallery -->
+  <div class="row g8" style="height:380px;margin-bottom:24px;">
+    <div class="img-ph bukko f2" style="height:100%;border-radius:6px 0 0 6px;"><label>施設画像 — ラウンジ</label></div>
+    <div class="col f1 g8">
+      <div class="img-ph bukko f1" style="border-radius:0 6px 0 0;"><label>施設画像 — 朝食</label></div>
+      <div class="img-ph bukko f1" style="border-radius:0 0 6px 0;"><label>施設画像 — 中庭</label></div>
+    </div>
+  </div>
+
+  <!-- Feature list -->
+  <div style="border:1px solid var(--chigusa-lt);border-radius:8px;overflow:hidden;background:#fff;">
+    <div class="feat-row" style="padding:16px 20px;">
+      <div class="feat-icon bukko">⊙</div>
+      <div class="feat-content">
+        <div class="feat-title">季節の朝食</div>
+        <div class="feat-desc">1階ダイニングにて7:30より。毎朝のメニューは季節に合わせて変わり、開業以来お付き合いの続く錦市場の生産者から食材を仕入れています。</div>
+      </div>
+      <div style="font-size:12px;color:var(--mid);margin-left:16px;flex-shrink:0;">›</div>
+    </div>
+    <div class="feat-row" style="padding:16px 20px;">
+      <div class="feat-icon bukko">⊠</div>
+      <div class="feat-content">
+        <div class="feat-title">中庭</div>
+        <div class="feat-desc">建物の中心に佇む小さな石庭。季節の緑が彩り、夜明けからゲストに開放されます。街が目覚める前の、静かなひととき。</div>
+      </div>
+      <div style="font-size:12px;color:var(--mid);margin-left:16px;flex-shrink:0;">›</div>
+    </div>
+    <div class="feat-row" style="padding:16px 20px;">
+      <div class="feat-icon bukko">◎</div>
+      <div class="feat-content">
+        <div class="feat-title">自転車レンタル</div>
+        <div class="feat-desc">毎朝シティバイクをご用意。仏光寺の参道、錦市場、川沿いの道など、スタッフおすすめのルートカード付き。スタッフ自身も通うコーヒースポット立ち寄りルートもあります。</div>
+      </div>
+      <div style="font-size:12px;color:var(--mid);margin-left:16px;flex-shrink:0;">›</div>
+    </div>
+    <div class="feat-row" style="padding:16px 20px;border-bottom:none;">
+      <div class="feat-icon bukko">✦</div>
+      <div class="feat-content">
+        <div class="feat-title">館内浴衣・ウェア</div>
+        <div class="feat-desc">京都の伝統的な藍染め技法で染めた千草色の浴衣。全客室にご用意。ご購入はフロントにて承ります。</div>
+      </div>
+      <div style="font-size:12px;color:var(--mid);margin-left:16px;flex-shrink:0;">›</div>
+    </div>
+  </div>
+</div>
+
+<!-- Experiences — Bukkoji -->
+<div class="sec" style="border-bottom:1px solid var(--chigusa-lt);">
+  <div class="row" style="align-items:flex-end;margin-bottom:32px;">
+    <div class="col f1">
+      <div class="sh-eyebrow chigusa"><span>体験プログラム</span></div>
+      <div class="sh-title" style="margin-bottom:4px;">厳選された <em class="chigusa">体験プログラム</em></div>
+      <div class="sh-body">仏光寺の路地を歩き続けたくなる、人々と場所への紹介。</div>
+    </div>
+    <div class="btn btn-ghost">すべての体験を見る →</div>
+  </div>
+
+  <!-- Carousel -->
+  <div class="row g8" style="align-items:stretch;">
+    <div style="display:flex;align-items:center;color:var(--light-line);font-size:24px;padding:0 8px;cursor:default;">‹</div>
+
+    <!-- Card 1 -->
+    <div class="exp-card f1">
+      <div class="img-ph bukko" style="height:180px;border-radius:6px 6px 0 0;"><label>寺院の朝散歩</label></div>
+      <div style="padding:16px 18px 20px;display:flex;flex-direction:column;gap:10px;">
+        <div class="exp-tag bukko" style="align-self:flex-start;">仏光寺</div>
+        <div class="card-title" style="font-size:17px;">寺院の朝散歩</div>
+        <div class="card-body">観光客が来る前、夜明けの鐘の音、6時に開く豆腐屋——仏光寺界隈を案内する40分間のモーニングウォーク。</div>
+        <div class="btn btn-ghost" style="align-self:flex-start;padding:6px 14px;font-size:9px;margin-top:4px;">詳しく見る →</div>
+      </div>
+    </div>
+
+    <!-- Card 2 -->
+    <div class="exp-card f1">
+      <div class="img-ph both" style="height:180px;border-radius:6px 6px 0 0;"><label>自転車レンタル</label></div>
+      <div style="padding:16px 18px 20px;display:flex;flex-direction:column;gap:10px;">
+        <div class="exp-tag both" style="align-self:flex-start;">両ホテル</div>
+        <div class="card-title" style="font-size:17px;">厳選自転車ルート</div>
+        <div class="card-body">毎朝2枚の新しいルートカードをフロントに用意。中京ルートは3つの個人経営カフェを経由し、錦のアーケードで締めくくります。</div>
+        <div class="btn btn-ghost" style="align-self:flex-start;padding:6px 14px;font-size:9px;margin-top:4px;">詳しく見る →</div>
+      </div>
+    </div>
+
+    <!-- Card 3 -->
+    <div class="exp-card f1">
+      <div class="img-ph bukko" style="height:180px;border-radius:6px 6px 0 0;"><label>藍染めワークショップ</label></div>
+      <div style="padding:16px 18px 20px;display:flex;flex-direction:column;gap:10px;">
+        <div class="exp-tag bukko" style="align-self:flex-start;">仏光寺</div>
+        <div class="card-title" style="font-size:17px;">藍染めワークショップ</div>
+        <div class="card-body">当ホテルの浴衣を染める中京の染物工房との2時間セッション。手染めの手ぬぐいをお土産にお持ち帰りいただけます。</div>
+        <div class="btn btn-ghost" style="align-self:flex-start;padding:6px 14px;font-size:9px;margin-top:4px;">詳しく見る →</div>
+      </div>
+    </div>
+
+    <div style="display:flex;align-items:center;color:var(--light-line);font-size:24px;padding:0 8px;cursor:default;">›</div>
+  </div>
+</div>
+
+<div class="wf-footer">
+  <div><div class="ft-logo">solmu kyoto</div><div class="ft-tagline">仏光寺 · 中京区、京都</div></div>
+  <div><div class="ft-col-title">この施設</div><div class="ft-links"><div class="ft-link">概要</div><div class="ft-link">客室・スイート</div><div class="ft-link">施設・サービス</div><div class="ft-link">体験プログラム</div></div></div>
+  <div><div class="ft-col-title">solmuの他の施設</div><div class="ft-links"><div class="ft-link">元悪王子</div><div class="ft-link">コンセプト</div><div class="ft-link">エリア情報</div></div></div>
+  <div><div class="ft-col-title">ご予約</div><div class="ft-links"><div class="ft-link">仏光寺を予約</div><div class="ft-link"><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="9ef7f0f8f1deedf1f2f3ebb3f5e7f1eaf1b0f4ee">[email&#160;protected]</a></div></div></div>
+  <div class="ft-bottom"><div class="ft-copy">© 2024 solmu kyoto · 仏光寺、中京区、京都。</div><div class="ft-socials"><div class="fsoc">IG</div><div class="fsoc">FB</div></div></div>
+</div>
+</div></div></div>
+
+
+
+<!-- ═══════════════════════════════════
+  06 · ROOM DETAIL
+═══════════════════════════════════ -->
+
+<div class="page" id="p5">
+<div style="padding:24px 40px 60px;">
+<div class="page-meta"><div class="pmeta-num">06</div><div class="pmeta-name">客室一覧</div><div class="pmeta-route">/rooms</div><div class="pmeta-line"></div></div>
+<div class="wf-frame">
+<div class="browser-bar"><div class="browser-dots"><span></span><span></span><span></span></div><div class="browser-url">solmu-kyoto.jp/rooms</div></div>
+<div class="wf-nav">
+  <div class="nav-brand">solmu kyoto</div>
+  <div class="nav-link">ホーム</div><div class="nav-link">コンセプト</div><div class="nav-link on">ホテル ▾</div>
+  <div class="nav-link">エリア情報</div><div class="nav-link">ニュース</div>
+  <div class="nav-link">よくある質問</div><div class="nav-link">アクセス</div>
+  <div class="nav-sp"></div><div class="nav-book">ご予約</div><div class="nav-lang">JP | EN</div>
+</div>
+
+<!-- Hero -->
+<div class="img-ph dark hero-ph" style="height:280px;position:relative;">
+  <div class="hero-content" style="bottom:36px;">
+    <div class="hero-eyebrow">客室 &amp; スイート</div>
+    <div class="hero-title" style="font-size:36px;">静けさの中で<br><em>眠る場所。</em></div>
+  </div>
+  <label>ヒーロー画像</label>
+</div>
+
+<!-- Filter bar -->
+<div class="fbar">
+  <div class="ftag on">すべて</div>
+  <div class="ftag">元悪王子</div>
+  <div class="ftag">仏光寺</div>
+  <div class="ftag">スイート</div>
+</div>
+
+<!-- Rooms grid -->
+<div class="sec" style="border-bottom:1px solid var(--light-line);">
+  <div class="sh-eyebrow" style="margin-bottom:6px;"><span>元悪王子</span></div>
+  <div class="sh-title" style="font-size:28px;margin-bottom:28px;">元悪王子の客室</div>
+  <div class="row g20" style="flex-wrap:wrap;">
+
+    <!-- Room 1 -->
+    <div class="room-card f1" style="min-width:240px;max-width:calc(33% - 14px);">
+      <div class="img-ph moto" style="height:200px;border-radius:8px 8px 0 0;"><label>客室画像</label></div>
+      <div class="room-card-body" style="padding:20px;">
+        <div class="card-eyebrow">スペリオールルーム</div>
+        <div class="card-title" style="font-size:20px;margin:6px 0;">町家スペリオール</div>
+        <div class="card-body">温かなアーストーン、天然木、そして庭の眺め。元悪王子体験への入口となる客室。</div>
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-top:14px;">
+          <div style="font-family:'Shippori Mincho',serif;font-size:16px;">¥ —— ,000<span style="font-size:11px;color:var(--mid);font-family:'Noto Sans JP',sans-serif;"> /泊</span></div>
+          <div style="font-size:10px;color:var(--mid);">最大2名</div>
+        </div>
+        <div style="display:flex;gap:10px;margin-top:14px;">
+          <div class="btn btn-primary" style="flex:1;text-align:center;padding:8px 0;font-size:10px;">この客室を予約</div>
+          <div class="btn btn-ghost" style="padding:8px 14px;font-size:10px;">詳細を見る →</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Room 2 -->
+    <div class="room-card f1" style="min-width:240px;max-width:calc(33% - 14px);">
+      <div class="img-ph moto" style="height:200px;border-radius:8px 8px 0 0;"><label>客室画像</label></div>
+      <div class="room-card-body" style="padding:20px;">
+        <div class="card-eyebrow">デラックスルーム</div>
+        <div class="card-title" style="font-size:20px;margin:6px 0;">アース デラックス</div>
+        <div class="card-body">隣の織物工房から仕入れた手織りテキスタイルに囲まれた、広々としたリビングスペース。</div>
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-top:14px;">
+          <div style="font-family:'Shippori Mincho',serif;font-size:16px;">¥ —— ,000<span style="font-size:11px;color:var(--mid);font-family:'Noto Sans JP',sans-serif;"> /泊</span></div>
+          <div style="font-size:10px;color:var(--mid);">最大2名</div>
+        </div>
+        <div style="display:flex;gap:10px;margin-top:14px;">
+          <div class="btn btn-primary" style="flex:1;text-align:center;padding:8px 0;font-size:10px;">この客室を予約</div>
+          <div class="btn btn-ghost" style="padding:8px 14px;font-size:10px;">詳細を見る →</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Room 3 (Suite) -->
+    <div class="room-card f1" style="min-width:240px;max-width:calc(33% - 14px);">
+      <div class="img-ph moto" style="height:200px;border-radius:8px 8px 0 0;"><label>客室画像</label></div>
+      <div class="room-card-body" style="padding:20px;">
+        <div class="card-eyebrow">スイート</div>
+        <div class="card-title" style="font-size:20px;margin:6px 0;">町家スイート</div>
+        <div class="card-body">個室の座敷と厳選された職人の工芸品が揃う、町家インスパイアの本格的な客室。</div>
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-top:14px;">
+          <div style="font-family:'Shippori Mincho',serif;font-size:16px;">¥ ——— ,000<span style="font-size:11px;color:var(--mid);font-family:'Noto Sans JP',sans-serif;"> /泊</span></div>
+          <div style="font-size:10px;color:var(--mid);">最大2名</div>
+        </div>
+        <div style="display:flex;gap:10px;margin-top:14px;">
+          <div class="btn btn-primary" style="flex:1;text-align:center;padding:8px 0;font-size:10px;">この客室を予約</div>
+          <div class="btn btn-ghost" style="padding:8px 14px;font-size:10px;">詳細を見る →</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Bukko rooms -->
+<div class="sec" style="border-bottom:1px solid var(--light-line);">
+  <div class="sh-eyebrow" style="margin-bottom:6px;"><span>仏光寺</span></div>
+  <div class="sh-title" style="font-size:28px;margin-bottom:28px;">仏光寺の客室</div>
+  <div class="row g20" style="flex-wrap:wrap;">
+
+    <!-- Bukko Room 1 -->
+    <div class="room-card f1" style="min-width:240px;max-width:calc(33% - 14px);">
+      <div class="img-ph bukko" style="height:200px;border-radius:8px 8px 0 0;"><label>客室画像</label></div>
+      <div class="room-card-body" style="padding:20px;">
+        <div class="card-eyebrow">スペリオールルーム</div>
+        <div class="card-title" style="font-size:20px;margin:6px 0;">セージ スペリオール</div>
+        <div class="card-body">セージトーンの壁と手染めのテキスタイルアクセント。仏光寺の世界への入口となる客室。</div>
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-top:14px;">
+          <div style="font-family:'Shippori Mincho',serif;font-size:16px;">¥ —— ,000<span style="font-size:11px;color:var(--mid);font-family:'Noto Sans JP',sans-serif;"> /泊</span></div>
+          <div style="font-size:10px;color:var(--mid);">最大2名</div>
+        </div>
+        <div style="display:flex;gap:10px;margin-top:14px;">
+          <div class="btn btn-primary" style="flex:1;text-align:center;padding:8px 0;font-size:10px;background:var(--chigusa);">この客室を予約</div>
+          <div class="btn btn-ghost" style="padding:8px 14px;font-size:10px;">詳細を見る →</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Bukko Room 2 -->
+    <div class="room-card f1" style="min-width:240px;max-width:calc(33% - 14px);">
+      <div class="img-ph bukko" style="height:200px;border-radius:8px 8px 0 0;"><label>客室画像</label></div>
+      <div class="room-card-body" style="padding:20px;">
+        <div class="card-eyebrow">デラックスルーム</div>
+        <div class="card-title" style="font-size:20px;margin:6px 0;">和紙 デラックス</div>
+        <div class="card-body">和紙の天井パネルと仏光寺の屋根を望む眺め。ゆとりある空間。</div>
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-top:14px;">
+          <div style="font-family:'Shippori Mincho',serif;font-size:16px;">¥ —— ,000<span style="font-size:11px;color:var(--mid);font-family:'Noto Sans JP',sans-serif;"> /泊</span></div>
+          <div style="font-size:10px;color:var(--mid);">最大2名</div>
+        </div>
+        <div style="display:flex;gap:10px;margin-top:14px;">
+          <div class="btn btn-primary" style="flex:1;text-align:center;padding:8px 0;font-size:10px;background:var(--chigusa);">この客室を予約</div>
+          <div class="btn btn-ghost" style="padding:8px 14px;font-size:10px;">詳細を見る →</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Bukko Room 3 (Suite) -->
+    <div class="room-card f1" style="min-width:240px;max-width:calc(33% - 14px);">
+      <div class="img-ph bukko" style="height:200px;border-radius:8px 8px 0 0;"><label>客室画像</label></div>
+      <div class="room-card-body" style="padding:20px;">
+        <div class="card-eyebrow">スイート</div>
+        <div class="card-title" style="font-size:20px;margin:6px 0;">仏光寺スイート</div>
+        <div class="card-body">窯焼きの陶器の意匠と中庭を望むプライベートラウンジを備えた、本格スイート。</div>
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-top:14px;">
+          <div style="font-family:'Shippori Mincho',serif;font-size:16px;">¥ ——— ,000<span style="font-size:11px;color:var(--mid);font-family:'Noto Sans JP',sans-serif;"> /泊</span></div>
+          <div style="font-size:10px;color:var(--mid);">最大2名</div>
+        </div>
+        <div style="display:flex;gap:10px;margin-top:14px;">
+          <div class="btn btn-primary" style="flex:1;text-align:center;padding:8px 0;font-size:10px;background:var(--chigusa);">この客室を予約</div>
+          <div class="btn btn-ghost" style="padding:8px 14px;font-size:10px;">詳細を見る →</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="wf-footer">
+  <div><div class="ft-logo">solmu kyoto</div><div class="ft-tagline">京都の中心に佇む二つの宿。</div></div>
+  <div><div class="ft-col-title">宿泊施設</div><div class="ft-links"><div class="ft-link">元悪王子</div><div class="ft-link">仏光寺</div></div></div>
+  <div><div class="ft-col-title">ナビゲート</div><div class="ft-links"><div class="ft-link">ニュース</div><div class="ft-link">エリア情報</div><div class="ft-link">よくある質問</div></div></div>
+  <div><div class="ft-col-title">ご予約</div><div class="ft-links"><div class="ft-link">ご予約</div></div></div>
+  <div class="ft-bottom"><div class="ft-copy">© 2024 solmu kyoto.</div><div class="ft-socials"><div class="fsoc">IG</div><div class="fsoc">FB</div></div></div>
+</div>
+</div></div></div><!-- /p12 -->
+
+
+
+<!-- ═══════════════════════════════════
+  14 · NEWS ARTICLE DETAIL
+═══════════════════════════════════ -->
+
+<div class="page" id="p6">
+<div style="padding:24px 40px 60px;">
+<div class="page-meta"><div class="pmeta-num">07</div><div class="pmeta-name">客室詳細</div><div class="pmeta-route">/rooms/[slug]</div><div class="pmeta-line"></div></div>
+<div class="wf-frame">
+<div class="browser-bar"><div class="browser-dots"><span></span><span></span><span></span></div><div class="browser-url">solmu-kyoto.jp/hotels/moto-akuoji/rooms/machiya-suite</div></div>
+<div class="wf-nav moto-nav">
+  <div class="nav-brand">solmu kyoto</div>
+  <div class="nav-link">ホーム</div><div class="nav-link">コンセプト</div>
+  <div class="nav-link on">ホテル ▾</div>
+  <div class="nav-link">エリア情報</div><div class="nav-link">ニュース</div><div class="nav-link">よくある質問</div><div class="nav-link">アクセス</div>
+  <div class="nav-sp"></div><div class="nav-book" style="background:var(--earth);">元悪王子を予約</div>
+  <div class="nav-lang">JP | EN</div>
+</div>
+<div style="height:3px;background:linear-gradient(90deg,var(--earth-lt),var(--earth),var(--earth-dk));"></div>
+<div class="sec-nav" style="background:var(--shironeri);border-bottom:1px solid var(--earth-lt);">
+  <div class="sec-nav-item">概要</div>
+  <div class="sec-nav-item on" style="background:var(--charcoal);">客室</div>
+  <div class="sec-nav-item">施設・サービス</div>
+  <div class="sec-nav-item">体験プログラム</div>
+</div>
+<div class="bcrumb" style="background:var(--shironeri);border-bottom:1px solid var(--earth-lt);">
+  <span>ホーム</span><span style="color:var(--light-line);">›</span>
+  <span>ホテル</span><span style="color:var(--light-line);">›</span>
+  <span>元悪王子</span><span style="color:var(--light-line);">›</span>
+  <span class="bc-on">町家スイート</span>
+</div>
+
+<!-- Hero image carousel -->
+<div class="img-ph hero-moto" style="height:520px;position:relative;">
+  <div style="position:absolute;left:20px;top:50%;transform:translateY(-50%);font-size:28px;color:rgba(237,232,223,0.4);z-index:5;">‹</div>
+  <div style="position:absolute;right:20px;top:50%;transform:translateY(-50%);font-size:28px;color:rgba(237,232,223,0.4);z-index:5;">›</div>
+  <div class="hero-content" style="bottom:40px;">
+    <div class="sh-eyebrow" style="margin-bottom:8px;"><span style="color:rgba(237,232,223,0.55);border-color:rgba(237,232,223,0.2);">スイート</span></div>
+    <div class="hero-title" style="font-size:46px;">町家スイート</div>
+    <div style="font-size:13px;color:rgba(237,232,223,0.45);letter-spacing:0.06em;font-family:'Noto Sans JP',sans-serif;margin-top:-2px;">元悪王子 · 下京区</div>
+  </div>
+  <div style="display:flex;gap:6px;position:absolute;bottom:20px;left:50%;transform:translateX(-50%);z-index:5;">
+    <div style="width:20px;height:2px;background:#fff;border-radius:2px;"></div>
+    <div style="width:8px;height:2px;background:rgba(255,255,255,0.3);border-radius:2px;"></div>
+    <div style="width:8px;height:2px;background:rgba(255,255,255,0.3);border-radius:2px;"></div>
+  </div>
+  <label>客室画像カルーセル</label>
+</div>
+
+<!-- Spec bar -->
+<div style="display:grid;grid-template-columns:repeat(4,1fr);border-top:1px solid var(--light-line);border-bottom:1px solid var(--light-line);background:var(--shironeri);">
+  <div style="padding:18px 24px;border-right:1px solid var(--earth-lt);">
+    <div style="font-size:9px;letter-spacing:0.18em;text-transform:uppercase;color:var(--mid);margin-bottom:6px;">客室面積</div>
+    <div style="font-size:16px;font-family:'Shippori Mincho',serif;color:var(--charcoal);">52 ㎡</div>
+  </div>
+  <div style="padding:18px 24px;border-right:1px solid var(--earth-lt);">
+    <div style="font-size:9px;letter-spacing:0.18em;text-transform:uppercase;color:var(--mid);margin-bottom:6px;">定員</div>
+    <div style="font-size:16px;font-family:'Shippori Mincho',serif;color:var(--charcoal);">最大2名</div>
+  </div>
+  <div style="padding:18px 24px;border-right:1px solid var(--earth-lt);">
+    <div style="font-size:9px;letter-spacing:0.18em;text-transform:uppercase;color:var(--mid);margin-bottom:6px;">眺望</div>
+    <div style="font-size:16px;font-family:'Shippori Mincho',serif;color:var(--charcoal);">中庭</div>
+  </div>
+  <div style="padding:18px 24px;">
+    <div style="font-size:9px;letter-spacing:0.18em;text-transform:uppercase;color:var(--mid);margin-bottom:6px;">浴室</div>
+    <div style="font-size:16px;font-family:'Shippori Mincho',serif;color:var(--charcoal);">プライベート温泉</div>
+  </div>
+</div>
+
+<!-- Description + floorplan + amenities -->
+<div class="sec sec-moto" style="border-bottom:1px solid var(--earth-lt);">
+  <div class="row g48">
+    <div class="col" style="flex:1.6;gap:28px;">
+      <div>
+        <div class="sh-eyebrow"><span>客室の説明</span></div>
+        <div class="sh-title">この宿泊は、<br><em>ずっと心に残る。</em></div>
+      </div>
+      <div class="body-copy">
+        <p>町家スイートは、元悪王子が目指した姿の最も完成された形です。低いテーブルを囲む個室の居間、中庭を望む寝室、そして満たすのに20分かかる深い桧の浴槽。ゲストはいつも、思っていたより長くその中に留まります。</p>
+        <p>ベッドとクッションのテキスタイルは、路地を三軒先の織物工房から仕入れています——開業以来ずっとホテルに納めてくれている工房です。棚の陶器の酒器は、下京の窯元で焼かれたもの。</p>
+      </div>
+      <!-- 3 thumbnails -->
+      <div class="row g10" style="height:150px;">
+        <div class="img-ph moto f1" style="border-radius:4px;"><label>客室画像</label></div>
+        <div class="img-ph moto f1" style="border-radius:4px;"><label>浴室</label></div>
+        <div class="img-ph moto f1" style="border-radius:4px;"><label>居室</label></div>
+      </div>
+      <div class="row g12">
+        <div class="btn btn-primary-earth">この客室を予約</div>
+        <div class="btn btn-ghost">お問い合わせ →</div>
+      </div>
+    </div>
+    <div class="col f1 g20">
+      <!-- Floorplan -->
+      <div>
+        <div class="sh-eyebrow" style="margin-bottom:12px;"><span>間取り図</span></div>
+        <div class="img-ph moto" style="height:200px;border-radius:6px;"><label>間取り図</label></div>
+      </div>
+      <!-- アメニティ -->
+      <div>
+        <div class="sh-eyebrow" style="margin-bottom:12px;"><span>アメニティ</span></div>
+        <div style="border:1px solid var(--earth-lt);border-radius:6px;overflow:hidden;background:#fff;">
+          <div class="feat-row" style="padding:12px 16px;"><div class="feat-icon moto">⊙</div><div class="feat-content"><div class="feat-title">プライベート桧風呂</div></div></div>
+          <div class="feat-row" style="padding:12px 16px;"><div class="feat-icon moto">⊠</div><div class="feat-content"><div class="feat-title">独立した居室</div></div></div>
+          <div class="feat-row" style="padding:12px 16px;"><div class="feat-icon moto">◎</div><div class="feat-content"><div class="feat-title">中庭の眺め</div></div></div>
+          <div class="feat-row" style="padding:12px 16px;border-bottom:none;"><div class="feat-icon moto">✦</div><div class="feat-content"><div class="feat-title">職人のテキスタイル & 陶器セット</div></div></div>
+        </div>
+      </div>
+      <!-- Price -->
+      <div style="padding:20px;background:rgba(184,156,132,0.08);border:1px solid var(--earth-lt);border-radius:6px;text-align:center;">
+        <div style="font-size:10px;letter-spacing:0.18em;text-transform:uppercase;color:var(--mid);margin-bottom:8px;">料金（税込）</div>
+        <div style="font-family:'Shippori Mincho',serif;font-size:32px;font-weight:300;color:var(--charcoal);">¥ — — — ,000</div>
+        <div style="font-size:11px;color:var(--mid);margin-top:4px;">1泊（朝食込み）</div>
+        <div class="btn btn-primary-earth" style="width:100%;margin-top:16px;justify-content:center;">ご予約はこちら</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Other rooms -->
+<div class="sec sec-surface" style="border-bottom:1px solid var(--light-line);">
+  <div class="sh-eyebrow" style="margin-bottom:20px;"><span>元悪王子のその他の客室</span></div>
+  <div class="row g16">
+    <div class="room-card f1">
+      <div class="img-ph moto" style="height:140px;"><label>客室画像</label></div>
+      <div class="room-card-body">
+        <div class="card-eyebrow">スペリオールルーム</div>
+        <div class="card-title">町家スペリオール</div>
+        <div class="card-price">¥ — — ,000 <span>/ 泊</span></div>
+        <div class="btn btn-ghost" style="align-self:flex-start;padding:6px 14px;font-size:9px;margin-top:4px;">客室を見る →</div>
+      </div>
+    </div>
+    <div class="room-card f1">
+      <div class="img-ph moto" style="height:140px;"><label>客室画像</label></div>
+      <div class="room-card-body">
+        <div class="card-eyebrow">デラックスルーム</div>
+        <div class="card-title">アース デラックス</div>
+        <div class="card-price">¥ — — ,000 <span>/ 泊</span></div>
+        <div class="btn btn-ghost" style="align-self:flex-start;padding:6px 14px;font-size:9px;margin-top:4px;">客室を見る →</div>
+      </div>
+    </div>
+    <div class="room-card f1">
+      <div class="img-ph bukko" style="height:140px;"><label>客室画像</label></div>
+      <div class="room-card-body">
+        <div class="card-eyebrow">仏光寺 · スイート</div>
+        <div class="card-title">千草スイート</div>
+        <div class="card-price">¥ — — — ,000 <span>/ 泊</span></div>
+        <div class="btn btn-ghost" style="align-self:flex-start;padding:6px 14px;font-size:9px;margin-top:4px;">客室を見る →</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="wf-footer">
+  <div><div class="ft-logo">solmu kyoto</div><div class="ft-tagline">元悪王子 · 下京区、京都</div></div>
+  <div><div class="ft-col-title">この施設</div><div class="ft-links"><div class="ft-link">概要</div><div class="ft-link">客室</div><div class="ft-link">施設・サービス</div><div class="ft-link">体験プログラム</div></div></div>
+  <div><div class="ft-col-title">solmuの他の施設</div><div class="ft-links"><div class="ft-link">仏光寺</div><div class="ft-link">コンセプト</div><div class="ft-link">エリア情報</div></div></div>
+  <div><div class="ft-col-title">ご予約</div><div class="ft-links"><div class="ft-link">元悪王子を予約</div><div class="ft-link"><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="2a43444c456a594546475f074153455e4504405a">[email&#160;protected]</a></div></div></div>
+  <div class="ft-bottom"><div class="ft-copy">© 2024 solmu kyoto.</div><div class="ft-socials"><div class="fsoc">IG</div><div class="fsoc">FB</div></div></div>
+</div>
+</div></div></div>
+
+
+<!-- ═══════════════════════════════════
+  07 · EXPERIENCE DETAIL
+═══════════════════════════════════ -->
+
+<div class="page" id="p7">
+<div style="padding:24px 40px 60px;">
+<div class="page-meta"><div class="pmeta-num">08</div><div class="pmeta-name">体験詳細</div><div class="pmeta-route">/experience/[slug]</div><div class="pmeta-line"></div></div>
+<div class="wf-frame">
+<div class="browser-bar"><div class="browser-dots"><span></span><span></span><span></span></div><div class="browser-url">solmu-kyoto.jp/experience/yukata-ceremony</div></div>
+<div class="wf-nav">
+  <div class="nav-brand">solmu kyoto</div>
+  <div class="nav-link">ホーム</div><div class="nav-link">コンセプト</div>
+  <div class="nav-link on">ホテル ▾</div>
+  <div class="nav-link">エリア情報</div><div class="nav-link">ニュース</div><div class="nav-link">よくある質問</div><div class="nav-link">アクセス</div>
+  <div class="nav-sp"></div><div class="nav-book">ご予約</div>
+  <div class="nav-lang">JP | EN</div>
+</div>
+<div class="bcrumb" style="border-bottom:1px solid var(--light-line);">
+  <span>ホーム</span><span style="color:var(--light-line);">›</span>
+  <span>元悪王子</span><span style="color:var(--light-line);">›</span>
+  <span>体験プログラム</span><span style="color:var(--light-line);">›</span>
+  <span class="bc-on">浴衣セレモニー</span>
+</div>
+
+<!-- Hero -->
+<div class="img-ph hero-moto" style="height:480px;position:relative;">
+  <div class="hero-content" style="bottom:44px;">
+    <div class="sh-eyebrow" style="margin-bottom:8px;"><span style="color:rgba(237,232,223,0.55);border-color:rgba(237,232,223,0.2);">体験プログラム</span></div>
+    <div class="hero-title" style="font-size:42px;">浴衣セレモニー</div>
+    <div style="margin-top:12px;">
+      <div class="exp-tag both" style="display:inline-flex;">両ホテル</div>
+    </div>
+  </div>
+  <label>ヒーロー画像</label>
+</div>
+
+<!-- About + gallery + sidebar -->
+<div class="sec" style="border-bottom:1px solid var(--light-line);">
+  <div class="row g40">
+    <div class="col" style="flex:1.8;gap:28px;">
+      <div>
+        <div class="sh-eyebrow"><span>この体験について</span></div>
+        <div class="sh-title">街の布を、<em>身にまとう。</em></div>
+      </div>
+      <!-- 3-image gallery -->
+      <div class="row g10" style="height:200px;">
+        <div class="img-ph f1" style="border-radius:4px;"><label>画像 1</label></div>
+        <div class="img-ph moto f1" style="border-radius:4px;"><label>画像 2</label></div>
+        <div class="img-ph f1" style="border-radius:4px;"><label>画像 3</label></div>
+      </div>
+      <div class="body-copy">
+        <p>ホテルの浴衣は、西陣の路地にある工房で京都の伝統的な藍染め技法によって染められています——元悪王子から3軒先の織物学校に納めているのと同じ工房です。この所作は演出ではありません。ここで作られた布を、ここで着るという、ただそれだけのことです。</p>
+        <p>ホテルのスタッフが、折り方と帯の締め方をご案内します——2分間の丁寧な説明が、滞在中の着心地をまったく変えます。</p>
+        <p>浴衣はチェックアウト時にフロントにてご購入いただけます。それぞれに染めのロット番号と工房名を記した小さなタグが付いています。</p>
+      </div>
+      <div class="row g12">
+        <div class="btn btn-primary-earth">この体験を予約</div>
+        <div class="btn btn-ghost">ご質問はこちら →</div>
+      </div>
+    </div>
+    <!-- Sidebar -->
+    <div class="col f1 g16">
+      <div style="padding:24px;background:var(--shironeri);border:1px solid var(--earth-lt);border-radius:8px;">
+        <div class="sh-eyebrow" style="margin-bottom:16px;"><span>体験情報</span></div>
+        <div class="feat-row" style="padding:12px 0;"><div class="feat-icon moto">⊙</div><div class="feat-content"><div class="feat-title">所要時間</div><div class="feat-desc">約30分</div></div></div>
+        <div class="feat-row" style="padding:12px 0;"><div class="feat-icon moto">⊠</div><div class="feat-content"><div class="feat-title">空き状況</div><div class="feat-desc">毎日、到着時</div></div></div>
+        <div class="feat-row" style="padding:12px 0;"><div class="feat-icon moto">◎</div><div class="feat-content"><div class="feat-title">ロケーション</div><div class="feat-desc">客室またはロビー</div></div></div>
+        <div class="feat-row" style="padding:12px 0;border-bottom:none;"><div class="feat-icon moto">✦</div><div class="feat-content"><div class="feat-title">含まれるもの</div><div class="feat-desc">すべての客室タイプ</div></div></div>
+      </div>
+      <div class="img-ph moto" style="height:220px;border-radius:6px;width:100%;"><label>詳細画像</label></div>
+      <div class="img-ph both" style="height:180px;border-radius:6px;width:100%;"><label>スタジオ写真</label></div>
+    </div>
+  </div>
+</div>
+
+<!-- Related experiences -->
+<div class="sec sec-surface" style="border-bottom:1px solid var(--light-line);">
+  <div class="sh-eyebrow" style="margin-bottom:24px;"><span>関連体験</span></div>
+  <div class="row g16">
+    <div class="col f1 g12">
+      <div class="img-ph moto" style="height:160px;border-radius:6px;"><label>画像</label></div>
+      <div class="card-eyebrow">元悪王子</div>
+      <div class="card-title" style="font-size:17px;">陶芸ワークショップ</div>
+      <div class="card-body">ホテルから東へ2ブロック、下京の窯元での2時間の朝のセッション。この街で40年間土を捏ねてきた陶芸家と共に。</div>
+      <div class="btn btn-ghost" style="align-self:flex-start;padding:6px 14px;font-size:9px;">詳しく見る →</div>
+    </div>
+    <div class="col f1 g12">
+      <div class="img-ph both" style="height:160px;border-radius:6px;"><label>画像</label></div>
+      <div class="card-eyebrow">両ホテル</div>
+      <div class="card-title" style="font-size:17px;">自転車ルート</div>
+      <div class="card-body">毎朝2枚の新しいルートカードをフロントに用意。下京の市場路地を巡るコースと、鴨川沿いを北へ向かうコースです。</div>
+      <div class="btn btn-ghost" style="align-self:flex-start;padding:6px 14px;font-size:9px;">詳しく見る →</div>
+    </div>
+    <div class="col f1 g12">
+      <div class="img-ph bukko" style="height:160px;border-radius:6px;"><label>画像</label></div>
+      <div class="card-eyebrow">仏光寺</div>
+      <div class="card-title" style="font-size:17px;">寺院の朝散歩</div>
+      <div class="card-body">観光客が来る前、夜明けの鐘の音と豆腐屋の朝仕事——仏光寺界隈を案内する40分間のモーニングウォーク。</div>
+      <div class="btn btn-ghost" style="align-self:flex-start;padding:6px 14px;font-size:9px;">詳しく見る →</div>
+    </div>
+  </div>
+</div>
+
+<div class="wf-footer">
+  <div><div class="ft-logo">solmu kyoto</div><div class="ft-tagline">京都の中心に佇む二つの宿。</div></div>
+  <div><div class="ft-col-title">宿泊施設</div><div class="ft-links"><div class="ft-link">元悪王子</div><div class="ft-link">仏光寺</div></div></div>
+  <div><div class="ft-col-title">ナビゲート</div><div class="ft-links"><div class="ft-link">コンセプト</div><div class="ft-link">エリア情報</div><div class="ft-link">よくある質問</div></div></div>
+  <div><div class="ft-col-title">ご予約</div><div class="ft-links"><div class="ft-link">ご予約</div><div class="ft-link"><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="b6dfd8d0d9f6c5d9dadbc39bddcfd9c2d998dcc6">[email&#160;protected]</a></div></div></div>
+  <div class="ft-bottom"><div class="ft-copy">© 2024 solmu kyoto.</div><div class="ft-socials"><div class="fsoc">IG</div><div class="fsoc">FB</div></div></div>
+</div>
+</div></div></div>
+
+
+<!-- ═══════════════════════════════════
+  08 · FACILITY DETAIL
+═══════════════════════════════════ -->
+
+<div class="page" id="p8">
+<div style="padding:24px 40px 60px;">
+<div class="page-meta"><div class="pmeta-num">09</div><div class="pmeta-name">施設詳細</div><div class="pmeta-route">/facilities/[slug]</div><div class="pmeta-line"></div></div>
+<div class="wf-frame">
+<div class="browser-bar"><div class="browser-dots"><span></span><span></span><span></span></div><div class="browser-url">solmu-kyoto.jp/hotels/moto-akuoji/facilities/communal-bath</div></div>
+<div class="wf-nav moto-nav">
+  <div class="nav-brand">solmu kyoto</div>
+  <div class="nav-link">ホーム</div><div class="nav-link">コンセプト</div>
+  <div class="nav-link on">ホテル ▾</div>
+  <div class="nav-link">エリア情報</div><div class="nav-link">ニュース</div><div class="nav-link">よくある質問</div><div class="nav-link">アクセス</div>
+  <div class="nav-sp"></div><div class="nav-book" style="background:var(--earth);">元悪王子を予約</div>
+  <div class="nav-lang">JP | EN</div>
+</div>
+<div style="height:3px;background:linear-gradient(90deg,var(--earth-lt),var(--earth),var(--earth-dk));"></div>
+<div class="sec-nav" style="background:var(--shironeri);border-bottom:1px solid var(--earth-lt);">
+  <div class="sec-nav-item">概要</div>
+  <div class="sec-nav-item">客室</div>
+  <div class="sec-nav-item on" style="background:var(--charcoal);">施設・サービス</div>
+  <div class="sec-nav-item">体験プログラム</div>
+</div>
+<div class="bcrumb" style="background:var(--shironeri);border-bottom:1px solid var(--earth-lt);">
+  <span>ホーム</span><span style="color:var(--light-line);">›</span>
+  <span>元悪王子</span><span style="color:var(--light-line);">›</span>
+  <span>施設・サービス</span><span style="color:var(--light-line);">›</span>
+  <span class="bc-on">共同浴室</span>
+</div>
+
+<!-- Hero gallery carousel -->
+<div class="img-ph hero-moto" style="height:480px;position:relative;">
+  <div style="position:absolute;left:20px;top:50%;transform:translateY(-50%);font-size:28px;color:rgba(237,232,223,0.4);z-index:5;">‹</div>
+  <div style="position:absolute;right:20px;top:50%;transform:translateY(-50%);font-size:28px;color:rgba(237,232,223,0.4);z-index:5;">›</div>
+  <div class="hero-content" style="bottom:44px;">
+    <div class="sh-eyebrow" style="margin-bottom:8px;"><span style="color:rgba(237,232,223,0.55);border-color:rgba(237,232,223,0.2);">ホテルの特徴</span></div>
+    <div class="hero-title" style="font-size:42px;">共同浴室</div>
+    <div style="margin-top:12px;display:flex;gap:8px;">
+      <span style="background:rgba(212,200,174,0.3);border:1px solid var(--earth-lt);border-radius:4px;padding:4px 12px;font-size:9px;color:var(--earth-lt);letter-spacing:0.08em;">元悪王子</span>
+    </div>
+  </div>
+  <div style="display:flex;gap:6px;position:absolute;bottom:20px;left:50%;transform:translateX(-50%);z-index:5;">
+    <div style="width:20px;height:2px;background:#fff;border-radius:2px;"></div>
+    <div style="width:8px;height:2px;background:rgba(255,255,255,0.3);border-radius:2px;"></div>
+    <div style="width:8px;height:2px;background:rgba(255,255,255,0.3);border-radius:2px;"></div>
+  </div>
+  <label>施設ヒーロー画像 / ギャラリー</label>
+</div>
+
+<!-- Description + gallery + sidebar -->
+<div class="sec sec-moto" style="border-bottom:1px solid var(--earth-lt);">
+  <div class="row g40">
+    <div class="col" style="flex:1.8;gap:28px;">
+      <div>
+        <div class="sh-eyebrow"><span>この施設について</span></div>
+        <div class="sh-title">時を緩める、<br><em>お風呂という名の場所。</em></div>
+      </div>
+      <div class="body-copy">
+        <p>元悪王子の共同浴室は、建物の地下にある深井戸の水を使用しています——元の町家が頼っていたのと同じ水源です。浴室には下京の窯元の手釉タイルが張られ、ヒノキのベンチと、空の四角い切り取りだけが見える小さな庭窓があります。</p>
+        <p>ご利用は時間制——朝または夜の2時間制でご予約いただけます。タオル、浴衣、ヒノキの香り石鹸をご用意しています。携帯電話はご遠慮ください。</p>
+      </div>
+      <!-- 3-image gallery -->
+      <div class="row g10" style="height:180px;">
+        <div class="img-ph moto f1" style="border-radius:4px;"><label>浴室画像 1</label></div>
+        <div class="img-ph moto f1" style="border-radius:4px;"><label>浴室画像 2</label></div>
+        <div class="img-ph moto f1" style="border-radius:4px;"><label>詳細画像</label></div>
+      </div>
+    </div>
+    <!-- Sidebar -->
+    <div class="col f1 g16" style="align-self:start;">
+      <div style="padding:24px;background:var(--shironeri);border:1px solid var(--earth-lt);border-radius:8px;">
+        <div class="sh-eyebrow" style="margin-bottom:16px;"><span>施設情報</span></div>
+        <div class="feat-row" style="padding:12px 0;"><div class="feat-icon moto">⊙</div><div class="feat-content"><div class="feat-title">営業時間</div><div class="feat-desc">06:00–09:00 · 18:00–22:00</div></div></div>
+        <div class="feat-row" style="padding:12px 0;"><div class="feat-icon moto">⊠</div><div class="feat-content"><div class="feat-title">ロケーション</div><div class="feat-desc">地下1階（B1）</div></div></div>
+        <div class="feat-row" style="padding:12px 0;border-bottom:none;"><div class="feat-icon moto">◎</div><div class="feat-content"><div class="feat-title">定員</div><div class="feat-desc">1枠最大4名様まで</div></div></div>
+      </div>
+      <!-- 空き状況/booking -->
+      <div style="padding:20px;background:rgba(184,156,132,0.08);border:1px solid var(--earth-lt);border-radius:8px;">
+        <div class="sh-eyebrow" style="margin-bottom:12px;"><span>空き状況</span></div>
+        <div class="body-copy" style="font-size:12px;margin-bottom:16px;">全ゲストにご利用いただけます。フロントまたは客室内タブレットからご予約ください。</div>
+        <div class="btn btn-primary-earth" style="width:100%;justify-content:center;">アクセスを確認</div>
+      </div>
+      <!-- 含まれる amenities -->
+      <div style="padding:20px;border:1px solid var(--earth-lt);border-radius:8px;background:#fff;">
+        <div class="sh-eyebrow" style="margin-bottom:12px;"><span>含まれるもの</span></div>
+        <div style="display:flex;flex-direction:column;gap:8px;">
+          <div style="display:flex;gap:8px;align-items:center;font-size:12px;color:var(--mid);"><div style="width:5px;height:5px;border-radius:50%;background:var(--earth);flex-shrink:0;"></div>タオル & 浴衣</div>
+          <div style="display:flex;gap:8px;align-items:center;font-size:12px;color:var(--mid);"><div style="width:5px;height:5px;border-radius:50%;background:var(--earth);flex-shrink:0;"></div>ヒノキの香り石鹸</div>
+          <div style="display:flex;gap:8px;align-items:center;font-size:12px;color:var(--mid);"><div style="width:5px;height:5px;border-radius:50%;background:var(--earth);flex-shrink:0;"></div>入浴後の冷水</div>
+          <div style="display:flex;gap:8px;align-items:center;font-size:12px;color:var(--mid);"><div style="width:5px;height:5px;border-radius:50%;background:var(--earth);flex-shrink:0;"></div>スキンケアアメニティ</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Full-width image strip -->
+<div style="border-bottom:1px solid var(--light-line);">
+  <div class="row g0" style="height:360px;">
+    <div class="img-ph moto" style="flex:2.5;border-radius:0;"><label>ワイド施設画像</label></div>
+    <div class="col f1" style="border-left:1px solid var(--light-line);">
+      <div class="img-ph dark f1" style="border-radius:0;border-bottom:1px solid var(--light-line);"><label>詳細画像</label></div>
+      <div class="img-ph moto f1" style="border-radius:0;"><label>詳細画像</label></div>
+    </div>
+  </div>
+</div>
+
+<!-- Other facilities -->
+<div class="sec sec-surface" style="border-bottom:1px solid var(--light-line);">
+  <div class="sh-eyebrow" style="margin-bottom:20px;"><span>元悪王子のその他の施設</span></div>
+  <div class="row g16">
+    <div class="col f1 g0" style="border:1px solid var(--earth-lt);border-radius:8px;overflow:hidden;background:#fff;">
+      <div class="img-ph moto" style="height:180px;width:100%;"><label>施設画像</label></div>
+      <div style="padding:16px;"><div class="card-eyebrow">共有スペース</div><div class="card-title" style="font-size:17px;">ラウンジ & ライブラリー</div><div class="btn btn-ghost" style="align-self:flex-start;padding:6px 14px;font-size:9px;margin-top:10px;">詳細を見る →</div></div>
+    </div>
+    <div class="col f1 g0" style="border:1px solid var(--earth-lt);border-radius:8px;overflow:hidden;background:#fff;">
+      <div class="img-ph moto" style="height:180px;width:100%;"><label>施設画像</label></div>
+      <div style="padding:16px;"><div class="card-eyebrow">ダイニング</div><div class="card-title" style="font-size:17px;">朝食ルーム</div><div class="btn btn-ghost" style="align-self:flex-start;padding:6px 14px;font-size:9px;margin-top:10px;">詳細を見る →</div></div>
+    </div>
+    <div class="col f1 g0" style="border:1px solid var(--earth-lt);border-radius:8px;overflow:hidden;background:#fff;">
+      <div class="img-ph moto" style="height:180px;width:100%;"><label>施設画像</label></div>
+      <div style="padding:16px;"><div class="card-eyebrow">レンタル</div><div class="card-title" style="font-size:17px;">自転車ステーション</div><div class="btn btn-ghost" style="align-self:flex-start;padding:6px 14px;font-size:9px;margin-top:10px;">詳細を見る →</div></div>
+    </div>
+  </div>
+</div>
+
+<div class="wf-footer">
+  <div><div class="ft-logo">solmu kyoto</div><div class="ft-tagline">元悪王子 · 下京区、京都</div></div>
+  <div><div class="ft-col-title">この施設</div><div class="ft-links"><div class="ft-link">概要</div><div class="ft-link">客室</div><div class="ft-link">施設・サービス</div><div class="ft-link">体験プログラム</div></div></div>
+  <div><div class="ft-col-title">solmuの他の施設</div><div class="ft-links"><div class="ft-link">仏光寺</div><div class="ft-link">コンセプト</div><div class="ft-link">エリア情報</div></div></div>
+  <div><div class="ft-col-title">ご予約</div><div class="ft-links"><div class="ft-link">元悪王子を予約</div><div class="ft-link"><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="731a1d151c33001c1f1e065e180a1c071c5d1903">[email&#160;protected]</a></div></div></div>
+  <div class="ft-bottom"><div class="ft-copy">© 2024 solmu kyoto.</div><div class="ft-socials"><div class="fsoc">IG</div><div class="fsoc">FB</div></div></div>
+</div>
+</div></div></div>
+
+
+<!-- ═══════════════════════════════════
+  09 · AREA INFO
+═══════════════════════════════════ -->
+
+<div class="page" id="p9">
+<div style="padding:24px 40px 60px;">
+<div class="page-meta"><div class="pmeta-num">10</div><div class="pmeta-name">エリア情報</div><div class="pmeta-route">/area</div><div class="pmeta-line"></div></div>
+<div class="wf-frame">
+<div class="browser-bar"><div class="browser-dots"><span></span><span></span><span></span></div><div class="browser-url">solmu-kyoto.jp/area</div></div>
+<div class="wf-nav">
+  <div class="nav-brand">solmu kyoto</div>
+  <div class="nav-link">ホーム</div><div class="nav-link">コンセプト</div>
+  <div class="nav-link">ホテル ▾</div>
+  <div class="nav-link on">エリア情報</div><div class="nav-link">ニュース</div><div class="nav-link">よくある質問</div><div class="nav-link">アクセス</div>
+  <div class="nav-sp"></div><div class="nav-book">ご予約</div>
+  <div class="nav-lang">JP | EN</div>
+</div>
+
+<!-- Hero -->
+<div class="img-ph hero-ph" style="height:340px;position:relative;">
+  <div class="hero-content" style="bottom:36px;">
+    <div class="sh-eyebrow" style="margin-bottom:8px;"><span style="color:rgba(237,232,223,0.55);border-color:rgba(237,232,223,0.2);">京都・下京 &amp; 中京</span></div>
+    <div class="hero-title" style="font-size:42px;">エリアを探索する</div>
+  </div>
+  <label>ヒーロー画像</label>
+</div>
+
+<!-- Filter bar -->
+<div class="fbar" style="background:var(--warm-off);border-bottom:1px solid var(--light-line);">
+  <div class="ftag on">すべて</div>
+  <div class="ftag">観光スポット</div>
+  <div class="ftag">グルメ・地元レストラン</div>
+  <div class="ftag">美術館 &amp; 文化施設</div>
+</div>
+
+<!-- Map + venue cards -->
+<div class="sec" style="border-bottom:1px solid var(--light-line);padding-top:36px;padding-bottom:36px;">
+  <div class="row g28" style="align-items:flex-start;">
+    <!-- Sticky map -->
+    <div style="flex:1.4;position:sticky;top:20px;">
+      <div class="map-ph" style="height:380px;">
+      <div class="map-streets"></div>
+      <!-- Attraction pins -->
+      <div class="map-pin" style="top:30%;left:28%;position:absolute;">
+        <div class="map-pin-dot" style="background:var(--accent-red);"></div>
+        <div class="map-pin-stem" style="background:var(--accent-red);"></div>
+      </div>
+      <div class="map-pin" style="top:45%;left:44%;position:absolute;">
+        <div class="map-pin-dot" style="background:var(--accent-red);"></div>
+        <div class="map-pin-stem" style="background:var(--accent-red);"></div>
+      </div>
+      <div class="map-pin" style="top:60%;left:35%;position:absolute;">
+        <div class="map-pin-dot" style="background:var(--accent-red);"></div>
+        <div class="map-pin-stem" style="background:var(--accent-red);"></div>
+      </div>
+      <div class="map-pin" style="top:38%;left:58%;position:absolute;">
+        <div class="map-pin-dot" style="background:var(--accent-red);"></div>
+        <div class="map-pin-stem" style="background:var(--accent-red);"></div>
+      </div>
+      <div class="map-pin" style="top:54%;left:64%;position:absolute;">
+        <div class="map-pin-dot" style="background:var(--accent-red);"></div>
+        <div class="map-pin-stem" style="background:var(--accent-red);"></div>
+      </div>
+      <div class="map-pin" style="top:22%;left:52%;position:absolute;">
+        <div class="map-pin-dot" style="background:var(--accent-red);"></div>
+        <div class="map-pin-stem" style="background:var(--accent-red);"></div>
+      </div>
+      <!-- Hotel pins (earth / chigusa) -->
+      <div class="map-pin moto" style="top:48%;left:40%;position:absolute;">
+        <div class="map-pin-dot"></div>
+        <div class="map-pin-stem"></div>
+      </div>
+      <div class="map-pin bukko" style="top:40%;left:56%;position:absolute;">
+        <div class="map-pin-dot"></div>
+        <div class="map-pin-stem"></div>
+      </div>
+      <!-- Legend -->
+      <div style="position:absolute;bottom:14px;left:12px;display:flex;gap:8px;z-index:4;">
+        <div style="background:var(--charcoal);border:1px solid var(--charcoal);border-radius:4px;padding:4px 10px;font-size:9px;display:flex;align-items:center;gap:5px;color:#fff;font-family:'Noto Sans JP',sans-serif;">
+          <div style="width:6px;height:6px;border-radius:50%;background:var(--earth);"></div>solmu ホテル
+        </div>
+        <div style="background:#fff;border:1px solid var(--light-line);border-radius:4px;padding:4px 10px;font-size:9px;display:flex;align-items:center;gap:5px;font-family:'Noto Sans JP',sans-serif;">
+          <div style="width:6px;height:6px;border-radius:50%;background:var(--accent-red);"></div>観光スポット
+        </div>
+      </div>
+      <div class="map-label">下京区・中京区　京都</div>
+      </div><!-- /map-ph -->
+    </div><!-- /map-wrapper -->
+
+    <!-- Venue card list -->
+    <div class="col f1 g16">
+      <!-- Venue 1 -->
+      <div style="border:1px solid var(--light-line);border-radius:8px;overflow:hidden;background:#fff;box-shadow:0 2px 12px rgba(58,53,48,0.04);display:flex;flex-direction:row;">
+        <div class="img-ph moto" style="width:160px;flex-shrink:0;border-radius:0;"><label>スポット画像</label></div>
+        <div style="padding:16px 18px;display:flex;flex-direction:column;gap:8px;flex:1;">
+          <div style="display:flex;align-items:center;justify-content:space-between;">
+            <div style="padding:3px 10px;background:rgba(184,156,132,0.12);border:1px solid var(--earth-lt);border-radius:3px;font-size:9px;color:var(--earth-dk);letter-spacing:0.06em;">観光スポット</div>
+            <div style="font-size:10px;color:var(--mid);">🚶 元悪王子から徒歩約8分</div>
+          </div>
+          <div style="font-family:'Shippori Mincho',serif;font-size:19px;font-weight:400;color:var(--charcoal);">錦市場</div>
+          <div style="font-size:12px;color:var(--mid);line-height:1.7;">地元の人々が「京都の台所」と呼ぶアーケード商店街。食料品店、刃物屋、漬物店、そして三百年以上毎朝新鮮に作り続けられる豆腐——5ブロックにわたる生活の場。</div>
+          <div style="font-size:10px;color:var(--mid);">📍 錦小路、中京区、京都</div>
+          <div style="display:flex;gap:8px;margin-top:4px;">
+            <div class="btn btn-ghost" style="padding:6px 14px;font-size:9px;">ウェブサイト →</div>
+            <div class="btn btn-ghost" style="padding:6px 14px;font-size:9px;">地図を見る →</div>
+          </div>
+        </div>
+      </div>
+      <!-- Venue 2 -->
+      <div style="border:1px solid var(--light-line);border-radius:8px;overflow:hidden;background:#fff;box-shadow:0 2px 12px rgba(58,53,48,0.04);display:flex;flex-direction:row;">
+        <div class="img-ph bukko" style="width:160px;flex-shrink:0;border-radius:0;"><label>スポット画像</label></div>
+        <div style="padding:16px 18px;display:flex;flex-direction:column;gap:8px;flex:1;">
+          <div style="display:flex;align-items:center;justify-content:space-between;">
+            <div style="padding:3px 10px;background:rgba(122,158,142,0.12);border:1px solid var(--chigusa-lt);border-radius:3px;font-size:9px;color:var(--chigusa-dk);letter-spacing:0.06em;">グルメ</div>
+            <div style="font-size:10px;color:var(--mid);">🚶 仏光寺から徒歩約5分</div>
+          </div>
+          <div style="font-family:'Shippori Mincho',serif;font-size:19px;font-weight:400;color:var(--charcoal);">吉泉</div>
+          <div style="font-size:12px;color:var(--mid);line-height:1.7;">中京区の静かな路地に佇む懐石料理店。カウンター席12席。予約は数ヶ月先まで埋まっているが、ホテルのチームが時折リクエストをサポートできることも。</div>
+          <div style="font-size:10px;color:var(--mid);">📍 岡崎、左京区、京都</div>
+          <div style="display:flex;gap:8px;margin-top:4px;">
+            <div class="btn btn-ghost" style="padding:6px 14px;font-size:9px;">食べログ →</div>
+            <div class="btn btn-ghost" style="padding:6px 14px;font-size:9px;">地図を見る →</div>
+          </div>
+        </div>
+      </div>
+      <!-- Venue 3 -->
+      <div style="border:1px solid var(--light-line);border-radius:8px;overflow:hidden;background:#fff;box-shadow:0 2px 12px rgba(58,53,48,0.04);display:flex;flex-direction:row;">
+        <div class="img-ph dark" style="width:160px;flex-shrink:0;border-radius:0;"><label>スポット画像</label></div>
+        <div style="padding:16px 18px;display:flex;flex-direction:column;gap:8px;flex:1;">
+          <div style="display:flex;align-items:center;justify-content:space-between;">
+            <div style="padding:3px 10px;background:rgba(58,53,48,0.06);border:1px solid var(--light-line);border-radius:3px;font-size:9px;color:var(--mid);letter-spacing:0.06em;">美術館・博物館</div>
+            <div style="font-size:10px;color:var(--mid);">🚶 元悪王子から徒歩約12分</div>
+          </div>
+          <div style="font-family:'Shippori Mincho',serif;font-size:19px;font-weight:400;color:var(--charcoal);">河井寬次郎記念館</div>
+          <div style="font-size:12px;color:var(--mid);line-height:1.7;">陶芸の巨匠・河井寬次郎の自宅と窯を保存した施設。1966年の没後も変わらず残るその空間は、京都で最も静かに非凡な場所のひとつ。</div>
+          <div style="font-size:10px;color:var(--mid);">📍 東山区、京都</div>
+          <div style="display:flex;gap:8px;margin-top:4px;">
+            <div class="btn btn-ghost" style="padding:6px 14px;font-size:9px;">ウェブサイト →</div>
+            <div class="btn btn-ghost" style="padding:6px 14px;font-size:9px;">地図を見る →</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Full grid of all nearby attractions -->
+<div class="sec sec-surface" style="border-bottom:1px solid var(--light-line);">
+  <div style="font-size:9px;letter-spacing:0.22em;text-transform:uppercase;color:var(--mid);margin-bottom:24px;font-family:'Noto Sans JP',sans-serif;">近隣スポット一覧</div>
+  <div class="row g12" style="flex-wrap:wrap;">
+    <div style="flex:0 0 calc(33.333% - 9px);border:1px solid var(--light-line);border-radius:8px;overflow:hidden;background:#fff;">
+      <div class="img-ph both" style="height:110px;width:100%;border-radius:0;"><label>スポット画像</label></div>
+      <div style="padding:14px 16px;display:flex;flex-direction:column;gap:6px;">
+        <div style="padding:2px 8px;background:rgba(184,156,132,0.12);border:1px solid var(--earth-lt);border-radius:3px;font-size:8px;color:var(--earth-dk);align-self:flex-start;">観光スポット</div>
+        <div style="font-family:'Shippori Mincho',serif;font-size:16px;">仏光寺</div>
+        <div style="font-size:10px;color:var(--mid);">🚶 両ホテルから徒歩約6分</div>
+      </div>
+    </div>
+    <div style="flex:0 0 calc(33.333% - 9px);border:1px solid var(--light-line);border-radius:8px;overflow:hidden;background:#fff;">
+      <div class="img-ph bukko" style="height:110px;width:100%;border-radius:0;"><label>スポット画像</label></div>
+      <div style="padding:14px 16px;display:flex;flex-direction:column;gap:6px;">
+        <div style="padding:2px 8px;background:rgba(122,158,142,0.12);border:1px solid var(--chigusa-lt);border-radius:3px;font-size:8px;color:var(--chigusa-dk);align-self:flex-start;">グルメ</div>
+        <div style="font-family:'Shippori Mincho',serif;font-size:16px;">一保堂茶舗</div>
+        <div style="font-size:10px;color:var(--mid);">🚶 元悪王子から徒歩約10分</div>
+      </div>
+    </div>
+    <div style="flex:0 0 calc(33.333% - 9px);border:1px solid var(--light-line);border-radius:8px;overflow:hidden;background:#fff;">
+      <div class="img-ph dark" style="height:110px;width:100%;border-radius:0;"><label>スポット画像</label></div>
+      <div style="padding:14px 16px;display:flex;flex-direction:column;gap:6px;">
+        <div style="padding:2px 8px;background:rgba(58,53,48,0.06);border:1px solid var(--light-line);border-radius:3px;font-size:8px;color:var(--mid);align-self:flex-start;">美術館・博物館</div>
+        <div style="font-family:'Shippori Mincho',serif;font-size:16px;">京都工芸繊維大学美術工芸資料館</div>
+        <div style="font-size:10px;color:var(--mid);">🚶 徒歩約15分</div>
+      </div>
+    </div>
+    <div style="flex:0 0 calc(33.333% - 9px);border:1px solid var(--light-line);border-radius:8px;overflow:hidden;background:#fff;">
+      <div class="img-ph bukko" style="height:110px;width:100%;border-radius:0;"><label>スポット画像</label></div>
+      <div style="padding:14px 16px;display:flex;flex-direction:column;gap:6px;">
+        <div style="padding:2px 8px;background:rgba(122,158,142,0.12);border:1px solid var(--chigusa-lt);border-radius:3px;font-size:8px;color:var(--chigusa-dk);align-self:flex-start;">グルメ</div>
+        <div style="font-family:'Shippori Mincho',serif;font-size:16px;">ウィークエンダーズコーヒー</div>
+        <div style="font-size:10px;color:var(--mid);">🚶 仏光寺から徒歩約4分</div>
+      </div>
+    </div>
+    <div style="flex:0 0 calc(33.333% - 9px);border:1px solid var(--light-line);border-radius:8px;overflow:hidden;background:#fff;">
+      <div class="img-ph moto" style="height:110px;width:100%;border-radius:0;"><label>スポット画像</label></div>
+      <div style="padding:14px 16px;display:flex;flex-direction:column;gap:6px;">
+        <div style="padding:2px 8px;background:rgba(184,156,132,0.12);border:1px solid var(--earth-lt);border-radius:3px;font-size:8px;color:var(--earth-dk);align-self:flex-start;">観光スポット</div>
+        <div style="font-family:'Shippori Mincho',serif;font-size:16px;">六角堂</div>
+        <div style="font-size:10px;color:var(--mid);">🚶 元悪王子から徒歩約9分</div>
+      </div>
+    </div>
+    <div style="flex:0 0 calc(33.333% - 9px);border:1px solid var(--light-line);border-radius:8px;overflow:hidden;background:#fff;">
+      <div class="img-ph dark" style="height:110px;width:100%;border-radius:0;"><label>スポット画像</label></div>
+      <div style="padding:14px 16px;display:flex;flex-direction:column;gap:6px;">
+        <div style="padding:2px 8px;background:rgba(58,53,48,0.06);border:1px solid var(--light-line);border-radius:3px;font-size:8px;color:var(--mid);align-self:flex-start;">美術館・博物館</div>
+        <div style="font-family:'Shippori Mincho',serif;font-size:16px;">西陣織会館</div>
+        <div style="font-size:10px;color:var(--mid);">🚶 元悪王子から徒歩約11分</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="wf-footer">
+  <div><div class="ft-logo">solmu kyoto</div><div class="ft-tagline">京都の中心に佇む二つの宿。</div></div>
+  <div><div class="ft-col-title">宿泊施設</div><div class="ft-links"><div class="ft-link">元悪王子</div><div class="ft-link">仏光寺</div></div></div>
+  <div><div class="ft-col-title">ナビゲート</div><div class="ft-links"><div class="ft-link">エリア情報</div><div class="ft-link">ニュース</div><div class="ft-link">よくある質問</div><div class="ft-link">アクセス</div></div></div>
+  <div><div class="ft-col-title">ご予約</div><div class="ft-links"><div class="ft-link">ご予約</div><div class="ft-link"><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="8fe6e1e9e0cffce0e3e2faa2e4f6e0fbe0a1e5ff">[email&#160;protected]</a></div></div></div>
+  <div class="ft-bottom"><div class="ft-copy">© 2024 solmu kyoto.</div><div class="ft-socials"><div class="fsoc">IG</div><div class="fsoc">FB</div></div></div>
+</div>
+</div></div></div>
+
+
+
+<!-- ═══════════════════════════════════
+  10 · NEWS
+═══════════════════════════════════ -->
+
+<div class="page" id="p10">
+<div style="padding:24px 40px 60px;">
+<div class="page-meta"><div class="pmeta-num">11</div><div class="pmeta-name">ニュース</div><div class="pmeta-route">/news</div><div class="pmeta-line"></div></div>
+<div class="wf-frame">
+<div class="browser-bar"><div class="browser-dots"><span></span><span></span><span></span></div><div class="browser-url">solmu-kyoto.jp/news</div></div>
+<div class="wf-nav">
+  <div class="nav-brand">solmu kyoto</div>
+  <div class="nav-link">ホーム</div><div class="nav-link">コンセプト</div><div class="nav-link">ホテル ▾</div>
+  <div class="nav-link">エリア情報</div><div class="nav-link on">ニュース</div>
+  <div class="nav-link">よくある質問</div><div class="nav-link">アクセス</div>
+  <div class="nav-sp"></div><div class="nav-book">ご予約</div><div class="nav-lang">JP | EN</div>
+</div>
+
+<div class="sec sec-surface" style="border-bottom:1px solid var(--light-line);">
+  <div class="sh-eyebrow" style="margin-bottom:12px;"><span>ジャーナル</span></div>
+  <div class="sh-title" style="font-size:42px;margin-bottom:0;">ニュース &amp; <em>ストーリー</em></div>
+</div>
+
+<div class="fbar">
+  <div class="ftag on">すべて</div>
+  <div class="ftag">ホテルニュース</div>
+  <div class="ftag">季節のストーリー</div>
+  <div class="ftag">近隣情報</div>
+  <div class="ftag">イベント</div>
+</div>
+
+<div class="sec" style="border-bottom:1px solid var(--light-line);">
+  <!-- Featured article -->
+  <div class="row g32" style="margin-bottom:40px;">
+    <div class="img-ph f2" style="height:320px;border-radius:8px;"><label>注目の画像</label></div>
+    <div class="col f1 g16" style="justify-content:center;">
+      <div class="exp-tag both" style="align-self:flex-start;">両ホテル</div>
+      <div style="font-size:11px;color:var(--mid);letter-spacing:0.1em;">2024年12月</div>
+      <div style="font-family:'Shippori Mincho',serif;font-size:28px;font-weight:400;line-height:1.25;">下京の冬の光：四度の訪問で見えてきた街の素顔</div>
+      <div class="body-copy">季節は街の表情をがらりと変える。夏が見せてくれるもの——夕方6時の錦市場に伸びる長い影——を、冬はすっかり塗り替え、もっと静かな何かと入れ替えてしまう。</div>
+      <div class="btn btn-outline" onclick="go(13,document.querySelectorAll('.tab-btn')[13])" style="align-self:flex-start;margin-top:8px;cursor:pointer;">続きを読む →</div>
+    </div>
+  </div>
+  <!-- News grid -->
+  <div class="row g20">
+    <div class="news-card f1">
+      <div class="img-ph both" style="height:180px;"><label>画像</label></div>
+      <div class="news-card-body">
+        <div class="exp-tag moto" style="margin-bottom:10px;">元悪王子</div>
+        <div class="news-date">2024年11月</div>
+        <div class="news-title">下京の窯元との新たな陶芸ワークショップ提携、スタート</div>
+        <div class="news-excerpt">今冬より、元悪王子に滞在されるゲストは、ホテルから東へ2ブロックの地元の窯元での2時間セッションにご参加いただけます。</div>
+      </div>
+    </div>
+    <div class="news-card f1">
+      <div class="img-ph bukko" style="height:180px;"><label>画像</label></div>
+      <div class="news-card-body">
+        <div class="exp-tag bukko" style="margin-bottom:10px;">仏光寺</div>
+        <div class="news-date">2024年10月</div>
+        <div class="news-title">仏光寺の鐘の音：住職との対話</div>
+        <div class="news-excerpt">毎朝5時、鐘の音から一日が始まる。四百年変わらぬその営みを知るため、仏光寺の住職とともに座りました。</div>
+      </div>
+    </div>
+    <div class="news-card f1">
+      <div class="img-ph both" style="height:180px;"><label>画像</label></div>
+      <div class="news-card-body">
+        <div class="exp-tag both" style="margin-bottom:10px;">両ホテル</div>
+        <div class="news-date">2024年9月</div>
+        <div class="news-title">2024年秋の季節の朝食メニュー——錦市場の生産者から仕入れて</div>
+        <div class="news-excerpt">今シーズンのメニューは、開業当初からのお付き合いの仕入れ先からの松茸と、京都の白味噌を使った新作デザートをご用意しています。</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="wf-footer">
+  <div><div class="ft-logo">solmu kyoto</div><div class="ft-tagline">京都の中心に佇む二つの宿。</div></div>
+  <div><div class="ft-col-title">宿泊施設</div><div class="ft-links"><div class="ft-link">元悪王子</div><div class="ft-link">仏光寺</div></div></div>
+  <div><div class="ft-col-title">ナビゲート</div><div class="ft-links"><div class="ft-link">ニュース</div><div class="ft-link">エリア情報</div><div class="ft-link">よくある質問</div></div></div>
+  <div><div class="ft-col-title">ご予約</div><div class="ft-links"><div class="ft-link">ご予約</div></div></div>
+  <div class="ft-bottom"><div class="ft-copy">© 2024 solmu kyoto.</div><div class="ft-socials"><div class="fsoc">IG</div><div class="fsoc">FB</div></div></div>
+</div>
+</div></div></div>
+
+
+
+
+<!-- ═══════════════════════════════════
+  11 · FAQS
+═══════════════════════════════════ -->
+
+<div class="page" id="p11">
+<div style="padding:24px 40px 60px;">
+<div class="page-meta"><div class="pmeta-num">12</div><div class="pmeta-name">記事詳細</div><div class="pmeta-route">/news/[slug]</div><div class="pmeta-line"></div></div>
+<div class="wf-frame">
+<div class="browser-bar"><div class="browser-dots"><span></span><span></span><span></span></div><div class="browser-url">solmu-kyoto.jp/news/shimogyo-winter-light</div></div>
+<div class="wf-nav">
+  <div class="nav-brand">solmu kyoto</div>
+  <div class="nav-link">ホーム</div><div class="nav-link">コンセプト</div><div class="nav-link">ホテル ▾</div>
+  <div class="nav-link">エリア情報</div><div class="nav-link on">ニュース</div>
+  <div class="nav-link">よくある質問</div><div class="nav-link">アクセス</div>
+  <div class="nav-sp"></div><div class="nav-book">ご予約</div><div class="nav-lang">JP | EN</div>
+</div>
+
+<!-- Article header -->
+<div class="sec sec-surface" style="border-bottom:1px solid var(--light-line);">
+  <div style="max-width:760px;">
+    <div style="display:flex;align-items:center;gap:12px;margin-bottom:16px;">
+      <div class="exp-tag both" style="align-self:flex-start;">両ホテル</div>
+      <div style="font-size:10px;color:var(--mid);letter-spacing:0.12em;">2024年12月</div>
+    </div>
+    <div style="font-family:'Shippori Mincho',serif;font-size:38px;font-weight:400;line-height:1.2;color:var(--charcoal);margin-bottom:20px;">下京の冬の光：四度の訪問で見えてきた街の素顔</div>
+    <div style="font-size:12px;color:var(--mid);display:flex;gap:20px;">
+      <span>執筆：solmu チーム</span>
+      <span>読了時間：約5分</span>
+    </div>
+  </div>
+</div>
+
+<!-- Hero image -->
+<div class="img-ph dark" style="height:400px;margin:0;border-radius:0;"><label>記事メイン画像</label></div>
+
+<!-- Article body -->
+<div class="sec" style="border-bottom:1px solid var(--light-line);">
+  <div class="row g48">
+    <!-- Main content -->
+    <div class="col" style="flex:2;gap:20px;">
+      <div class="body-copy" style="font-size:14px;line-height:1.9;">
+        季節は街の表情をがらりと変える。夏が見せてくれるもの——夕方6時の錦市場に伸びる長い影——を、冬はすっかり塗り替え、もっと静かな何かと入れ替えてしまう。
+      </div>
+      <div class="body-copy" style="font-size:14px;line-height:1.9;">
+        12月の下京は、観光客がまだ眠っている朝7時が最も美しい。仏光寺の参道に差し込む朝の光は、夏とはまったく違う角度から石畳を照らし、影の輪郭を鋭く彫り込む。常連の豆腐屋は変わらず6時に店を開け、湯気とともに一日を始める。この光景は四季を通じて繰り返されるが、冬だけが持つ空気の澄み方がある。
+      </div>
+
+      <!-- Pull quote -->
+      <div style="border-left:3px solid var(--earth);padding:16px 24px;margin:8px 0;background:var(--cream);">
+        <div style="font-family:'Shippori Mincho',serif;font-size:18px;font-weight:400;line-height:1.6;color:var(--charcoal);font-style:italic;">「この街を知るには、同じ場所に何度も来る必要がある。一度目は驚き、二度目は気づき、三度目は親しみ、四度目に初めてここが自分の街になる。」</div>
+        <div style="font-size:10px;color:var(--mid);margin-top:10px;letter-spacing:0.1em;">— solmu kyoto 開業の辞より</div>
+      </div>
+
+      <div class="body-copy" style="font-size:14px;line-height:1.9;">
+        錦小路の市場は、冬になると生牡蠣と白味噌の季節を迎える。私たちが朝食のメニューを変えるのも、この変化に寄り添うためだ。地元の生産者から届く食材が変わると、ゲストへ伝える話も変わる。食卓が季節と街を繋ぐ場所になる。
+      </div>
+
+      <!-- Inline image -->
+      <div class="img-ph both" style="height:260px;border-radius:8px;"><label>記事画像 — 錦市場冬の朝</label></div>
+      <div style="font-size:10px;color:var(--mid);text-align:center;margin-top:-12px;">錦小路の朝、仕入れの風景。</div>
+
+      <div class="body-copy" style="font-size:14px;line-height:1.9;">
+        solmu kyotoが「旅人と街を結ぶ縁の結び目」と名乗るのは、こういうことだ。ホテルがただの宿泊地ではなく、その街の四季の変わり目を感じる窓口になること。訪れるたびに違う顔を見せる街に、何度でも戻ってきてほしい。
+      </div>
+    </div>
+
+    <!-- Sidebar -->
+    <div class="col f1 g20" style="max-width:260px;">
+      <!-- Author card -->
+      <div style="border:1px solid var(--light-line);border-radius:8px;padding:20px;background:#fff;">
+        <div style="font-size:9px;letter-spacing:0.18em;color:var(--mid);margin-bottom:12px;">この記事について</div>
+        <div class="img-ph dark" style="height:80px;width:80px;border-radius:50%;margin-bottom:12px;"><label>著者画像</label></div>
+        <div style="font-size:12px;font-weight:500;color:var(--charcoal);margin-bottom:4px;">solmu チーム</div>
+        <div style="font-size:11px;color:var(--mid);line-height:1.6;">京都・下京区から、街とゲストを繋ぐ物語をお届けします。</div>
+      </div>
+
+      <!-- Tags -->
+      <div style="border:1px solid var(--light-line);border-radius:8px;padding:20px;background:#fff;">
+        <div style="font-size:9px;letter-spacing:0.18em;color:var(--mid);margin-bottom:12px;">タグ</div>
+        <div style="display:flex;flex-wrap:wrap;gap:6px;">
+          <div class="ftag" style="font-size:9px;">季節のストーリー</div>
+          <div class="ftag" style="font-size:9px;">下京区</div>
+          <div class="ftag" style="font-size:9px;">錦市場</div>
+          <div class="ftag" style="font-size:9px;">冬</div>
+        </div>
+      </div>
+
+      <!-- Related articles -->
+      <div style="border:1px solid var(--light-line);border-radius:8px;padding:20px;background:#fff;">
+        <div style="font-size:9px;letter-spacing:0.18em;color:var(--mid);margin-bottom:16px;">関連記事</div>
+        <div class="col g16">
+          <div style="display:flex;gap:12px;align-items:flex-start;">
+            <div class="img-ph moto" style="width:60px;height:60px;flex-shrink:0;border-radius:6px;"><label>画像</label></div>
+            <div>
+              <div style="font-size:10px;color:var(--mid);margin-bottom:4px;">2024年11月</div>
+              <div style="font-size:11px;color:var(--charcoal);line-height:1.5;">下京の窯元との新たな陶芸ワークショップ提携、スタート</div>
+            </div>
+          </div>
+          <div style="display:flex;gap:12px;align-items:flex-start;">
+            <div class="img-ph bukko" style="width:60px;height:60px;flex-shrink:0;border-radius:6px;"><label>画像</label></div>
+            <div>
+              <div style="font-size:10px;color:var(--mid);margin-bottom:4px;">2024年10月</div>
+              <div style="font-size:11px;color:var(--charcoal);line-height:1.5;">仏光寺の鐘の音：住職との対話</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- CTA -->
+      <div style="background:var(--charcoal);border-radius:8px;padding:20px;color:#fff;">
+        <div style="font-size:9px;letter-spacing:0.18em;color:rgba(255,255,255,0.5);margin-bottom:10px;">この街に泊まる</div>
+        <div style="font-family:'Shippori Mincho',serif;font-size:16px;font-weight:400;line-height:1.5;margin-bottom:14px;">記事の中の景色を、実際に体験してみませんか。</div>
+        <div class="btn btn-primary" style="width:100%;text-align:center;padding:10px 0;font-size:10px;background:var(--earth);">客室を予約する</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- More articles -->
+<div class="sec sec-surface" style="border-bottom:1px solid var(--light-line);">
+  <div class="sh-eyebrow" style="margin-bottom:20px;"><span>その他の記事</span></div>
+  <div class="row g20">
+    <div class="news-card f1">
+      <div class="img-ph moto" style="height:160px;"></div>
+      <div class="news-card-body">
+        <div class="exp-tag moto" style="margin-bottom:10px;">元悪王子</div>
+        <div class="news-date">2024年11月</div>
+        <div class="news-title">下京の窯元との新たな陶芸ワークショップ提携、スタート</div>
+        <div class="news-excerpt">今冬より、元悪王子に滞在されるゲストは、ホテルから東へ2ブロックの地元の窯元での2時間セッションにご参加いただけます。</div>
+      </div>
+    </div>
+    <div class="news-card f1">
+      <div class="img-ph bukko" style="height:160px;"></div>
+      <div class="news-card-body">
+        <div class="exp-tag bukko" style="margin-bottom:10px;">仏光寺</div>
+        <div class="news-date">2024年10月</div>
+        <div class="news-title">仏光寺の鐘の音：住職との対話</div>
+        <div class="news-excerpt">毎朝5時、鐘の音から一日が始まる。四百年変わらぬその営みを知るため、仏光寺の住職とともに座りました。</div>
+      </div>
+    </div>
+    <div class="news-card f1">
+      <div class="img-ph both" style="height:160px;"></div>
+      <div class="news-card-body">
+        <div class="exp-tag both" style="margin-bottom:10px;">両ホテル</div>
+        <div class="news-date">2024年9月</div>
+        <div class="news-title">2024年秋の季節の朝食メニュー——錦市場の生産者から仕入れて</div>
+        <div class="news-excerpt">今シーズンのメニューは、松茸と京都の白味噌を使った新作デザートをご用意しています。</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="wf-footer">
+  <div><div class="ft-logo">solmu kyoto</div><div class="ft-tagline">京都の中心に佇む二つの宿。</div></div>
+  <div><div class="ft-col-title">宿泊施設</div><div class="ft-links"><div class="ft-link">元悪王子</div><div class="ft-link">仏光寺</div></div></div>
+  <div><div class="ft-col-title">ナビゲート</div><div class="ft-links"><div class="ft-link">ニュース</div><div class="ft-link">エリア情報</div><div class="ft-link">よくある質問</div></div></div>
+  <div><div class="ft-col-title">ご予約</div><div class="ft-links"><div class="ft-link">ご予約</div></div></div>
+  <div class="ft-bottom"><div class="ft-copy">© 2024 solmu kyoto.</div><div class="ft-socials"><div class="fsoc">IG</div><div class="fsoc">FB</div></div></div>
+</div>
+</div></div></div><!-- /p13 -->
+
+
+
+<div class="page" id="p12">
+<div style="padding:24px 40px 60px;">
+<div class="page-meta"><div class="pmeta-num">13</div><div class="pmeta-name">よくある質問</div><div class="pmeta-route">/faqs</div><div class="pmeta-line"></div></div>
+<div class="wf-frame">
+<div class="browser-bar"><div class="browser-dots"><span></span><span></span><span></span></div><div class="browser-url">solmu-kyoto.jp/faqs</div></div>
+<div class="wf-nav">
+  <div class="nav-brand">solmu kyoto</div>
+  <div class="nav-link">ホーム</div><div class="nav-link">コンセプト</div><div class="nav-link">ホテル ▾</div>
+  <div class="nav-link">エリア情報</div><div class="nav-link">ニュース</div>
+  <div class="nav-link on">よくある質問</div>
+  <div class="nav-link">アクセス</div>
+  <div class="nav-sp"></div><div class="nav-book">ご予約</div><div class="nav-lang">JP | EN</div>
+</div>
+
+<div class="sec sec-surface" style="border-bottom:1px solid var(--light-line);">
+  <div class="sh-eyebrow" style="margin-bottom:12px;"><span>サポート</span></div>
+  <div class="sh-title" style="font-size:42px;margin-bottom:0;">よく寄せられる<br><em>ご質問</em></div>
+</div>
+
+<div class="sec" style="border-bottom:1px solid var(--light-line);">
+  <div class="row g48">
+    <!-- FAQs -->
+    <div class="col f2 g0">
+      <div style="font-size:10px;letter-spacing:0.22em;text-transform:uppercase;color:var(--mid);margin-bottom:20px;padding-bottom:16px;border-bottom:1px solid var(--light-line);">ご予約</div>
+
+      <div class="accordion-item">
+        <div class="accordion-q">ご予約はどのようにすればよいですか？<div class="accordion-ico">−</div></div>
+        <div class="accordion-a">ご予約は当ウェブサイト、メール（<a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="3d54535b527d4e5251504810564452495213574d">[email&#160;protected]</a>）、またはお電話にて直接承っております。直接ご予約いただくことで、ご来訪の準備を適切に整え、最適な客室をご用意することができます。</div>
+      </div>
+      <div class="accordion-item">
+        <div class="accordion-q">キャンセルポリシーについて教えてください。<div class="accordion-ico">+</div></div>
+      </div>
+      <div class="accordion-item">
+        <div class="accordion-q">アーリーチェックインやレイトチェックアウトは可能ですか？<div class="accordion-ico">+</div></div>
+      </div>
+
+      <div style="font-size:10px;letter-spacing:0.22em;text-transform:uppercase;color:var(--mid);margin:32px 0 20px;padding-bottom:16px;border-bottom:1px solid var(--light-line);">ご滞在</div>
+
+      <div class="accordion-item">
+        <div class="accordion-q">チェックインとチェックアウトの時間は何時ですか？<div class="accordion-ico">−</div></div>
+        <div class="accordion-a">チェックインは15:00より、チェックアウトは11:00までとなります。レイトチェックアウトをご希望の場合は事前にご連絡ください。空き状況に応じてできる限り対応いたします。</div>
+      </div>
+      <div class="accordion-item">
+        <div class="accordion-q">solmu kyotoではペットを連れて宿泊できますか？<div class="accordion-ico">+</div></div>
+      </div>
+      <div class="accordion-item">
+        <div class="accordion-q">館内全体でWi-Fiは利用できますか？<div class="accordion-ico">+</div></div>
+      </div>
+
+      <div style="font-size:10px;letter-spacing:0.22em;text-transform:uppercase;color:var(--mid);margin:32px 0 20px;padding-bottom:16px;border-bottom:1px solid var(--light-line);">アクセス</div>
+
+      <div class="accordion-item">
+        <div class="accordion-q">京都駅から元悪王子へはどのように行けばよいですか？<div class="accordion-ico">+</div></div>
+      </div>
+      <div class="accordion-item">
+        <div class="accordion-q">二つの施設はどのくらい離れていますか？<div class="accordion-ico">+</div></div>
+      </div>
+    </div>
+
+    <!-- Sidebar -->
+    <div class="col f1 g16" style="align-self:start;position:sticky;top:20px;">
+      <div style="padding:24px;background:#fff;border:1px solid var(--light-line);border-radius:8px;box-shadow:0 2px 12px rgba(58,53,48,0.05);">
+        <div style="font-family:'Shippori Mincho',serif;font-size:20px;margin-bottom:10px;">他にご質問がありますか？</div>
+        <div class="body-copy" style="font-size:13px;margin-bottom:20px;">チームは毎日9:00〜20:00（日本標準時）に対応しております。お問い合わせには数時間以内にご返信いたします。</div>
+        <div class="btn btn-primary-earth" style="width:100%;margin-bottom:8px;justify-content:center;">お問い合わせ</div>
+        <div class="btn btn-ghost" style="width:100%;justify-content:center;"><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="c3aaada5ac83b0acafaeb6eea8baacb7aceda9b3">[email&#160;protected]</a></div>
+      </div>
+      <div style="padding:20px 22px;border:1px solid var(--light-line);border-radius:8px;background:var(--warm-off);">
+        <div style="font-size:10px;letter-spacing:0.18em;text-transform:uppercase;color:var(--mid);margin-bottom:16px;">クイックリンク</div>
+        <div class="col g10">
+          <div style="font-size:12px;color:var(--charcoal);">アクセス・道順 →</div>
+          <div style="font-size:12px;color:var(--charcoal);">キャンセルポリシー →</div>
+          <div style="font-size:12px;color:var(--charcoal);">客室を予約 →</div>
+          <div style="font-size:12px;color:var(--charcoal);">エリアガイド →</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="wf-footer">
+  <div><div class="ft-logo">solmu kyoto</div><div class="ft-tagline">京都の中心に佇む二つの宿。</div></div>
+  <div><div class="ft-col-title">宿泊施設</div><div class="ft-links"><div class="ft-link">元悪王子</div><div class="ft-link">仏光寺</div></div></div>
+  <div><div class="ft-col-title">ナビゲート</div><div class="ft-links"><div class="ft-link">よくある質問</div><div class="ft-link">アクセス</div><div class="ft-link">ご予約</div></div></div>
+  <div><div class="ft-col-title">お問い合わせ</div><div class="ft-links"><div class="ft-link"><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="f79e999198b784989b9a82da9c8e988398d99d87">[email&#160;protected]</a></div></div></div>
+  <div class="ft-bottom"><div class="ft-copy">© 2024 solmu kyoto. 全著作権所有。</div><div class="ft-socials"><div class="fsoc">IG</div><div class="fsoc">FB</div><div class="fsoc">X</div></div></div>
+</div>
+</div></div></div>
+
+
+<!-- ═══════════════════════════════════
+  12 · ACCESS
+═══════════════════════════════════ -->
+
+<div class="page" id="p13">
+<div style="padding:24px 40px 60px;">
+<div class="page-meta"><div class="pmeta-num">14</div><div class="pmeta-name">アクセス</div><div class="pmeta-route">/access</div><div class="pmeta-line"></div></div>
+<div class="wf-frame">
+<div class="browser-bar"><div class="browser-dots"><span></span><span></span><span></span></div><div class="browser-url">solmu-kyoto.jp/access</div></div>
+<div class="wf-nav">
+  <div class="nav-brand">solmu kyoto</div>
+  <div class="nav-link">ホーム</div><div class="nav-link">コンセプト</div><div class="nav-link">ホテル ▾</div>
+  <div class="nav-link">エリア情報</div><div class="nav-link">ニュース</div><div class="nav-link">よくある質問</div>
+  <div class="nav-link on">アクセス</div>
+  <div class="nav-sp"></div><div class="nav-book">ご予約</div><div class="nav-lang">JP | EN</div>
+</div>
+
+<div class="img-ph hero-ph" style="height:280px;position:relative;">
+  <div class="hero-content" style="bottom:36px;">
+    <div class="hero-eyebrow">アクセス</div>
+    <div class="hero-title" style="font-size:36px;">アクセス</div>
+  </div>
+  <label>ヒーロー画像</label>
+</div>
+
+<div class="sec" style="border-bottom:1px solid var(--light-line);">
+  <div class="row g48">
+    <!-- Left: map + addresses -->
+    <div class="col f1 g24">
+      <!-- Address cards -->
+      <div class="row g16">
+        <div class="addr-card moto f1">
+          <div class="addr-hotel-name moto">元悪王子</div>
+          <div class="addr-kanji">元悪王子</div>
+          <div class="addr-text">〒 600-8XXX<br>京都市下京区<br>仏光寺通 [番地]</div>
+          <div style="margin-top:10px;font-size:11px;color:var(--mid);">Tel: +81 75 — — ——</div>
+        </div>
+        <div class="addr-card bukko f1">
+          <div class="addr-hotel-name bukko">仏光寺</div>
+          <div class="addr-kanji">仏光寺</div>
+          <div class="addr-text">〒 604-8XXX<br>京都市中京区<br>[町名・番地]</div>
+          <div style="margin-top:10px;font-size:11px;color:var(--mid);">Tel: +81 75 — — ——</div>
+        </div>
+      </div>
+      <!-- Map -->
+      <div class="map-ph" style="height:340px;">
+        <div class="map-streets"></div>
+        <div class="map-pin moto" style="top:48%;left:37%;">
+          <div class="map-pin-dot"></div>
+          <div class="map-pin-stem"></div>
+        </div>
+        <div class="map-pin bukko" style="top:39%;left:57%;">
+          <div class="map-pin-dot"></div>
+          <div class="map-pin-stem"></div>
+        </div>
+        <div class="map-label">下京区・中京区　京都</div>
+      </div>
+      <div class="body-copy" style="font-size:13px;">両施設とも烏丸線から徒歩圏内。最寄り駅は五条駅（烏丸線）で、徒歩約8〜10分です。</div>
+    </div>
+
+    <!-- Right: access routes -->
+    <div class="col f1 g0">
+      <div style="font-size:10px;letter-spacing:0.22em;text-transform:uppercase;color:var(--mid);margin-bottom:20px;padding-bottom:16px;border-bottom:1px solid var(--light-line);">アクセスルート</div>
+      <div class="route-item">
+        <div class="route-top"><div class="route-name">関西国際空港から</div><div class="route-time">約75分</div></div>
+        <div class="route-desc">はるか号で京都駅（75分）、その後タクシーまたは烏丸線で五条駅へ。</div>
+      </div>
+      <div class="route-item">
+        <div class="route-top"><div class="route-name">大阪（新大阪）から</div><div class="route-time">約30分</div></div>
+        <div class="route-desc">新幹線で京都駅、その後タクシー（10分）または烏丸線（2駅）で五条へ。</div>
+      </div>
+      <div class="route-item">
+        <div class="route-top"><div class="route-name">京都駅から</div><div class="route-time">約10分</div></div>
+        <div class="route-desc">京都駅から烏丸線で北へ2駅、五条駅下車。両ホテルとも徒歩5分以内。</div>
+      </div>
+      <div class="route-item">
+        <div class="route-top"><div class="route-name">タクシー利用</div><div class="route-time">到着時</div></div>
+        <div class="route-desc">京都駅からタクシーをご利用いただけます。フロントにてご用意しているホテルの住所カードを運転手にお見せください。</div>
+      </div>
+      <div class="route-item">
+        <div class="route-top"><div class="route-name">無料送迎サービス</div><div class="route-time">ご要望に応じて</div></div>
+        <div class="route-desc">京都駅からの専用送迎をご希望の方は、24時間前までにご連絡ください。</div>
+      </div>
+    </div><!-- /right col -->
+  </div><!-- /row -->
+</div><!-- /sec -->
+
+<div class="wf-footer">
+  <div>
+    <div class="ft-logo">solmu kyoto</div>
+    <div class="ft-tagline">京都の中心に佇む二つの宿。急かされることなく、ここにある時間を。</div>
+  </div>
+  <div>
+    <div class="ft-col-title">宿泊施設</div>
+    <div cla    <div class="ft-links"><div class="ft-link">元悪王子</div><div class="ft-link">仏光寺</div></div>
+  </div>
+  <div>
+    <div class="ft-col-title">ナビゲート</div>
+    <div class="ft-links"><div class="ft-link">コンセプト</div><div class="ft-link">エリア情報</div><div class="ft-link">ニュース</div><div class="ft-link">よくある質問</div></div>
+  </div>
+  <div>
+    <div class="ft-col-title">ご予約</div>
+    <div class="ft-links"><div class="ft-link">ご予約</div><div class="ft-link"><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="31585f575e71425e5d5c441c5a485e455e1f5b41">[email&#160;protected]</a></div></div>
+  </div>
+  <div class="ft-bottom"><div class="ft-copy">© 2024 solmu kyoto. 全著作権所有。</div><div class="ft-socials"><div class="fsoc">IG</div><div class="fsoc">FB</div></div></div>
+</div>
+
+</div><!-- /wf-frame -->
+</div><!-- /inner -->
+</div>
+</div><!-- /p11 -->
+
+<!-- ═══════════════════════════════════
+  13 · ROOMS LIST
+═══════════════════════════════════ -->
+
+</div><!-- /pages-container -->
+</div><!-- /shell -->
+
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+function go(idx, btn) {
+  document.querySelectorAll('.page').forEach(function(p) { p.classList.remove('active'); });
+  document.querySelectorAll('.tab-btn').forEach(function(b) { b.classList.remove('active'); });
+  var pages = document.querySelectorAll('.page');
+  if (pages[idx]) pages[idx].classList.add('active');
+  if (btn) btn.classList.add('active');
+  var container = document.querySelector('.pages-container');
+  if (container) container.scrollTop = 0;
+}
+</script>
+</body>
+</html>
