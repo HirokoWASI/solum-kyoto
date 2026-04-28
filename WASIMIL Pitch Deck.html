@@ -1,0 +1,796 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>WASIMIL — IVS Pitch Deck</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://unpkg.com/@phosphor-icons/web@2.1.1/src/regular/style.css">
+<link rel="stylesheet" href="https://unpkg.com/@phosphor-icons/web@2.1.1/src/fill/style.css">
+<link rel="stylesheet" href="https://unpkg.com/@phosphor-icons/web@2.1.1/src/duotone/style.css">
+<link rel="stylesheet" href="slides/styles.css?v=3">
+<style>
+  html, body { height: 100%; background: #08302b; margin: 0; }
+</style>
+</head>
+<body>
+
+<deck-stage width="1920" height="1080">
+
+  <!-- ===================================================== -->
+  <!-- 01 — Cover (light, canva-style)                       -->
+  <!-- ===================================================== -->
+  <section data-label="01 表紙" class="bg-sage-white">
+    <!-- decorative blobs -->
+    <div class="blob orange" style="width: 520px; height: 520px; top: -120px; right: -120px; opacity: 0.92;"></div>
+    <div class="blob yellow" style="width: 220px; height: 220px; top: 380px; right: 220px; opacity: 0.9;"></div>
+    <div class="blob forest" style="width: 240px; height: 240px; top: -80px; left: -80px; opacity: 0.92;"></div>
+
+    <div class="slide-chrome" style="padding: 96px 110px;">
+      <!-- Top bar -->
+      <div style="position: relative; z-index: 2; display:flex; justify-content:space-between; align-items:center;">
+        <div class="wordmark" style="font-size: 36px; letter-spacing: 0.18em;">WASIMIL</div>
+        <div style="font-family: var(--font-ui); font-size: 24px; letter-spacing: 0.18em; color: var(--brand-muted-text); text-transform: uppercase;">IVS 2026 · Launchpad</div>
+      </div>
+
+      <!-- Hero -->
+      <div style="position: relative; z-index: 2; margin-top: 80px; max-width: 1500px;">
+        <div class="ribbon" style="margin-bottom: 44px;">ホテル運営 × AIエージェント</div>
+        <h1 class="title-xxl" style="font-size: 110px;">
+          <span class="hl-yellow">ホテル運営</span>を、<br>
+          AIエージェントが<br>
+          動かす時代へ。
+        </h1>
+        <p class="body-l" style="margin-top: 40px; max-width: 1300px; color: var(--brand-muted-text); font-size: 32px;">
+          オールインワンのホテル運営プラットフォーム<span style="color: var(--brand-forest); font-weight: 800;">「WASIMIL」</span>が、<br>
+          バックオフィス業務の<span style="color: var(--brand-orange-deep); font-weight: 800;">90%</span>を自動化する。
+        </p>
+      </div>
+
+      <!-- Bottom bar -->
+      <div style="position: absolute; left: 110px; right: 110px; bottom: 60px; display:flex; justify-content:space-between; align-items:flex-end; font-family: var(--font-ui); z-index: 2;">
+        <div>
+          <div style="color: var(--brand-muted-text); font-size: 24px; letter-spacing: 0.16em; text-transform:uppercase; margin-bottom: 10px;">Presented by</div>
+          <div style="color: var(--brand-forest); font-size: 30px; font-weight: 800;">株式会社AZOO / AZOO Inc.</div>
+        </div>
+        <div style="text-align:right;">
+          <div style="color: var(--brand-muted-text); font-size: 24px; letter-spacing: 0.16em; text-transform:uppercase; margin-bottom: 10px;">Web</div>
+          <div style="color: var(--brand-forest); font-size: 26px; font-weight: 700;">wasimil.com</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================================================== -->
+  <!-- 02 — Problem hook                                     -->
+  <!-- ===================================================== -->
+  <section data-label="02 問題" class="bg-sage-white">
+    <div class="slide-chrome slide-pad">
+      <div class="eyebrow">Problem · 01</div>
+      <h1 class="title-xl">
+        日本のホテル業界は、いま<br>
+        <span class="hl-yellow accent">史上最大の人手不足</span>に<br>直面している。
+      </h1>
+
+      <div style="display:grid; grid-template-columns: 1fr 1fr 1fr; gap: 28px; margin-top: 90px;">
+        <div class="card">
+          <div style="font-family: var(--font-ui); font-size: 24px; letter-spacing: 0.18em; color: var(--brand-mid-green); text-transform:uppercase; margin-bottom: 16px; font-weight: 700;">Workforce gap</div>
+          <div class="stat-number" style="font-size: 152px;">▲23<span style="font-size: 72px;">%</span></div>
+          <div class="body-s muted" style="margin-top: 12px;">2030年予測<br>宿泊業の人手不足率</div>
+        </div>
+        <div class="card">
+          <div style="font-family: var(--font-ui); font-size: 24px; letter-spacing: 0.18em; color: var(--brand-mid-green); text-transform:uppercase; margin-bottom: 16px; font-weight: 700;">Inbound demand</div>
+          <div class="stat-number" style="font-size: 152px;">3,500<span style="font-size: 72px;">万</span></div>
+          <div class="body-s muted" style="margin-top: 12px;">訪日外国人客数(2024)<br>過去最高を更新</div>
+        </div>
+        <div class="card">
+          <div style="font-family: var(--font-ui); font-size: 24px; letter-spacing: 0.18em; color: var(--brand-mid-green); text-transform:uppercase; margin-bottom: 16px; font-weight: 700;">Operational load</div>
+          <div class="stat-number" style="font-size: 152px;">90<span style="font-size: 72px;">時間</span></div>
+          <div class="body-s muted" style="margin-top: 12px;">1ホテルあたり月間の<br>バックオフィス業務時間</div>
+        </div>
+      </div>
+    </div>
+    <div class="slide-footer"><div class="logo-mark">WASIMIL</div><div>02 / 17</div></div>
+  </section>
+
+  <!-- ===================================================== -->
+  <!-- 03 — Existing systems are fragmented                  -->
+  <!-- ===================================================== -->
+  <section data-label="03 既存システムの限界" class="bg-sage-white">
+    <div class="slide-chrome slide-pad">
+      <div class="eyebrow">Problem · 02</div>
+      <h1 class="title-xl" style="max-width: 1700px;">
+        既存システムは「<span class="accent">人</span>」が<br>動かす前提で設計されている。
+      </h1>
+
+      <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 56px; margin-top: 64px; align-items: center;">
+        <!-- Left: photo -->
+        <div style="position: relative; border-radius: 18px; overflow: hidden; box-shadow: 0 24px 48px rgba(11,31,58,0.18); aspect-ratio: 16/10;">
+          <img src="assets/hotel-frontdesk-overwhelmed.png" style="width: 100%; height: 100%; object-fit: cover; display: block;" alt="Overwhelmed hotel front-desk staff surrounded by fragmented system screens">
+          <!-- Subtle caption tag -->
+          <div style="position: absolute; left: 20px; bottom: 20px; background: rgba(11,31,58,0.88); color: white; padding: 10px 18px; border-radius: 9999px; font-family: var(--font-ui); font-size: 24px; font-weight: 700; letter-spacing: 0.06em;">
+            ▸ 現場のリアル
+          </div>
+        </div>
+
+        <!-- Right: cards -->
+        <div style="display: flex; flex-direction: column; gap: 24px;">
+          <div class="card">
+            <div style="font-family: var(--font-ui); font-size: 24px; letter-spacing: 0.2em; color: var(--brand-mid-green); text-transform:uppercase; margin-bottom: 14px; font-weight: 700;">Legacy PMS</div>
+            <div style="font-size: 36px; font-weight: 800; line-height: 1.3; color: var(--brand-forest);">PMS・予約・CRM・清掃・経理が<br><span style="color: var(--brand-orange-deep);">バラバラに分断</span></div>
+            <div class="body-s muted" style="margin-top: 16px;">画面を行き来し、CSVをコピペして、人間がデータを繋いで運用する設計。</div>
+          </div>
+          <div class="card">
+            <div style="font-family: var(--font-ui); font-size: 24px; letter-spacing: 0.2em; color: var(--brand-mid-green); text-transform:uppercase; margin-bottom: 14px; font-weight: 700;">Bolt-on AI</div>
+            <div style="font-size: 36px; font-weight: 800; line-height: 1.3; color: var(--brand-forest);">後付けのAIは<br><span style="color: var(--brand-orange-deep);">個別タスクしか触れない</span></div>
+            <div class="body-s muted" style="margin-top: 16px;">チャットボット止まり。運営の意思決定までは届かない。</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="slide-footer"><div class="logo-mark">WASIMIL</div><div>03 / 17</div></div>
+  </section>
+
+  <!-- ===================================================== -->
+  <!-- 04 — Insight (forest accent slide)                    -->
+  <!-- ===================================================== -->
+  <section data-label="04 インサイト" class="bg-forest">
+    <div class="slide-chrome slide-pad on-dark">
+      <div class="eyebrow" style="color: var(--brand-orange);">Insight</div>
+      <h1 class="title-xl on-dark" style="max-width: 1700px; color: white;">
+        AIエージェントを動かすには、<br>
+        <span class="accent">すべての運営データ</span>が<br>
+        一つに繋がっていなければならない。
+      </h1>
+      <p class="body-l" style="margin-top: 70px; max-width: 1500px; color: var(--brand-muted-green);">
+        予約 / 顧客 / 客室 / 料金 / レビュー / 清掃 / 会計 ──<br>
+        <span style="color: white; font-weight: 800;">分断されたデータの上に、自律エージェントは立たない。</span>
+      </p>
+    </div>
+    <div class="slide-footer on-dark"><div class="logo-mark">WASIMIL</div><div>04 / 17</div></div>
+  </section>
+
+  <!-- ===================================================== -->
+  <!-- 05 — Solution (orange ribbon banner like canva)        -->
+  <!-- ===================================================== -->
+  <section data-label="05 解決策" class="bg-sage-white">
+    <div class="slide-chrome slide-pad">
+      <div class="eyebrow">Our Approach</div>
+
+      <!-- Canva-style banner -->
+      <div style="display:inline-flex; align-items: stretch; margin-bottom: 64px;">
+        <div style="background: var(--brand-forest); color: white; padding: 22px 36px; font-size: 40px; font-weight: 800; font-family: var(--font-brand); border-radius: 6px 0 0 6px;">ホテルシステムWASIMIL</div>
+        <div style="background: var(--brand-yellow); color: var(--brand-forest); padding: 22px 36px; font-size: 40px; font-weight: 800; font-family: var(--font-brand); border-radius: 0 6px 6px 0;">これまでバラバラだった全業務をAIで統合</div>
+      </div>
+
+      <h1 class="title-xl" style="max-width: 1700px;">
+        WASIMILは、<br>
+        <span class="hl-yellow">AI時代に逆算</span>して設計された、<br>
+        唯一のオールインワン。
+      </h1>
+
+      <div class="soft-panel" style="margin-top: 64px; max-width: 1700px;">
+        <div style="font-size: 30px; line-height: 1.6; color: var(--brand-forest); font-weight: 500;">
+          ホテルシステム業界では従来1機能のみがベースとなったシングルプロダクトが展開され、データ連携に課題。<br>
+          WASIMILは<span style="font-weight: 800; color: var(--brand-orange-deep);">15機能+を統合的に開発するコンパウンド戦略</span>を展開。<br>
+          一つのデータ基盤の上で、AIエージェントが自律的に動く。
+        </div>
+      </div>
+    </div>
+    <div class="slide-footer"><div class="logo-mark">WASIMIL</div><div>05 / 17</div></div>
+  </section>
+
+  <!-- ===================================================== -->
+  <!-- 06 — Hotel journey: WASIMIL coverage (canva-style)     -->
+  <!-- ===================================================== -->
+  <section data-label="06 業務カバレッジ" class="bg-sage-white">
+    <div class="slide-chrome" style="padding: 80px 80px 110px;">
+      <div style="padding: 0 30px;">
+        <div class="eyebrow">Coverage</div>
+        <h1 class="title-l" style="max-width: 1700px;">
+          ホテル運営の<span class="hl-yellow">全工程</span>を、<br>
+          一つのプラットフォームで。
+        </h1>
+      </div>
+
+      <!-- Step arrow flow -->
+      <div style="margin: 60px 30px 0; display: grid; grid-template-columns: repeat(5, 1fr); gap: 8px;">
+        <div class="step-arrow">予約・在庫連携</div>
+        <div class="step-arrow">宿泊前</div>
+        <div class="step-arrow">チェックイン</div>
+        <div class="step-arrow">宿泊中</div>
+        <div class="step-arrow">チェックアウト</div>
+      </div>
+
+      <!-- Module cards under each step -->
+      <div style="margin: 28px 30px 0; display: grid; grid-template-columns: repeat(5, 1fr); gap: 16px;">
+        <div class="card" style="padding: 24px;">
+          <i class="ph-duotone ph-calendar-check" style="font-size: 38px; color: var(--brand-orange);"></i>
+          <div style="font-size: 28px; font-weight: 800; margin-top: 14px; color: var(--brand-forest);">Booking Engine</div>
+          <div style="font-size: 24px; color: var(--brand-muted-text); margin-top: 6px; line-height: 1.4;">直販サイト / OTA連携 / レート最適化</div>
+        </div>
+        <div class="card" style="padding: 24px;">
+          <i class="ph-duotone ph-chat-circle-text" style="font-size: 38px; color: var(--brand-orange);"></i>
+          <div style="font-size: 28px; font-weight: 800; margin-top: 14px; color: var(--brand-forest);">ゲスト対応</div>
+          <div style="font-size: 24px; color: var(--brand-muted-text); margin-top: 6px; line-height: 1.4;">問い合わせ / 多言語コンシェルジュ</div>
+        </div>
+        <div class="card" style="padding: 24px;">
+          <i class="ph-duotone ph-key" style="font-size: 38px; color: var(--brand-orange);"></i>
+          <div style="font-size: 28px; font-weight: 800; margin-top: 14px; color: var(--brand-forest);">オンラインチェックイン</div>
+          <div style="font-size: 24px; color: var(--brand-muted-text); margin-top: 6px; line-height: 1.4;">事前登録 / セルフチェックイン</div>
+        </div>
+        <div class="card" style="padding: 24px;">
+          <i class="ph-duotone ph-house-line" style="font-size: 38px; color: var(--brand-orange);"></i>
+          <div style="font-size: 28px; font-weight: 800; margin-top: 14px; color: var(--brand-forest);">宿泊管理</div>
+          <div style="font-size: 24px; color: var(--brand-muted-text); margin-top: 6px; line-height: 1.4;">客室管理 / 清掃 / コンシェルジュ</div>
+        </div>
+        <div class="card" style="padding: 24px;">
+          <i class="ph-duotone ph-chart-bar" style="font-size: 38px; color: var(--brand-orange);"></i>
+          <div style="font-size: 28px; font-weight: 800; margin-top: 14px; color: var(--brand-forest);">会計・経営分析</div>
+          <div style="font-size: 24px; color: var(--brand-muted-text); margin-top: 6px; line-height: 1.4;">ナイトオーディット / レポート</div>
+        </div>
+      </div>
+
+      <!-- Plus CRM/Marketing -->
+      <div style="margin: 36px 30px 0; padding: 28px 36px; background: var(--brand-orange-pale); border-radius: 16px; display:flex; align-items:center; gap: 28px;">
+        <div style="background: var(--brand-orange); color: white; padding: 12px 28px; border-radius: 9999px; font-size: 26px; font-weight: 800;">加えて！</div>
+        <div style="font-size: 32px; font-weight: 700; color: var(--brand-forest);">CRM / マーケティング / レベニューマネジメント もすべて統合</div>
+      </div>
+    </div>
+    <div class="slide-footer"><div class="logo-mark">WASIMIL</div><div>06 / 17</div></div>
+  </section>
+
+  <!-- ===================================================== -->
+  <!-- 07 — AI Agent layer (90% automation)                   -->
+  <!-- ===================================================== -->
+  <section data-label="07 AIエージェント層" class="bg-forest">
+    <div class="slide-chrome slide-pad on-dark">
+      <div class="eyebrow" style="color: var(--brand-orange);">The Agent Layer</div>
+      <h1 class="title-l on-dark" style="color: white; max-width: 1700px;">
+        その上で、AIエージェントが<br>
+        バックオフィス業務の<span class="accent">90%</span>を自動化する。
+      </h1>
+
+      <div style="margin-top: 64px; display: grid; grid-template-columns: 1.1fr 1fr; gap: 64px; align-items:center;">
+        <!-- Stack diagram -->
+        <div>
+          <div style="border: 1px solid rgba(238, 118, 51, 0.5); border-radius: 16px; padding: 28px; background: rgba(238, 118, 51, 0.16);">
+            <div style="font-family: var(--font-ui); font-size: 24px; letter-spacing: 0.2em; color: var(--brand-orange); text-transform:uppercase; margin-bottom: 16px; font-weight: 700;">Agent Layer</div>
+            <div style="display:grid; grid-template-columns: 1fr 1fr; gap: 10px;">
+              <div style="background: var(--brand-orange); color: white; padding: 14px 18px; border-radius: 8px; font-size: 24px; font-weight: 700;">予約問い合わせ</div>
+              <div style="background: var(--brand-orange); color: white; padding: 14px 18px; border-radius: 8px; font-size: 24px; font-weight: 700;">レベニュー最適化</div>
+              <div style="background: var(--brand-orange); color: white; padding: 14px 18px; border-radius: 8px; font-size: 24px; font-weight: 700;">清掃指示</div>
+              <div style="background: var(--brand-orange); color: white; padding: 14px 18px; border-radius: 8px; font-size: 24px; font-weight: 700;">ナイトオーディット</div>
+              <div style="background: var(--brand-orange); color: white; padding: 14px 18px; border-radius: 8px; font-size: 24px; font-weight: 700;">レビュー返信</div>
+              <div style="background: var(--brand-orange); color: white; padding: 14px 18px; border-radius: 8px; font-size: 24px; font-weight: 700;">多言語ゲスト対応</div>
+            </div>
+          </div>
+
+          <div style="text-align:center; padding: 12px 0; color: var(--brand-orange); font-size: 36px; font-weight: 800;">↓</div>
+
+          <div style="border: 1px solid rgba(159, 191, 187, 0.3); border-radius: 16px; padding: 28px; background: rgba(231, 239, 238, 0.06);">
+            <div style="font-family: var(--font-ui); font-size: 24px; letter-spacing: 0.2em; color: var(--brand-muted-green); text-transform:uppercase; margin-bottom: 16px; font-weight: 700;">Unified Data Platform</div>
+            <div style="display:grid; grid-template-columns: repeat(4, 1fr); gap: 8px;">
+              <div style="background: rgba(159, 191, 187, 0.16); color: white; padding: 12px; border-radius: 8px; font-size: 24px; text-align:center; font-weight: 600;">PMS</div>
+              <div style="background: rgba(159, 191, 187, 0.16); color: white; padding: 12px; border-radius: 8px; font-size: 24px; text-align:center; font-weight: 600;">CRM</div>
+              <div style="background: rgba(159, 191, 187, 0.16); color: white; padding: 12px; border-radius: 8px; font-size: 24px; text-align:center; font-weight: 600;">Booking</div>
+              <div style="background: rgba(159, 191, 187, 0.16); color: white; padding: 12px; border-radius: 8px; font-size: 24px; text-align:center; font-weight: 600;">Revenue</div>
+              <div style="background: rgba(159, 191, 187, 0.16); color: white; padding: 12px; border-radius: 8px; font-size: 24px; text-align:center; font-weight: 600;">Housekeeping</div>
+              <div style="background: rgba(159, 191, 187, 0.16); color: white; padding: 12px; border-radius: 8px; font-size: 24px; text-align:center; font-weight: 600;">Marketing</div>
+              <div style="background: rgba(159, 191, 187, 0.16); color: white; padding: 12px; border-radius: 8px; font-size: 24px; text-align:center; font-weight: 600;">Guest Portal</div>
+              <div style="background: rgba(159, 191, 187, 0.16); color: white; padding: 12px; border-radius: 8px; font-size: 24px; text-align:center; font-weight: 600;">Night Audit</div>
+            </div>
+          </div>
+        </div>
+
+        <div>
+          <div class="stat-number" style="color: var(--brand-orange); font-size: 280px;">90<span style="font-size: 120px;">%</span></div>
+          <div style="font-size: 32px; line-height: 1.5; color: white; margin-top: 24px; font-weight: 500;">
+            ホテルスタッフが<br>
+            <span style="color: var(--brand-orange); font-weight: 800;">「人間しかできない仕事」</span>に<br>
+            集中できる時間を取り戻す。
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="slide-footer on-dark"><div class="logo-mark">WASIMIL</div><div>07 / 17</div></div>
+  </section>
+
+  <!-- ===================================================== -->
+  <!-- 08 — Demo: Inquiry agent                              -->
+  <!-- ===================================================== -->
+  <section data-label="08 デモ:予約問い合わせ" class="bg-sage-white">
+    <div class="slide-chrome" style="padding: 76px 100px 100px;">
+      <div style="display:flex; justify-content:space-between; align-items:flex-end; margin-bottom: 36px;">
+        <div>
+          <div class="eyebrow" style="margin-bottom: 14px;">Demo · Agent 01</div>
+          <h1 class="title-m">予約問い合わせ対応エージェント</h1>
+        </div>
+        <div class="pill orange">24/7 · 12言語対応</div>
+      </div>
+
+      <div style="display:grid; grid-template-columns: 1.05fr 1fr; gap: 36px; height: 720px;">
+        <div style="border-radius: 16px; overflow: hidden; border: 1px solid var(--brand-sage-border); box-shadow: 0 18px 36px rgba(8,48,43,0.10);">
+          <img src="assets/app-reservation.png" style="width:100%; height:100%; object-fit: cover; object-position: top left;" alt="WASIMIL Reservation Card">
+        </div>
+
+        <div style="background: var(--brand-sage-card); border-radius: 16px; padding: 32px; display:flex; flex-direction: column; gap: 16px;">
+          <div style="font-size: 24px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--brand-muted-text); font-family: var(--font-ui); margin-bottom: 6px; font-weight: 700;">▸ Live · Booking.com inquiry</div>
+
+          <div style="background: white; border-radius: 14px 14px 14px 2px; padding: 18px 22px; max-width: 88%; align-self:flex-start;">
+            <div style="font-size: 24px; color: var(--brand-mid-green); font-weight: 800; margin-bottom: 6px;">GUEST · KR</div>
+            <div style="font-size: 24px; line-height: 1.5; color: var(--brand-forest);">3월 19일 1박 가능한가요? 더블룸으로 부탁드립니다.</div>
+          </div>
+
+          <div style="background: var(--brand-forest); color: white; border-radius: 14px 14px 2px 14px; padding: 18px 22px; max-width: 88%; align-self:flex-end;">
+            <div style="font-size: 24px; color: var(--brand-orange); font-weight: 800; margin-bottom: 6px;">WASIMIL AGENT</div>
+            <div style="font-size: 24px; line-height: 1.5;">3월 19일 더블 디럭스 1실 비어있습니다. 12,727엔(세후)로 가능하며, 지금 예약 확정 가능합니다.</div>
+          </div>
+
+          <div style="background: var(--brand-forest); color: white; border-radius: 14px 14px 2px 14px; padding: 18px 22px; max-width: 88%; align-self:flex-end;">
+            <div style="font-size: 24px; color: var(--brand-orange); font-weight: 800; margin-bottom: 6px;">WASIMIL AGENT · Action</div>
+            <div style="font-size: 24px; line-height: 1.5;">✓ 在庫確認 → ✓ 料金算出 → ✓ 予約作成 → ✓ 確認メール送信</div>
+          </div>
+
+          <div style="margin-top: auto; display:grid; grid-template-columns: 1fr 1fr; gap: 14px;">
+            <div style="background: white; padding: 18px 22px; border-radius: 12px;">
+              <div style="font-size: 24px; color: var(--brand-muted-text); letter-spacing: 0.12em; text-transform: uppercase; font-family: var(--font-ui); margin-bottom: 4px; font-weight: 700;">平均応答</div>
+              <div style="font-size: 44px; font-weight: 900; color: var(--brand-orange-deep);">12秒</div>
+            </div>
+            <div style="background: white; padding: 18px 22px; border-radius: 12px;">
+              <div style="font-size: 24px; color: var(--brand-muted-text); letter-spacing: 0.12em; text-transform: uppercase; font-family: var(--font-ui); margin-bottom: 4px; font-weight: 700;">自動成約率</div>
+              <div style="font-size: 44px; font-weight: 900; color: var(--brand-orange-deep);">68%</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="slide-footer" style="bottom: 28px;"><div class="logo-mark">WASIMIL</div><div>08 / 17</div></div>
+  </section>
+
+  <!-- ===================================================== -->
+  <!-- 09 — Demo: Revenue agent                              -->
+  <!-- ===================================================== -->
+  <section data-label="09 デモ:レベニュー" class="bg-sage">
+    <div class="slide-chrome" style="padding: 76px 100px 100px;">
+      <div style="display:flex; justify-content:space-between; align-items:flex-end; margin-bottom: 36px;">
+        <div>
+          <div class="eyebrow" style="margin-bottom: 14px;">Demo · Agent 02</div>
+          <h1 class="title-m">レベニューマネジメントエージェント</h1>
+        </div>
+        <div class="pill orange">毎時自動最適化</div>
+      </div>
+
+      <div style="display:grid; grid-template-columns: 1.05fr 1fr; gap: 36px; height: 720px;">
+        <div style="border-radius: 16px; overflow: hidden; border: 1px solid var(--brand-sage-border); box-shadow: 0 18px 36px rgba(8,48,43,0.10);">
+          <img src="assets/app-calendar.png" style="width:100%; height:100%; object-fit: cover;" alt="WASIMIL Occupancy Calendar">
+        </div>
+
+        <div style="display:flex; flex-direction: column; gap: 18px;">
+          <div style="background: white; border-radius: 14px; padding: 26px 30px; border: 1px solid var(--brand-sage-border);">
+            <div style="font-size: 24px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--brand-muted-text); font-family: var(--font-ui); margin-bottom: 12px; font-weight: 700;">Agent reasoning · 4月22日</div>
+            <div style="font-size: 26px; line-height: 1.5; color: var(--brand-forest);">
+              競合5施設の同日料金が<span style="font-weight:800; color:var(--brand-orange-deep);">+8%上昇</span>。<br>
+              天気予報・桜開花・近隣イベント需要から、<br>本日の料金を<span style="font-weight:800;">¥13,200 → ¥14,800</span>に引き上げ。
+            </div>
+          </div>
+
+          <div style="background: var(--brand-forest); color: white; border-radius: 14px; padding: 26px 30px;">
+            <div style="font-size: 24px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--brand-orange); font-family: var(--font-ui); margin-bottom: 12px; font-weight: 700;">✓ 自動実行</div>
+            <div style="font-size: 26px; line-height: 1.5; color: white;">
+              全OTA・直販に反映 / 30分後に予約2件追加 / RevPAR <span style="font-weight: 900; color: var(--brand-orange);">+11.4%</span>
+            </div>
+          </div>
+
+          <div style="margin-top: auto; display:grid; grid-template-columns: 1fr 1fr 1fr; gap: 14px;">
+            <div style="background: white; padding: 22px; border-radius: 12px; text-align:center;">
+              <div style="font-size: 48px; font-weight: 900; color: var(--brand-orange-deep);">+15%</div>
+              <div style="font-size: 24px; color: var(--brand-muted-text); margin-top: 4px;">RevPAR向上</div>
+            </div>
+            <div style="background: white; padding: 22px; border-radius: 12px; text-align:center;">
+              <div style="font-size: 48px; font-weight: 900; color: var(--brand-orange-deep);">24h</div>
+              <div style="font-size: 24px; color: var(--brand-muted-text); margin-top: 4px;">無人最適化</div>
+            </div>
+            <div style="background: white; padding: 22px; border-radius: 12px; text-align:center;">
+              <div style="font-size: 48px; font-weight: 900; color: var(--brand-orange-deep);">365日</div>
+              <div style="font-size: 24px; color: var(--brand-muted-text); margin-top: 4px;">継続稼働</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="slide-footer" style="bottom: 28px;"><div class="logo-mark">WASIMIL</div><div>09 / 17</div></div>
+  </section>
+
+  <!-- ===================================================== -->
+  <!-- 10 — Demo: Housekeeping & Night Audit                  -->
+  <!-- ===================================================== -->
+  <section data-label="10 デモ:清掃・監査" class="bg-sage-white">
+    <div class="slide-chrome" style="padding: 76px 100px 100px;">
+      <div style="display:flex; justify-content:space-between; align-items:flex-end; margin-bottom: 36px;">
+        <div>
+          <div class="eyebrow" style="margin-bottom: 14px;">Demo · Agent 03 & 04</div>
+          <h1 class="title-m">清掃指示 / ナイトオーディット</h1>
+        </div>
+        <div class="pill orange">バックオフィス完全自動</div>
+      </div>
+
+      <div style="display:grid; grid-template-columns: 1fr 1fr; gap: 32px; height: 720px;">
+        <!-- Housekeeping -->
+        <div class="card" style="display:flex; flex-direction: column;">
+          <div style="display:flex; align-items:center; gap: 16px; margin-bottom: 20px;">
+            <i class="ph-duotone ph-broom" style="font-size: 40px; color: var(--brand-orange);"></i>
+            <div style="font-size: 32px; font-weight: 800; color: var(--brand-forest);">Housekeeping Agent</div>
+          </div>
+
+          <div style="background: var(--brand-sage-card); border-radius: 12px; padding: 20px 22px; margin-bottom: 12px; display:flex; justify-content:space-between; align-items:center;">
+            <div>
+              <div style="font-size: 24px; color: var(--brand-muted-text); font-family: var(--font-ui); font-weight: 600;">Room 401 · Double Deluxe</div>
+              <div style="font-size: 26px; font-weight: 700; margin-top: 4px; color: var(--brand-forest);">11:00 OUT → 14:30 IN</div>
+            </div>
+            <div style="background: var(--brand-orange); color: white; padding: 8px 18px; border-radius: 9999px; font-size: 24px; font-weight: 800;">優先度 高</div>
+          </div>
+          <div style="background: var(--brand-sage-card); border-radius: 12px; padding: 20px 22px; margin-bottom: 12px;">
+            <div style="font-size: 24px; color: var(--brand-muted-text); font-family: var(--font-ui); font-weight: 600;">Room 203 · Large Double</div>
+            <div style="font-size: 26px; font-weight: 700; margin-top: 4px; color: var(--brand-forest);">連泊 → リネン交換のみ</div>
+          </div>
+          <div style="background: var(--brand-sage-card); border-radius: 12px; padding: 20px 22px;">
+            <div style="font-size: 24px; color: var(--brand-muted-text); font-family: var(--font-ui); font-weight: 600;">Room 503 · Suite</div>
+            <div style="font-size: 26px; font-weight: 700; margin-top: 4px; color: var(--brand-forest);">VIPゲスト → アメニティ追加指示</div>
+          </div>
+
+          <div style="margin-top: auto; padding-top: 24px; font-size: 26px; line-height: 1.5; color: var(--brand-forest);">
+            <span style="font-weight: 800;">予約・客室タイプ・ゲスト属性</span>から、<br>清掃順序と特記事項を自動で割り当て。
+          </div>
+        </div>
+
+        <!-- Night Audit -->
+        <div class="card-forest" style="display:flex; flex-direction: column;">
+          <div style="display:flex; align-items:center; gap: 16px; margin-bottom: 20px;">
+            <i class="ph-duotone ph-moon-stars" style="font-size: 40px; color: var(--brand-orange);"></i>
+            <div style="font-size: 32px; font-weight: 800; color: white;">Night Audit Agent</div>
+          </div>
+
+          <div style="font-family: var(--font-ui); font-size: 24px; color: var(--brand-orange); letter-spacing: 0.14em; margin-bottom: 20px; font-weight: 700;">02:00 · 自動実行ログ</div>
+
+          <div style="display:flex; flex-direction:column; gap: 12px; font-family: var(--font-ui); font-size: 24px;">
+            <div style="display:flex; align-items:center; gap: 14px;"><span style="color: var(--brand-orange); font-weight: 800;">✓</span> 当日売上集計 完了</div>
+            <div style="display:flex; align-items:center; gap: 14px;"><span style="color: var(--brand-orange); font-weight: 800;">✓</span> 未チェックインゲスト 3件 → ノーショー処理</div>
+            <div style="display:flex; align-items:center; gap: 14px;"><span style="color: var(--brand-orange); font-weight: 800;">✓</span> 日付ロール / 客室ステータス更新</div>
+            <div style="display:flex; align-items:center; gap: 14px;"><span style="color: var(--brand-orange); font-weight: 800;">✓</span> OTA / 会計システムへ連携 完了</div>
+            <div style="display:flex; align-items:center; gap: 14px;"><span style="color: var(--brand-orange); font-weight: 800;">✓</span> 異常値 1件検知 → スタッフ通知済</div>
+          </div>
+
+          <div style="margin-top: auto; padding-top: 28px;">
+            <div style="font-size: 26px; line-height: 1.5; color: var(--brand-soft-green);">
+              スタッフは朝、<span style="font-weight: 800; color: var(--brand-orange);">確認するだけ</span>。<br>夜勤フロントの常駐は不要に。
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="slide-footer" style="bottom: 28px;"><div class="logo-mark">WASIMIL</div><div>10 / 17</div></div>
+  </section>
+
+  <!-- ===================================================== -->
+  <!-- 11 — Demo: Reviews & Multilingual                      -->
+  <!-- ===================================================== -->
+  <section data-label="11 デモ:レビュー・多言語" class="bg-sage">
+    <div class="slide-chrome" style="padding: 76px 100px 100px;">
+      <div style="display:flex; justify-content:space-between; align-items:flex-end; margin-bottom: 36px;">
+        <div>
+          <div class="eyebrow" style="margin-bottom: 14px;">Demo · Agent 05 & 06</div>
+          <h1 class="title-m">レビュー返信 / 多言語ゲスト対応</h1>
+        </div>
+        <div class="pill orange">EN · ZH · KR · TH · FR · DE...</div>
+      </div>
+
+      <div style="display:grid; grid-template-columns: 1fr 1fr; gap: 32px; height: 720px;">
+        <!-- Review reply -->
+        <div class="card" style="display:flex; flex-direction: column; gap: 16px;">
+          <div style="display:flex; align-items:center; gap: 16px;">
+            <i class="ph-duotone ph-star" style="font-size: 40px; color: var(--brand-orange);"></i>
+            <div style="font-size: 32px; font-weight: 800; color: var(--brand-forest);">Review Reply Agent</div>
+          </div>
+
+          <div style="background: var(--brand-sage-white); border-left: 4px solid var(--brand-orange); padding: 20px 24px; border-radius: 6px;">
+            <div style="font-size: 24px; font-family: var(--font-ui); color: var(--brand-muted-text); letter-spacing: 0.14em; text-transform: uppercase; font-weight: 700;">★ ★ ★ ★ ★ · Booking.com · EN</div>
+            <div style="font-size: 24px; line-height: 1.5; margin-top: 8px; color: var(--brand-forest);">"Beautiful room and the staff was incredibly kind. The check-in took a bit long though."</div>
+          </div>
+
+          <div style="background: var(--brand-forest); color: white; padding: 22px 24px; border-radius: 12px;">
+            <div style="font-size: 24px; font-family: var(--font-ui); color: var(--brand-orange); letter-spacing: 0.14em; text-transform: uppercase; margin-bottom: 8px; font-weight: 700;">Drafted reply · 自動生成</div>
+            <div style="font-size: 24px; line-height: 1.55; color: white;">
+              "Thank you for your kind words about our team! We are sorry your check-in took longer than expected — we are introducing self-check-in next month..."
+            </div>
+          </div>
+
+          <div style="margin-top: auto; padding-top: 12px; font-size: 24px; line-height: 1.5; color: var(--brand-forest);">
+            <span style="font-weight: 800;">過去のゲスト履歴・運営状況</span>を踏まえ、ホテルのトーンに合わせた返信を起案 → 承認するだけ。
+          </div>
+        </div>
+
+        <!-- Multilingual -->
+        <div class="card" style="display:flex; flex-direction: column;">
+          <div style="display:flex; align-items:center; gap: 16px; margin-bottom: 20px;">
+            <i class="ph-duotone ph-translate" style="font-size: 40px; color: var(--brand-orange);"></i>
+            <div style="font-size: 32px; font-weight: 800; color: var(--brand-forest);">Guest Concierge Agent</div>
+          </div>
+
+          <div style="display:flex; flex-direction:column; gap: 12px;">
+            <div style="background: var(--brand-sage-card); padding: 16px 22px; border-radius: 12px;">
+              <div style="font-size: 24px; color: var(--brand-mid-green); font-family: var(--font-ui); font-weight: 800;">🇨🇳 中国語</div>
+              <div style="font-size: 24px; margin-top: 4px; color: var(--brand-forest);">附近有什么好的拉面店？</div>
+            </div>
+            <div style="background: var(--brand-sage-card); padding: 16px 22px; border-radius: 12px;">
+              <div style="font-size: 24px; color: var(--brand-mid-green); font-family: var(--font-ui); font-weight: 800;">🇹🇭 タイ語</div>
+              <div style="font-size: 24px; margin-top: 4px; color: var(--brand-forest);">ฝากกระเป๋าได้ไหมครับ?</div>
+            </div>
+            <div style="background: var(--brand-sage-card); padding: 16px 22px; border-radius: 12px;">
+              <div style="font-size: 24px; color: var(--brand-mid-green); font-family: var(--font-ui); font-weight: 800;">🇫🇷 フランス語</div>
+              <div style="font-size: 24px; margin-top: 4px; color: var(--brand-forest);">Le petit-déjeuner est-il inclus?</div>
+            </div>
+          </div>
+
+          <div style="margin-top: 24px; background: var(--brand-orange); color: white; padding: 22px 24px; border-radius: 12px;">
+            <div style="font-size: 24px; font-family: var(--font-ui); letter-spacing: 0.14em; text-transform: uppercase; opacity: 0.92; margin-bottom: 6px; font-weight: 700;">Agent 同時対応</div>
+            <div style="font-size: 26px; line-height: 1.5;">予約情報・館内情報・周辺観光まで把握。<span style="font-weight: 800;">スタッフ介在ゼロ</span>で完結。</div>
+          </div>
+
+          <div style="margin-top: auto; padding-top: 20px; display:grid; grid-template-columns: 1fr 1fr; gap: 14px;">
+            <div style="background: var(--brand-sage-white); padding: 18px; border-radius: 10px; text-align:center;">
+              <div style="font-size: 40px; font-weight: 900; color: var(--brand-orange-deep);">12</div>
+              <div style="font-size: 24px; font-family: var(--font-ui); color: var(--brand-muted-text);">対応言語</div>
+            </div>
+            <div style="background: var(--brand-sage-white); padding: 18px; border-radius: 10px; text-align:center;">
+              <div style="font-size: 40px; font-weight: 900; color: var(--brand-orange-deep);">94%</div>
+              <div style="font-size: 24px; font-family: var(--font-ui); color: var(--brand-muted-text);">一次解決率</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="slide-footer" style="bottom: 28px;"><div class="logo-mark">WASIMIL</div><div>11 / 17</div></div>
+  </section>
+
+  <!-- ===================================================== -->
+  <!-- 12 — Why only us                                       -->
+  <!-- ===================================================== -->
+  <section data-label="12 なぜWASIMILだけ" class="bg-sage-white">
+    <div class="slide-chrome slide-pad">
+      <div class="eyebrow">Defensibility</div>
+      <h1 class="title-l" style="max-width: 1700px;">
+        なぜ<span class="hl-yellow accent">"今"</span>、WASIMILだけが<br>これを実現できるのか。
+      </h1>
+
+      <div style="margin-top: 56px;">
+        <div class="numbered-item">
+          <div class="num">01</div>
+          <div style="flex: 1;">
+            <div class="label">オールインワンの<span style="color: var(--brand-orange-deep);">コンパウンド</span>な統合データ基盤を、すでに持っている。</div>
+            <div class="desc">PMS・予約・CRM・清掃・経理が単一スキーマで繋がっているのは、業界で唯一。AIエージェントの土台になる。</div>
+          </div>
+        </div>
+        <div class="numbered-item">
+          <div class="num">02</div>
+          <div style="flex: 1;">
+            <div class="label">日本のホテルオペレーションに、<span style="color: var(--brand-orange-deep);">5年以上</span>の運用知見。</div>
+            <div class="desc">150施設・国内特有の商習慣（OTA構成・税制・業界用語）を学習済み。エージェントの精度はデータと文脈で決まる。</div>
+          </div>
+        </div>
+        <div class="numbered-item">
+          <div class="num">03</div>
+          <div style="flex: 1;">
+            <div class="label">既存PMSへの後付けでは<span style="color: var(--brand-orange-deep);">構造的に不可能</span>。</div>
+            <div class="desc">分断されたデータの上にエージェントを乗せても、清掃・レベニュー・夜間監査まで自律実行はできない。これが堀。</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="slide-footer"><div class="logo-mark">WASIMIL</div><div>12 / 17</div></div>
+  </section>
+
+  <!-- ===================================================== -->
+  <!-- 13 — Traction (canva-style hero number + screenshots)  -->
+  <!-- ===================================================== -->
+  <section data-label="13 トラクション" class="bg-sage-white">
+    <div class="slide-chrome slide-pad">
+      <div class="eyebrow">Traction</div>
+      <h1 class="title-l" style="max-width: 1700px;">
+        日本のホテル運営の<span class="hl-yellow">第一線</span>で、<br>すでに動いている。
+      </h1>
+
+      <div style="margin-top: 56px; display:grid; grid-template-columns: 1.4fr 1fr 1fr; gap: 28px; align-items: stretch;">
+        <!-- Hero stat -->
+        <div class="card-orange" style="display:flex; flex-direction:column; justify-content: space-between; padding: 40px;">
+          <div>
+            <div style="font-family: var(--font-ui); font-size: 24px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--brand-mid-green); font-weight: 700;">Hotels live on WASIMIL</div>
+          </div>
+          <div>
+            <div class="stat-number" style="font-size: 240px; line-height: 0.9;">150<span style="font-size: 90px;">+</span></div>
+            <div style="font-size: 32px; font-weight: 800; margin-top: 24px; color: var(--brand-forest);">導入施設数</div>
+            <div class="body-s muted" style="margin-top: 6px;">大手チェーンから個人運営まで、全国で稼働中</div>
+          </div>
+        </div>
+
+        <div class="card" style="display:flex; flex-direction: column; justify-content: space-between;">
+          <div style="font-family: var(--font-ui); font-size: 24px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--brand-mid-green); font-weight: 700;">Automation</div>
+          <div>
+            <div class="stat-number" style="font-size: 160px;">90<span style="font-size: 70px;">%</span></div>
+            <div style="font-size: 28px; font-weight: 800; margin-top: 10px; color: var(--brand-forest);">バックオフィス自動化率</div>
+            <div class="body-s muted" style="margin-top: 6px;">手作業を大幅に削減</div>
+          </div>
+        </div>
+
+        <div class="card-forest" style="display:flex; flex-direction: column; justify-content: space-between;">
+          <div style="font-family: var(--font-ui); font-size: 24px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--brand-orange); font-weight: 700;">Funding</div>
+          <div>
+            <div style="font-family: var(--font-brand); font-size: 96px; font-weight: 900; line-height: 1; color: white;">Series A</div>
+            <div style="font-size: 28px; font-weight: 800; margin-top: 10px; color: white;">調達済</div>
+            <div style="font-size: 24px; color: var(--brand-muted-green); margin-top: 6px;">国内主要VCが既に出資</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Voice card -->
+      <div style="margin-top: 32px; padding: 24px 32px; background: var(--brand-orange-pale); border-radius: 16px; display:flex; align-items:center; gap: 24px;">
+        <i class="ph-fill ph-quotes" style="font-size: 44px; color: var(--brand-orange);"></i>
+        <div>
+          <div style="font-size: 26px; line-height: 1.45; color: var(--brand-forest); font-weight: 600;">「夜勤スタッフが要らなくなった。月70時間以上の業務がエージェントで消えた。」</div>
+          <div style="margin-top: 6px; font-family: var(--font-ui); font-size: 24px; color: var(--brand-muted-text); letter-spacing: 0.12em; font-weight: 600;">— 都内ビジネスホテル / 総支配人</div>
+        </div>
+      </div>
+    </div>
+    <div class="slide-footer"><div class="logo-mark">WASIMIL</div><div>13 / 17</div></div>
+  </section>
+
+  <!-- ===================================================== -->
+  <!-- 14 — Market opportunity                                -->
+  <!-- ===================================================== -->
+  <section data-label="14 市場機会" class="bg-sage">
+    <div class="slide-chrome slide-pad">
+      <div class="eyebrow">Market Opportunity</div>
+      <h1 class="title-l" style="max-width: 1700px;">
+        日本の宿泊市場 × インバウンド成長 ×<br>
+        労働力不足 = <span class="hl-yellow accent">巨大な追い風</span>。
+      </h1>
+
+      <div style="margin-top: 64px; display:grid; grid-template-columns: 1.2fr 1fr 1fr; gap: 28px;">
+        <div class="card">
+          <div style="font-family: var(--font-ui); font-size: 24px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--brand-mid-green); margin-bottom: 12px; font-weight: 700;">TAM · 日本</div>
+          <div style="font-size: 84px; font-weight: 900; color: var(--brand-forest); line-height: 1; letter-spacing: -0.02em;">¥4,800億</div>
+          <div class="body-s muted" style="margin-top: 16px;">国内ホテル運営テック市場 / 約55,000施設×ARPA換算</div>
+        </div>
+        <div class="card">
+          <div style="font-family: var(--font-ui); font-size: 24px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--brand-mid-green); margin-bottom: 12px; font-weight: 700;">SAM</div>
+          <div style="font-size: 84px; font-weight: 900; color: var(--brand-forest); line-height: 1;">¥1,200億</div>
+          <div class="body-s muted" style="margin-top: 16px;">中規模以上の宿泊施設 / オールインワン適合層</div>
+        </div>
+        <div class="card-orange" style="background: var(--brand-orange);">
+          <div style="font-family: var(--font-ui); font-size: 24px; letter-spacing: 0.18em; text-transform: uppercase; color: rgba(255,255,255,0.9); margin-bottom: 12px; font-weight: 700;">SOM · 3年</div>
+          <div style="font-size: 84px; font-weight: 900; color: white; line-height: 1;">¥120億</div>
+          <div class="body-s" style="margin-top: 16px; color: rgba(255,255,255,0.95);">2,000施設導入 / ARPA約60万円</div>
+        </div>
+      </div>
+
+      <div style="margin-top: 56px; display:flex; gap: 20px; flex-wrap: wrap;">
+        <div class="pill"><i class="ph-fill ph-airplane-tilt" style="color: var(--brand-orange);"></i> 訪日3,500万人 → 6,000万人(2030政府目標)</div>
+        <div class="pill"><i class="ph-fill ph-users" style="color: var(--brand-orange);"></i> 宿泊業就業者 ▲23%予測</div>
+        <div class="pill"><i class="ph-fill ph-globe-hemisphere-east" style="color: var(--brand-orange);"></i> アジア太平洋への横展開も視野</div>
+      </div>
+    </div>
+    <div class="slide-footer"><div class="logo-mark">WASIMIL</div><div>14 / 17</div></div>
+  </section>
+
+  <!-- ===================================================== -->
+  <!-- 15 — Vision                                            -->
+  <!-- ===================================================== -->
+  <section data-label="15 ビジョン" class="bg-forest">
+    <div class="slide-chrome slide-pad on-dark">
+      <div class="eyebrow" style="color: var(--brand-orange);">Vision</div>
+      <h1 class="title-xl on-dark" style="color: white; max-width: 1700px;">
+        「ホテル運営は<br>
+        <span class="accent">AIに任せる</span>」が、<br>
+        当たり前になる世界へ。
+      </h1>
+      <p class="body-l" style="margin-top: 56px; max-width: 1500px; color: var(--brand-muted-green);">
+        スタッフは"おもてなし"に専念し、経営者は意思決定に専念する。<br>
+        WASIMILは、<span style="color: white; font-weight: 800;">観光立国・地方創生のインフラ</span>になる。
+      </p>
+    </div>
+    <div class="slide-footer on-dark"><div class="logo-mark">WASIMIL</div><div>15 / 17</div></div>
+  </section>
+
+  <!-- ===================================================== -->
+  <!-- 16 — Team                                              -->
+  <!-- ===================================================== -->
+  <section data-label="16 チーム" class="bg-sage-white">
+    <div class="slide-chrome slide-pad">
+      <div class="eyebrow">Team</div>
+      <h1 class="title-l" style="max-width: 1700px;">
+        ホテル × SaaS × AIを<br>
+        実装してきたチーム。
+      </h1>
+
+      <div style="margin-top: 64px; display:grid; grid-template-columns: repeat(3, 1fr); gap: 28px;">
+        <div class="card">
+          <div style="width: 80px; height: 80px; border-radius: 50%; background: var(--brand-forest); color: white; display:flex; align-items:center; justify-content:center; font-size: 28px; font-weight: 900; font-family: var(--font-ui);">CEO</div>
+          <div style="font-size: 30px; font-weight: 800; margin-top: 24px; color: var(--brand-forest);">[Founder Name]</div>
+          <div style="font-size: 24px; color: var(--brand-muted-text); margin-top: 4px; font-family: var(--font-ui); letter-spacing: 0.06em; font-weight: 600;">CEO · Co-founder</div>
+          <div class="body-s muted" style="margin-top: 16px;">元ホテル運営、PMS導入を国内100施設超で経験。観光業のリアルを知るオペレーター。</div>
+        </div>
+        <div class="card">
+          <div style="width: 80px; height: 80px; border-radius: 50%; background: var(--brand-forest); color: white; display:flex; align-items:center; justify-content:center; font-size: 28px; font-weight: 900; font-family: var(--font-ui);">CTO</div>
+          <div style="font-size: 30px; font-weight: 800; margin-top: 24px; color: var(--brand-forest);">[CTO Name]</div>
+          <div style="font-size: 24px; color: var(--brand-muted-text); margin-top: 4px; font-family: var(--font-ui); letter-spacing: 0.06em; font-weight: 600;">CTO · Co-founder</div>
+          <div class="body-s muted" style="margin-top: 16px;">大規模SaaS基盤の設計経験。LLM/エージェントアーキテクチャを率いる。</div>
+        </div>
+        <div class="card">
+          <div style="width: 80px; height: 80px; border-radius: 50%; background: var(--brand-forest); color: white; display:flex; align-items:center; justify-content:center; font-size: 28px; font-weight: 900; font-family: var(--font-ui);">COO</div>
+          <div style="font-size: 30px; font-weight: 800; margin-top: 24px; color: var(--brand-forest);">[COO Name]</div>
+          <div style="font-size: 24px; color: var(--brand-muted-text); margin-top: 4px; font-family: var(--font-ui); letter-spacing: 0.06em; font-weight: 600;">COO</div>
+          <div class="body-s muted" style="margin-top: 16px;">国内エンタープライズ営業を率い、150施設導入を実現。GTMの再現性を確立。</div>
+        </div>
+      </div>
+
+      <div style="margin-top: 36px; padding: 22px 32px; background: var(--brand-orange-pale); border-radius: 14px; font-size: 26px; color: var(--brand-forest); display:flex; align-items:center; gap: 20px; font-weight: 600;">
+        <i class="ph-duotone ph-users-three" style="font-size: 36px; color: var(--brand-orange);"></i>
+        <div>合計 <span style="font-weight: 900;">42名</span> · 元PMS / 元ホテル運営 / 元LLM研究者 / 多国籍エンジニアチーム</div>
+      </div>
+    </div>
+    <div class="slide-footer"><div class="logo-mark">WASIMIL</div><div>16 / 17</div></div>
+  </section>
+
+  <!-- ===================================================== -->
+  <!-- 17 — Closing                                           -->
+  <!-- ===================================================== -->
+  <section data-label="17 クロージング" class="bg-sage-white">
+    <div class="blob orange" style="width: 480px; height: 480px; top: -100px; right: -100px; opacity: 0.92;"></div>
+    <div class="blob yellow" style="width: 200px; height: 200px; bottom: 280px; left: 100px; opacity: 0.9;"></div>
+    <div class="blob forest" style="width: 220px; height: 220px; top: 120px; right: 320px; opacity: 0.92;"></div>
+
+    <div class="slide-chrome" style="padding: 96px 110px;">
+      <div style="position: relative; z-index: 2; display:flex; justify-content:space-between; align-items:flex-start;">
+        <div class="wordmark" style="font-size: 36px; letter-spacing: 0.18em;">WASIMIL</div>
+        <div style="font-family: var(--font-ui); font-size: 24px; letter-spacing: 0.18em; color: var(--brand-muted-text); text-transform: uppercase;">Thank you</div>
+      </div>
+
+      <div style="position: relative; z-index: 2; margin-top: 100px; max-width: 1700px;">
+        <div class="ribbon" style="margin-bottom: 56px;">Let's build the future together</div>
+        <h1 class="title-xxl" style="font-size: 132px;">
+          ホテル運営を、<br>
+          <span class="hl-yellow accent">AIに委ねる側</span>に<br>
+          なりませんか。
+        </h1>
+      </div>
+
+      <div style="position:absolute; left: 110px; right: 110px; bottom: 90px; display:grid; grid-template-columns: 1fr 1fr 1fr; gap: 36px; z-index: 2;">
+        <div>
+          <div style="font-family: var(--font-ui); font-size: 24px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--brand-muted-text); margin-bottom: 8px; font-weight: 700;">Web</div>
+          <div style="font-size: 28px; color: var(--brand-forest); font-weight: 800;">wasimil.com</div>
+        </div>
+        <div>
+          <div style="font-family: var(--font-ui); font-size: 24px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--brand-muted-text); margin-bottom: 8px; font-weight: 700;">Company</div>
+          <div style="font-size: 28px; color: var(--brand-forest); font-weight: 800;">株式会社AZOO</div>
+        </div>
+        <div>
+          <div style="font-family: var(--font-ui); font-size: 24px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--brand-muted-text); margin-bottom: 8px; font-weight: 700;">Social</div>
+          <div style="font-size: 28px; color: var(--brand-forest); font-weight: 800;">@Wasimil_Japan</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</deck-stage>
+
+<script src="deck-stage.js"></script>
+
+<!-- Tweaks -->
+<script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
+<script type="text/babel" src="tweaks-panel.jsx"></script>
+<script type="text/babel" src="slides/tweaks-app.jsx"></script>
+
+</body>
+</html>
