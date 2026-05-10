@@ -12,7 +12,7 @@ export default function AboutPage() {
         <div className="absolute inset-0 bg-gradient-to-b from-black/10 via-transparent to-black/50" />
         <div className="relative z-10 h-full max-w-content mx-auto px-5 md:px-10 flex flex-col justify-end pb-20 text-cream">
           <Eyebrow tone="light">私たちの哲学</Eyebrow>
-          <h1 className="mt-5 h-display text-5xl md:text-6xl">solum kyotoについて</h1>
+          <h1 className="mt-5 h-display text-5xl md:text-6xl">solmu kyotoについて</h1>
         </div>
       </section>
 
@@ -47,7 +47,7 @@ export default function AboutPage() {
             }
           />
           <div className="space-y-5 text-[14px] md:text-[15px] text-mid leading-relaxed">
-            <p>海外資本のホテルのように観光名所へ誘うのではなく、solum kyotoは「生きた紹介装置」として機能します——地元の人々と旅人が予期せぬ出会いを紡ぐ場所として。</p>
+            <p>海外資本のホテルのように観光名所へ誘うのではなく、solmu kyotoは「生きた紹介装置」として機能します——地元の人々と旅人が予期せぬ出会いを紡ぐ場所として。</p>
             <p>両施設は下京区と中京区に位置します。寺院巡りや観光バスの京都ではなく、町のパン屋、老舗の織物工房、四代続く豆腐屋のある、京都の日常の中に。</p>
             <p>ゲストはホテルを通じて街に出会い、街を通じてホテルを記憶する。</p>
           </div>

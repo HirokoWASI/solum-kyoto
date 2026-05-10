@@ -109,7 +109,7 @@ export default function AreaPage() {
           </div>
           <div className="mt-4 flex gap-3 text-[11px]">
             <span className="inline-flex items-center gap-2 bg-charcoal text-cream px-3 py-1.5">
-              <span className="w-2 h-2 rounded-full bg-earth" /> solum ホテル
+              <span className="w-2 h-2 rounded-full bg-earth" /> solmu ホテル
             </span>
             <span className="inline-flex items-center gap-2 bg-cream border border-light-line text-charcoal px-3 py-1.5">
               <span className="w-2 h-2 rounded-full bg-accent-red" /> 観光スポット

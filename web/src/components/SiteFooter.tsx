@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { FOOTER_NAV, SITE } from "@/lib/site";
+import { Logo } from "@/components/Logo";
 
 // グローバルフッタ。サイト全体の導線とブランド情報。
 export function SiteFooter() {
@@ -7,8 +8,8 @@ export function SiteFooter() {
     <footer className="mt-32 bg-charcoal text-cream">
       <div className="max-w-content mx-auto px-5 md:px-10 py-20 grid gap-12 md:grid-cols-12">
         <div className="md:col-span-4">
-          <div className="font-serif text-2xl tracking-[0.18em]">{SITE.brandJa}</div>
-          <div className="h-latin text-sm text-cream/60 mt-1">{SITE.brandLatin}</div>
+          {/* フルロゴ（モノグラム + ワードマーク + サブタイトル） */}
+          <Logo variant="full" className="h-32 w-auto text-cream" alt={SITE.brandJa} />
           <p className="mt-6 text-[13px] text-cream/70 leading-relaxed max-w-sm">
             京都・下京に点在する小さな宿。
             町家と路地のかたちを残し、暮らすように泊まる、静かな滞在を。

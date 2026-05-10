@@ -1,8 +1,10 @@
 // サイト全体で使う定数とナビゲーション定義
+// 公式ロゴ表記に合わせ "solmu kyoto" を採用。所在地サブタイトルは "shijo karasuma"。
 export const SITE = {
-  brandJa: "solum kyoto",
+  brandJa: "solmu kyoto",
   brandKana: "ソルム キョウト",
-  brandLatin: "SOLUM KYOTO",
+  brandLatin: "SOLMU KYOTO",
+  brandSub: "shijo karasuma",
   tagline: "京都に潜む、静謐の旅",
   copyright: "© Imai Kensetsu Co., Ltd. All rights reserved.",
 } as const;
