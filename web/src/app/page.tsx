@@ -5,6 +5,7 @@ import { SectionHeading } from "@/components/SectionHeading";
 import { Eyebrow } from "@/components/Eyebrow";
 import { HeroSlideshow } from "@/components/HeroSlideshow";
 import { IMG } from "@/lib/assets";
+import { CalendarCheck } from "@/components/BrandIcons";
 
 // 01 ホーム / route: "/"
 export default function HomePage() {
@@ -241,7 +242,10 @@ export default function HomePage() {
       <section id="book" className="bg-charcoal text-cream">
         <div className="max-w-content mx-auto px-5 md:px-10 py-20 md:py-24 grid md:grid-cols-12 gap-8 items-center">
           <div className="md:col-span-7">
-            <Eyebrow tone="light">予約</Eyebrow>
+            <div className="flex items-center gap-3">
+              <CalendarCheck className="w-8 h-8 text-cream/85" />
+              <Eyebrow tone="light">予約</Eyebrow>
+            </div>
             <h2 className="mt-5 h-display text-3xl md:text-5xl">
               静かな京都の夜を、
               <br />
