@@ -1,44 +1,60 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 680" fill="none" role="img" aria-label="solmu kyoto / shijo karasuma">
-  <!-- 透過背景。色は currentColor で外側から制御。 -->
-  <g stroke="currentColor" stroke-width="5" stroke-linecap="round" stroke-linejoin="round" fill="none">
-    <!-- メインのSストローク -->
-    <path d="M 200 110
-             C 200 70, 250 50, 300 50
-             C 360 50, 400 80, 400 120
-             C 400 170, 340 195, 290 205
-             C 230 215, 190 250, 190 295
-             C 190 345, 230 380, 290 390
-             C 350 400, 410 425, 410 480
-             C 410 530, 360 560, 305 560
-             C 250 560, 205 540, 195 510" />
-    <!-- 上の装飾ループ -->
-    <path d="M 200 110
-             C 175 95, 175 70, 200 60
-             C 230 50, 260 75, 245 100
-             C 235 115, 215 115, 205 105" />
-    <!-- 中央の交差ライン -->
-    <path d="M 215 290
-             C 270 270, 330 270, 385 295" opacity="0.55" />
-    <!-- 下の装飾ループ -->
-    <path d="M 410 480
-             C 435 495, 435 525, 410 535
-             C 380 545, 350 525, 360 500
-             C 368 488, 388 488, 395 498" />
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 760" fill="none" role="img" aria-label="solmu kyoto / shijo karasuma">
+  <!--
+    暫定ロゴ（本物の画像が手元にないため近似）。
+    本番では web/public/logo.svg をブランドオリジナルに差し替えてください。
+    色は currentColor で外側から制御しています。
+  -->
+  <g stroke="currentColor" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round" fill="none">
+    <!-- メインの連続S字ストローク -->
+    <path d="
+      M 200 140
+      C 200 90, 250 60, 305 60
+      C 365 60, 405 90, 405 130
+      C 405 175, 360 195, 305 200
+      C 240 206, 195 235, 195 295
+      C 195 350, 250 380, 310 386
+      C 380 393, 420 425, 420 475
+      C 420 530, 365 560, 305 560
+      C 245 560, 200 540, 195 510
+    "/>
+
+    <!-- 上の閉ループ（カリグラフィックな返し） -->
+    <path d="
+      M 200 140
+      C 175 130, 165 105, 180 90
+      C 200 70, 235 80, 245 105
+      C 252 122, 240 138, 220 138
+      C 208 138, 200 130, 200 140 Z
+    " />
+
+    <!-- 中央の交差ストローク -->
+    <path d="
+      M 210 295
+      C 270 270, 340 270, 395 300
+    " opacity="0.55" />
+
+    <!-- 下の閉ループ（小さめ） -->
+    <path d="
+      M 420 475
+      C 445 475, 460 495, 450 515
+      C 438 535, 408 535, 398 515
+      C 388 498, 405 485, 420 490
+    " />
   </g>
 
   <!-- ワードマーク -->
   <g fill="currentColor">
-    <text x="300" y="618"
-          text-anchor="middle"
-          font-family="'Cormorant Garamond', Georgia, 'Times New Roman', serif"
-          font-size="68"
-          font-weight="300"
-          letter-spacing="2">solmu kyoto</text>
     <text x="300" y="660"
           text-anchor="middle"
-          font-family="-apple-system, 'Segoe UI', 'Helvetica Neue', Avenir, sans-serif"
-          font-size="22"
+          font-family="'Cormorant Garamond', Georgia, 'Times New Roman', serif"
+          font-size="80"
           font-weight="300"
-          letter-spacing="3.5">shijo karasuma</text>
+          letter-spacing="2.2">solmu kyoto</text>
+    <text x="300" y="710"
+          text-anchor="middle"
+          font-family="-apple-system, 'Segoe UI', 'Helvetica Neue', Avenir, sans-serif"
+          font-size="28"
+          font-weight="300"
+          letter-spacing="5">shijo karasuma</text>
   </g>
 </svg>
