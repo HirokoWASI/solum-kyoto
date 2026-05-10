@@ -1,22 +1,33 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 280" fill="none" role="img" aria-label="solmu kyoto monogram">
-  <!-- 透過背景 / Sマークのみ。currentColor で着色。 -->
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 280 320" fill="none" role="img" aria-label="solmu kyoto monogram">
+  <!--
+    Sマーク単体（暫定）。本物の画像に差し替える場合は同パスで上書き。
+    color は currentColor で制御。
+  -->
   <g stroke="currentColor" stroke-width="6" stroke-linecap="round" stroke-linejoin="round" fill="none">
-    <path d="M 60 50
-             C 60 25, 90 12, 120 12
-             C 156 12, 180 30, 180 54
-             C 180 84, 144 99, 114 105
-             C 78 111, 54 132, 54 159
-             C 54 189, 78 210, 114 216
-             C 150 222, 186 237, 186 270" transform="scale(1) translate(0 0)" />
-    <path d="M 60 50
-             C 45 41, 45 26, 60 20
-             C 78 14, 96 29, 87 44
-             C 81 53, 69 53, 63 47" />
-    <path d="M 186 230
-             C 201 239, 201 257, 186 263
-             C 168 269, 150 257, 159 242
-             C 165 234, 177 234, 183 240" />
-    <path d="M 65 130
-             C 98 118, 142 118, 175 132" opacity="0.5" />
+    <path d="
+      M 90 55
+      C 90 30, 115 17, 142 17
+      C 174 17, 192 32, 192 52
+      C 192 76, 169 86, 142 89
+      C 110 92, 87 106, 87 134
+      C 87 162, 110 178, 142 181
+      C 175 184, 196 200, 196 224
+      C 196 250, 169 264, 142 264
+      C 115 264, 92 254, 90 240
+    " />
+    <path d="
+      M 90 55
+      C 78 50, 73 38, 80 30
+      C 90 20, 108 25, 114 38
+      C 117 47, 112 56, 102 56
+      C 96 56, 90 52, 90 55 Z
+    " />
+    <path d="M 96 134 C 130 122, 165 122, 195 134" opacity="0.55" />
+    <path d="
+      M 196 224
+      C 208 224, 215 234, 211 244
+      C 205 254, 191 254, 187 244
+      C 182 235, 192 230, 198 232
+    " />
   </g>
 </svg>
