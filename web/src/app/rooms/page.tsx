@@ -1,7 +1,9 @@
 import Link from "next/link";
-import { Placeholder, Icon } from "@/components/Placeholder";
+import { Placeholder } from "@/components/Placeholder";
+import { Icon } from "@/components/PlaceholderIcons";
 import { Eyebrow } from "@/components/Eyebrow";
 import { ROOMS } from "@/lib/rooms";
+import { IMG } from "@/lib/assets";
 
 // 06 客室一覧 / route: "/rooms"
 export default function RoomsPage() {
@@ -11,7 +13,7 @@ export default function RoomsPage() {
   return (
     <>
       <section className="relative h-[40vh] min-h-[320px] overflow-hidden">
-        <Placeholder label="HERO — 客室の静けさ" fill variant="charcoal" icon={<Icon.Room />} />
+        <Placeholder label="HERO — 客室の静けさ" fill variant="charcoal" icon={<Icon.Room />} src={IMG.heroRooms} />
         <div className="absolute inset-0 bg-gradient-to-b from-black/15 via-black/15 to-black/55" />
         <div className="relative z-10 h-full max-w-content mx-auto px-5 md:px-10 flex flex-col justify-end pb-16 text-cream">
           <Eyebrow tone="light">客室 & スイート</Eyebrow>
@@ -97,7 +99,7 @@ function RoomGroup({
               href={`/rooms/${r.slug}`}
               className="group bg-cream border border-light-line flex flex-col overflow-hidden"
             >
-              <Placeholder label={`${r.name} — 客室画像`} ratio="3/2" variant={palette} icon={<Icon.Room />} />
+              <Placeholder label={`${r.name} — 客室画像`} ratio="3/2" variant={palette} icon={<Icon.Room />} src={IMG.rooms[r.slug]} />
               <div className="p-6 flex flex-col gap-3">
                 <span className="text-[10px] tracking-[0.18em] uppercase text-mid">{r.categoryLabel}</span>
                 <h3 className="h-display text-xl">{r.name}</h3>

@@ -1,8 +1,10 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { Placeholder, Icon } from "@/components/Placeholder";
+import { Placeholder } from "@/components/Placeholder";
+import { Icon } from "@/components/PlaceholderIcons";
 import { Eyebrow } from "@/components/Eyebrow";
 import { NEWS, getNews } from "@/lib/news";
+import { IMG } from "@/lib/assets";
 
 // 12 記事詳細 / route: "/news/[slug]"
 export function generateStaticParams() {
@@ -32,7 +34,7 @@ export default async function NewsDetail({ params }: { params: Promise<{ slug: s
       </section>
 
       <section>
-        <Placeholder label="記事メイン画像" variant="charcoal" className="!aspect-[21/9] !static" icon={<Icon.Camera />} />
+        <Placeholder label="記事メイン画像" variant="charcoal" className="!aspect-[21/9] !static" icon={<Icon.Camera />} src={IMG.news[article.slug]} />
       </section>
 
       <section className="max-w-content mx-auto px-5 md:px-10 py-20 grid lg:grid-cols-[2fr_1fr] gap-12">
@@ -88,7 +90,7 @@ export default async function NewsDetail({ params }: { params: Promise<{ slug: s
                 <li key={r.slug}>
                   <Link href={`/news/${r.slug}`} className="flex gap-3 items-start group">
                     <div className="w-16 h-16 shrink-0">
-                      <Placeholder label={r.title} ratio="1/1" variant={r.variant} className="!aspect-square" icon={<Icon.News />} />
+                      <Placeholder label={r.title} ratio="1/1" variant={r.variant} className="!aspect-square" icon={<Icon.News />} src={IMG.news[r.slug]} />
                     </div>
                     <div className="flex-1">
                       <div className="h-latin text-xs text-mid">{r.date}</div>
@@ -122,7 +124,7 @@ export default async function NewsDetail({ params }: { params: Promise<{ slug: s
           <div className="mt-10 grid md:grid-cols-3 gap-6">
             {related.map((r) => (
               <Link key={r.slug} href={`/news/${r.slug}`} className="group">
-                <Placeholder label={r.title} ratio="3/2" variant={r.variant} icon={<Icon.News />} />
+                <Placeholder label={r.title} ratio="3/2" variant={r.variant} icon={<Icon.News />} src={IMG.news[r.slug]} />
                 <div className="mt-4 flex flex-col gap-2">
                   <span className="text-[10px] tracking-widest uppercase text-mid">{r.tag}</span>
                   <span className="h-latin text-xs text-mid">{r.date}</span>

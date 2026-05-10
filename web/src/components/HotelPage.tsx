@@ -1,6 +1,8 @@
 import Link from "next/link";
-import { Placeholder, Icon } from "@/components/Placeholder";
+import { Placeholder } from "@/components/Placeholder";
+import { Icon } from "@/components/PlaceholderIcons";
 import { Eyebrow } from "@/components/Eyebrow";
+import { IMG } from "@/lib/assets";
 
 // 各ホテル個別ページの共通レイアウト。パレットと文言を差し替えて利用する。
 type Palette = "earth" | "chigusa";
@@ -47,6 +49,12 @@ const accent = (p: Palette) =>
 
 export function HotelPage({ data }: { data: HotelPageData }) {
   const a = accent(data.palette);
+  const isMoto = data.palette === "earth";
+  const heroSrc = isMoto ? IMG.heroMoto : IMG.heroBukko;
+  const lobbySrc = isMoto ? IMG.motoLobby : IMG.bukkoLobby;
+  const bento = isMoto
+    ? [IMG.motoBento1, IMG.motoBento2, IMG.motoBento3]
+    : [IMG.bukkoBento1, IMG.bukkoBento2, IMG.bukkoBento3];
 
   return (
     <>
@@ -90,6 +98,7 @@ export function HotelPage({ data }: { data: HotelPageData }) {
           fill
           variant={a.heroVariant}
           icon={<Icon.Townhouse />}
+          src={heroSrc}
         />
         <div className="absolute inset-0 bg-gradient-to-b from-black/15 via-black/10 to-black/65" />
         <div className="relative z-10 h-full max-w-content mx-auto px-5 md:px-10 flex flex-col justify-end pb-20 text-cream">
@@ -135,6 +144,7 @@ export function HotelPage({ data }: { data: HotelPageData }) {
               variant={a.heroVariant}
               icon={<Icon.Room />}
               rounded
+              src={lobbySrc}
             />
             <div className="bg-cream border border-light-line p-6 flex flex-col gap-4">
               <div className="eyebrow !text-[10px]">一目でわかる</div>
@@ -171,13 +181,17 @@ export function HotelPage({ data }: { data: HotelPageData }) {
           </div>
 
           <div className="grid md:grid-cols-3 gap-6">
-            {data.rooms.map((r) => (
+            {data.rooms.map((r, i) => {
+              const tier = ["superior", "deluxe", "suite"][i] ?? "superior";
+              const prefix = isMoto ? "moto" : "bukko";
+              const roomSlug = `${prefix}-${tier}`;
+              return (
               <Link
                 key={r.title}
-                href={`/rooms/${data.slug}-${r.title.replace(/\s+/g, "-").toLowerCase()}`}
+                href={`/rooms/${roomSlug}`}
                 className="group bg-cream border border-light-line overflow-hidden flex flex-col"
               >
-                <Placeholder label={`${r.title} — 客室画像`} ratio="3/2" variant={a.heroVariant} icon={<Icon.Room />} />
+                <Placeholder label={`${r.title} — 客室画像`} ratio="3/2" variant={a.heroVariant} icon={<Icon.Room />} src={IMG.rooms[roomSlug]} />
                 <div className="p-6 flex flex-col gap-3">
                   <span className="text-[10px] tracking-[0.18em] uppercase text-mid">{r.eyebrow}</span>
                   <h3 className="h-display text-xl">{r.title}</h3>
@@ -187,7 +201,8 @@ export function HotelPage({ data }: { data: HotelPageData }) {
                   </span>
                 </div>
               </Link>
-            ))}
+              );
+            })}
           </div>
         </div>
       </section>
@@ -202,9 +217,9 @@ export function HotelPage({ data }: { data: HotelPageData }) {
 
           {/* ベントーギャラリー */}
           <div className="mt-12 grid grid-cols-3 gap-2 h-[420px]">
-            <Placeholder label="施設画像 — ラウンジ" variant={a.heroVariant} fill className="!aspect-auto col-span-2 row-span-2 !relative" icon={<Icon.Tea />} />
-            <Placeholder label="施設画像 — 朝食" variant={a.heroVariant} fill className="!aspect-auto !relative" icon={<Icon.Food />} />
-            <Placeholder label={data.palette === "earth" ? "施設画像 — 浴室" : "施設画像 — 中庭"} variant={a.heroVariant} fill className="!aspect-auto !relative" icon={<Icon.Garden />} />
+            <Placeholder label="施設画像 — ラウンジ" variant={a.heroVariant} fill className="!aspect-auto col-span-2 row-span-2 !relative" icon={<Icon.Tea />} src={bento[0]} />
+            <Placeholder label="施設画像 — 朝食" variant={a.heroVariant} fill className="!aspect-auto !relative" icon={<Icon.Food />} src={bento[1]} />
+            <Placeholder label={data.palette === "earth" ? "施設画像 — 浴室" : "施設画像 — 中庭"} variant={a.heroVariant} fill className="!aspect-auto !relative" icon={<Icon.Garden />} src={bento[2]} />
           </div>
 
           {/* リスト */}
@@ -242,9 +257,20 @@ export function HotelPage({ data }: { data: HotelPageData }) {
           </div>
 
           <div className="grid md:grid-cols-3 gap-6">
-            {data.experiences.map((e) => (
+            {data.experiences.map((e) => {
+              // タイトルキーワードから体験画像を推定する。
+              const t = e.title;
+              const expSrc =
+                t.includes("陶芸") ? IMG.expPottery :
+                t.includes("自転車") ? IMG.expBike :
+                t.includes("朝食") ? IMG.expBreakfast :
+                t.includes("寺院") || t.includes("散歩") ? IMG.expTempleWalk :
+                t.includes("織") ? IMG.expWeaving :
+                t.includes("藍") ? IMG.expIndigo :
+                undefined;
+              return (
               <article key={e.title} className="bg-cream border border-light-line flex flex-col">
-                <Placeholder label={e.title} ratio="3/2" variant={a.heroVariant} icon={<Icon.Tea />} />
+                <Placeholder label={e.title} ratio="3/2" variant={a.heroVariant} icon={<Icon.Tea />} src={expSrc} />
                 <div className="p-6 flex flex-col gap-3">
                   <span className={`self-start text-[10px] tracking-[0.18em] uppercase px-2 py-1 border ${a.chip}`}>{e.tag}</span>
                   <h3 className="h-display text-lg">{e.title}</h3>
@@ -252,7 +278,8 @@ export function HotelPage({ data }: { data: HotelPageData }) {
                   <span className="mt-2 self-start text-[11px] tracking-widest text-charcoal">詳しく見る →</span>
                 </div>
               </article>
-            ))}
+              );
+            })}
           </div>
         </div>
       </section>

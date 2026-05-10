@@ -1,8 +1,10 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { Placeholder, Icon } from "@/components/Placeholder";
+import { Placeholder } from "@/components/Placeholder";
+import { Icon } from "@/components/PlaceholderIcons";
 import { Eyebrow } from "@/components/Eyebrow";
 import { FACILITIES, getFacility } from "@/lib/facilities";
+import { IMG } from "@/lib/assets";
 
 // 09 施設詳細 / route: "/facilities/[slug]"
 export function generateStaticParams() {
@@ -38,7 +40,7 @@ export default async function FacilityDetail({ params }: { params: Promise<{ slu
       </div>
 
       <section className="relative h-[55vh] min-h-[420px] overflow-hidden">
-        <Placeholder label={`${f.name} — 施設ヒーロー / ギャラリー`} fill variant={palette} icon={<Icon.Tea />} />
+        <Placeholder label={`${f.name} — 施設ヒーロー / ギャラリー`} fill variant={palette} icon={<Icon.Tea />} src={IMG.facilities[f.slug]} />
         <div className="absolute inset-0 bg-gradient-to-b from-black/15 via-black/10 to-black/60" />
         <div className="relative z-10 h-full max-w-content mx-auto px-5 md:px-10 flex flex-col justify-end pb-14 text-cream">
           <span className="self-start text-[10px] tracking-widest uppercase bg-cream text-charcoal px-3 py-1">
@@ -140,7 +142,7 @@ export default async function FacilityDetail({ params }: { params: Promise<{ slu
                   href={`/facilities/${o.slug}`}
                   className="group bg-cream border border-light-line p-6 flex flex-col gap-3"
                 >
-                  <Placeholder label={o.name} ratio="3/2" variant={palette} icon={<Icon.Tea />} />
+                  <Placeholder label={o.name} ratio="3/2" variant={palette} icon={<Icon.Tea />} src={IMG.facilities[o.slug]} />
                   <span className="text-[10px] tracking-widest uppercase text-mid">{o.category}</span>
                   <h3 className="h-display text-lg">{o.name}</h3>
                   <span className="text-[13px] text-mid">{o.tagline}</span>

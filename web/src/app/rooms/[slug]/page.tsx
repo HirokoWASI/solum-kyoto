@@ -1,8 +1,10 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { Placeholder, Icon } from "@/components/Placeholder";
+import { Placeholder } from "@/components/Placeholder";
+import { Icon } from "@/components/PlaceholderIcons";
 import { Eyebrow } from "@/components/Eyebrow";
 import { ROOMS, getRoom } from "@/lib/rooms";
+import { IMG } from "@/lib/assets";
 
 // 07 客室詳細 / route: "/rooms/[slug]"
 export function generateStaticParams() {
@@ -39,7 +41,7 @@ export default async function RoomDetail({ params }: { params: Promise<{ slug: s
 
       {/* ヒーロー */}
       <section className="relative h-[60vh] min-h-[460px] overflow-hidden">
-        <Placeholder label={`${room.name} — 客室画像カルーセル`} fill variant={palette} icon={<Icon.Room />} />
+        <Placeholder label={`${room.name} — 客室画像カルーセル`} fill variant={palette} icon={<Icon.Room />} src={IMG.rooms[room.slug]} />
         <div className="absolute inset-0 bg-gradient-to-b from-black/15 via-black/10 to-black/65" />
         <div className="relative z-10 h-full max-w-content mx-auto px-5 md:px-10 flex flex-col justify-end pb-16 text-cream">
           <span className="self-start text-[10px] tracking-[0.18em] uppercase bg-cream text-charcoal px-3 py-1">
@@ -141,7 +143,7 @@ export default async function RoomDetail({ params }: { params: Promise<{ slug: s
             {others.map((r) => (
               <Link key={r.slug} href={`/rooms/${r.slug}`} className="group flex gap-4 bg-cream border border-light-line p-4">
                 <div className="w-32 h-24 shrink-0">
-                  <Placeholder label={r.name} ratio="4/3" variant={palette} icon={<Icon.Room />} />
+                  <Placeholder label={r.name} ratio="4/3" variant={palette} icon={<Icon.Room />} src={IMG.rooms[r.slug]} />
                 </div>
                 <div className="flex flex-col">
                   <span className="text-[10px] tracking-widest uppercase text-mid">{r.categoryLabel}</span>

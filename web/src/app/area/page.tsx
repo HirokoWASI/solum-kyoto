@@ -1,5 +1,6 @@
 import Link from "next/link";
-import { Placeholder, Icon } from "@/components/Placeholder";
+import { Placeholder } from "@/components/Placeholder";
+import { Icon } from "@/components/PlaceholderIcons";
 import { Eyebrow } from "@/components/Eyebrow";
 
 // 10 エリア情報 / route: "/area"

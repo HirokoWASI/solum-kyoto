@@ -1,7 +1,8 @@
 import Link from "next/link";
 import { Eyebrow } from "@/components/Eyebrow";
 import { AccessMap } from "@/components/AccessMap";
-import { Placeholder, Icon } from "@/components/Placeholder";
+import { Placeholder } from "@/components/Placeholder";
+import { Icon } from "@/components/PlaceholderIcons";
 
 // 14 アクセス / route: "/access"
 // 京都の実際の街路構造（烏丸線・四条駅・五条駅・仏光寺通）をベースに、両ホテルの位置を視覚化する。

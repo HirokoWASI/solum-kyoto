@@ -1,14 +1,16 @@
 import Link from "next/link";
-import { Placeholder, Icon } from "@/components/Placeholder";
+import { Placeholder } from "@/components/Placeholder";
+import { Icon } from "@/components/PlaceholderIcons";
 import { SectionHeading } from "@/components/SectionHeading";
 import { Eyebrow } from "@/components/Eyebrow";
+import { IMG } from "@/lib/assets";
 
 // 02 コンセプト / route: "/about"
 export default function AboutPage() {
   return (
     <>
       <section className="relative h-[60vh] min-h-[420px] w-full overflow-hidden">
-        <Placeholder label="HERO — 京の朝、しろねりの暖簾" variant="earth" fill icon={<Icon.Townhouse />} />
+        <Placeholder label="HERO — 京の朝、しろねりの暖簾" variant="earth" fill icon={<Icon.Townhouse />} src={IMG.heroAbout} />
         <div className="absolute inset-0 bg-gradient-to-b from-black/10 via-transparent to-black/50" />
         <div className="relative z-10 h-full max-w-content mx-auto px-5 md:px-10 flex flex-col justify-end pb-20 text-cream">
           <Eyebrow tone="light">私たちの哲学</Eyebrow>
