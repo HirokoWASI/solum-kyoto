@@ -1,0 +1,142 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ════════════════════════════════════════
+   ベースタイポグラフィ & グローバル
+════════════════════════════════════════ */
+:root {
+  color-scheme: light;
+}
+
+html { scroll-behavior: smooth; }
+
+body {
+  background: #F0EDE6;
+  color: #3A3530;
+  font-family: var(--font-noto-sans-jp), "Noto Sans JP", sans-serif;
+  font-weight: 300;
+  font-size: 15px;
+  line-height: 1.75;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* 見出し用の縦書きを許容する細罫線 */
+.kanji-vertical {
+  writing-mode: vertical-rl;
+  text-orientation: upright;
+}
+
+/* ────────── 画像プレイスホルダ ────────── */
+/* CSS グラデーション + SVG アイコンで雰囲気を表現する。本番では nano banana / GPT image2 で生成した実写差し替え。 */
+.ph {
+  position: relative;
+  overflow: hidden;
+  background: linear-gradient(135deg, #E8E3DA 0%, #D5CECC 60%, #B89C84 100%);
+  color: rgba(58, 53, 48, 0.55);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  isolation: isolate;
+}
+.ph::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(ellipse at 30% 20%, rgba(255,255,255,0.45), transparent 55%),
+    radial-gradient(ellipse at 80% 90%, rgba(58,53,48,0.18), transparent 60%);
+  z-index: -1;
+}
+.ph::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(rgba(58,53,48,0.04) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(58,53,48,0.04) 1px, transparent 1px);
+  background-size: 24px 24px;
+  z-index: -1;
+}
+.ph--earth   { background: linear-gradient(135deg, #EDE8DF 0%, #D4C8AE 55%, #8A6E56 100%); }
+.ph--chigusa { background: linear-gradient(135deg, #EBF2EE 0%, #A8C4B7 55%, #5A7E6E 100%); }
+.ph--charcoal{ background: linear-gradient(135deg, #6E6560 0%, #3A3530 100%); color: rgba(240,237,230,0.8); }
+.ph--night   { background: linear-gradient(160deg, #2C2925 0%, #5A7E6E 60%, #B89C84 110%); color: rgba(240,237,230,0.85); }
+
+.ph__label {
+  position: relative;
+  z-index: 1;
+  font-size: 11px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  padding: 6px 10px;
+  background: rgba(240,237,230,0.78);
+  border: 1px solid rgba(58,53,48,0.1);
+  color: #3A3530;
+  border-radius: 2px;
+  backdrop-filter: blur(2px);
+}
+
+.ph__icon {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0.35;
+  z-index: 0;
+}
+
+/* ────────── ボタン ────────── */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  padding: 14px 28px;
+  font-size: 12px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  border: 1px solid currentColor;
+  transition: all 0.25s ease;
+  cursor: pointer;
+}
+.btn--solid {
+  background: #3A3530;
+  color: #F0EDE6;
+  border-color: #3A3530;
+}
+.btn--solid:hover { background: #2C2925; }
+.btn--ghost { color: #3A3530; }
+.btn--ghost:hover { background: #3A3530; color: #F0EDE6; }
+.btn--earth { background: #8A6E56; color: #F0EDE6; border-color: #8A6E56; }
+.btn--earth:hover { background: #6E5644; }
+.btn--chigusa { background: #5A7E6E; color: #F0EDE6; border-color: #5A7E6E; }
+.btn--chigusa:hover { background: #45624F; }
+
+/* 見出し用のセリフ大見出し */
+.h-display {
+  font-family: var(--font-shippori), "Shippori Mincho", serif;
+  font-weight: 400;
+  letter-spacing: 0.06em;
+  line-height: 1.25;
+}
+.h-latin {
+  font-family: var(--font-cormorant), "Cormorant Garamond", serif;
+  font-weight: 300;
+  font-style: italic;
+  letter-spacing: 0.08em;
+}
+
+.eyebrow {
+  font-family: var(--font-cormorant), "Cormorant Garamond", serif;
+  font-size: 11px;
+  letter-spacing: 0.32em;
+  text-transform: uppercase;
+  color: #6E6560;
+}
+
+/* スクロール時のフェードイン */
+[data-reveal] { opacity: 0; transform: translateY(20px); transition: opacity 0.9s ease, transform 0.9s ease; }
+[data-reveal].is-visible { opacity: 1; transform: translateY(0); }
