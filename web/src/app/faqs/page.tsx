@@ -3,11 +3,13 @@
 import { useState } from "react";
 import Link from "next/link";
 import { Eyebrow } from "@/components/Eyebrow";
+import { CalendarCheck, BedLamp, Train, FaqBubbles } from "@/components/BrandIcons";
 
 // 13 よくある質問 / route: "/faqs"
 const GROUPS = [
   {
     heading: "ご予約",
+    Icon: CalendarCheck,
     items: [
       {
         q: "ご予約はどのようにすればよいですか？",
@@ -25,6 +27,7 @@ const GROUPS = [
   },
   {
     heading: "ご滞在",
+    Icon: BedLamp,
     items: [
       {
         q: "チェックインとチェックアウトの時間は何時ですか？",
@@ -42,6 +45,7 @@ const GROUPS = [
   },
   {
     heading: "アクセス",
+    Icon: Train,
     items: [
       {
         q: "京都駅から元悪王子へはどのように行けばよいですか？",
@@ -59,13 +63,17 @@ export default function FAQsPage() {
   return (
     <>
       <section className="bg-warm-off pt-32 pb-16">
-        <div className="max-w-content mx-auto px-5 md:px-10">
-          <Eyebrow>サポート</Eyebrow>
-          <h1 className="mt-4 h-display text-5xl md:text-6xl">
-            よく寄せられる
-            <br />
-            <em className="h-latin not-italic">ご質問</em>
-          </h1>
+        <div className="max-w-content mx-auto px-5 md:px-10 flex items-center justify-between gap-8">
+          <div>
+            <Eyebrow>サポート</Eyebrow>
+            <h1 className="mt-4 h-display text-5xl md:text-6xl">
+              よく寄せられる
+              <br />
+              <em className="h-latin not-italic">ご質問</em>
+            </h1>
+          </div>
+          {/* ブランドアイコン（吹き出し）。装飾要素 */}
+          <FaqBubbles className="hidden md:block w-32 h-32 text-charcoal/30" />
         </div>
       </section>
 
@@ -105,10 +113,14 @@ export default function FAQsPage() {
 
 function FaqGroup({ group }: { group: (typeof GROUPS)[number] }) {
   const [open, setOpen] = useState<number | null>(0);
+  const GroupIcon = group.Icon;
 
   return (
     <section>
-      <Eyebrow>{group.heading}</Eyebrow>
+      <div className="flex items-center gap-3">
+        {GroupIcon ? <GroupIcon className="w-7 h-7 text-charcoal/70" /> : null}
+        <Eyebrow>{group.heading}</Eyebrow>
+      </div>
       <ul className="mt-5 divide-y divide-light-line border-y border-light-line">
         {group.items.map((it, i) => (
           <li key={it.q}>

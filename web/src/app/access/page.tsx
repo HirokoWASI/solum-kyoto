@@ -2,6 +2,7 @@ import Link from "next/link";
 import { Eyebrow } from "@/components/Eyebrow";
 import { Placeholder } from "@/components/Placeholder";
 import { Icon } from "@/components/PlaceholderIcons";
+import { Train, MapPin } from "@/components/BrandIcons";
 import { IMG } from "@/lib/assets";
 
 // 14 アクセス / route: "/access"
@@ -176,7 +177,10 @@ export default function AccessPage() {
       {/* ───────── アクセスルート ───────── */}
       <section className="bg-shironeri border-y border-light-line">
         <div className="max-w-content mx-auto px-5 md:px-10 py-20">
-          <Eyebrow>アクセスルート</Eyebrow>
+          <div className="flex items-center gap-3">
+            <Train className="w-8 h-8 text-charcoal/70" />
+            <Eyebrow>アクセスルート</Eyebrow>
+          </div>
           <h2 className="mt-4 h-display text-3xl md:text-4xl">
             主要拠点から
             <em className="h-latin not-italic">五条駅</em>まで
@@ -206,7 +210,10 @@ export default function AccessPage() {
       {/* ───────── 五条駅 出口案内 ───────── */}
       <section className="max-w-content mx-auto px-5 md:px-10 py-20 grid lg:grid-cols-2 gap-10">
         <div>
-          <Eyebrow>五条駅 出口・エレベーター</Eyebrow>
+          <div className="flex items-center gap-3">
+            <MapPin className="w-7 h-7 text-charcoal/70" />
+            <Eyebrow>五条駅 出口・エレベーター</Eyebrow>
+          </div>
           <h2 className="mt-4 h-display text-3xl md:text-4xl">
             <em className="h-latin not-italic">6 番出口</em>から、
             <br />

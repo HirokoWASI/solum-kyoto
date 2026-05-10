@@ -3,6 +3,7 @@ import { Placeholder } from "@/components/Placeholder";
 import { Icon } from "@/components/PlaceholderIcons";
 import { Eyebrow } from "@/components/Eyebrow";
 import { IMG } from "@/lib/assets";
+import { CalendarCheck, BedLamp, MapPin, FaqBubbles, Pottery, Bicycle, Breakfast, Pagoda } from "@/components/BrandIcons";
 
 // 各ホテル個別ページの共通レイアウト。パレットと文言を差し替えて利用する。
 type Palette = "earth" | "chigusa";
@@ -149,19 +150,22 @@ export function HotelPage({ data }: { data: HotelPageData }) {
             <div className="bg-cream border border-light-line p-6 flex flex-col gap-4">
               <div className="eyebrow !text-[10px]">一目でわかる</div>
               {[
-                { l: "チェックイン / チェックアウト", v: "15:00 / 11:00" },
-                { l: "客室タイプ", v: "スペリオール・デラックス・スイート" },
-                { l: "ロケーション", v: data.area },
-                { l: "対応言語", v: "日本語・英語・中国語" },
-              ].map((r) => (
-                <div key={r.l} className="flex items-start gap-4 border-b border-light-line/70 pb-3 last:border-none">
-                  <span className={`mt-1 inline-block w-2 h-2 rounded-full ${data.palette === "earth" ? "bg-earth" : "bg-chigusa"}`} />
-                  <div className="flex-1">
-                    <div className="text-[12px] font-medium tracking-wide">{r.l}</div>
-                    <div className="text-[12px] text-mid">{r.v}</div>
+                { l: "チェックイン / チェックアウト", v: "15:00 / 11:00", I: CalendarCheck },
+                { l: "客室タイプ", v: "スペリオール・デラックス・スイート", I: BedLamp },
+                { l: "ロケーション", v: data.area, I: MapPin },
+                { l: "対応言語", v: "日本語・英語・中国語", I: FaqBubbles },
+              ].map((r) => {
+                const I = r.I;
+                return (
+                  <div key={r.l} className="flex items-start gap-3 border-b border-light-line/70 pb-3 last:border-none">
+                    <I className={`mt-0.5 w-5 h-5 ${data.palette === "earth" ? "text-earth-dark" : "text-chigusa-dark"}`} />
+                    <div className="flex-1">
+                      <div className="text-[12px] font-medium tracking-wide">{r.l}</div>
+                      <div className="text-[12px] text-mid">{r.v}</div>
+                    </div>
                   </div>
-                </div>
-              ))}
+                );
+              })}
             </div>
           </aside>
         </div>
