@@ -1,4 +1,4 @@
-// ブランドロゴ。差し替え可能な /public/logo.svg / logo-mark.svg を参照する。
+// ブランドロゴ。/public/ 配下の PNG を参照（透過済み）。
 // basePath を考慮し、env から組み立てる。
 const BASE = process.env.NEXT_PUBLIC_BASE_PATH ?? "";
 
@@ -8,12 +8,15 @@ export function Logo({
   variant = "mark",
   className = "",
   alt = "solmu kyoto",
+  invert = false,
 }: {
   variant?: Variant;
   className?: string;
   alt?: string;
+  /** 暗い背景上で白く反転表示するか（PNG なので filter で反転）。 */
+  invert?: boolean;
 }) {
-  const src = variant === "mark" ? `${BASE}/logo-mark.svg` : `${BASE}/logo.svg`;
-  // SVG は currentColor を採用しているため、parent 要素の color を継承する。
-  return <img src={src} alt={alt} className={className} aria-label={alt} />;
+  const src = variant === "mark" ? `${BASE}/logo-mark.png` : `${BASE}/logo.png`;
+  const style = invert ? { filter: "brightness(0) invert(1)" } : undefined;
+  return <img src={src} alt={alt} className={className} style={style} aria-label={alt} />;
 }

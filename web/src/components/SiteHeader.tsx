@@ -34,8 +34,8 @@ export function SiteHeader() {
           aria-label={`${SITE.brandJa} — ホーム`}
           className={`flex items-center gap-3 transition-colors ${light ? "text-cream" : "text-charcoal"}`}
         >
-          {/* Sマークの小ロゴ */}
-          <Logo variant="mark" className="h-9 md:h-11 w-auto" alt="" />
+          {/* S マークの小ロゴ。スクロール前は白反転、後は通常表示。 */}
+          <Logo variant="mark" className="h-9 md:h-11 w-auto" alt="" invert={light} />
           <span className="flex flex-col leading-none">
             <span className="font-serif text-base md:text-lg tracking-[0.12em] lowercase">{SITE.brandJa}</span>
             <span className={`mt-1 h-latin text-[10px] tracking-[0.3em] ${light ? "text-cream/70" : "text-mid"}`}>

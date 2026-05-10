@@ -8,8 +8,8 @@ export function SiteFooter() {
     <footer className="mt-32 bg-charcoal text-cream">
       <div className="max-w-content mx-auto px-5 md:px-10 py-20 grid gap-12 md:grid-cols-12">
         <div className="md:col-span-4">
-          {/* フルロゴ（モノグラム + ワードマーク + サブタイトル） */}
-          <Logo variant="full" className="h-32 w-auto text-cream" alt={SITE.brandJa} />
+          {/* フルロゴ。charcoal 背景上なので白反転。 */}
+          <Logo variant="full" className="h-32 w-auto" alt={SITE.brandJa} invert />
           <p className="mt-6 text-[13px] text-cream/70 leading-relaxed max-w-sm">
             京都・下京に点在する小さな宿。
             町家と路地のかたちを残し、暮らすように泊まる、静かな滞在を。
