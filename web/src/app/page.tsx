@@ -186,19 +186,12 @@ export default function HomePage() {
           />
           <div className="relative">
             <Placeholder
-              label="エリアマップ — 下京区・中京区"
+              label="エリアマップ — 下京区"
               ratio="4/5"
               icon={<Icon.Map />}
               className="!aspect-[4/3]"
+              src={IMG.areaMap}
             />
-            <div className="absolute top-[48%] left-[37%]">
-              <div className="w-3 h-3 rounded-full bg-earth border-2 border-cream shadow" />
-              <div className="w-px h-6 bg-earth/70 mx-auto" />
-            </div>
-            <div className="absolute top-[40%] left-[56%]">
-              <div className="w-3 h-3 rounded-full bg-chigusa border-2 border-cream shadow" />
-              <div className="w-px h-6 bg-chigusa/70 mx-auto" />
-            </div>
           </div>
         </div>
         <div className="max-w-content mx-auto px-5 md:px-10 -mt-12 pb-24">

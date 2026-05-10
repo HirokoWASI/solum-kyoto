@@ -1,8 +1,8 @@
 import Link from "next/link";
 import { Eyebrow } from "@/components/Eyebrow";
-import { AccessMap } from "@/components/AccessMap";
 import { Placeholder } from "@/components/Placeholder";
 import { Icon } from "@/components/PlaceholderIcons";
+import { IMG } from "@/lib/assets";
 
 // 14 アクセス / route: "/access"
 // 京都の実際の街路構造（烏丸線・四条駅・五条駅・仏光寺通）をベースに、両ホテルの位置を視覚化する。
@@ -69,8 +69,14 @@ export default function AccessPage() {
           <p className="text-[13px] text-mid leading-relaxed max-w-lg">
             京都の中心、四条と五条の間。烏丸通を背骨に、仏光寺通・高辻通の格子が両ホテルを繋ぎます。
           </p>
-          <div className="mt-2">
-            <AccessMap />
+          <div className="mt-2 bg-cream border border-light-line overflow-hidden">
+            {/* 公式エリアマップ画像。提供画像。 */}
+            <Placeholder
+              label="solmu kyoto エリアマップ"
+              src={IMG.areaMap}
+              ratio="4/3"
+              icon={<Icon.Map />}
+            />
           </div>
         </div>
 
@@ -179,7 +185,17 @@ export default function AccessPage() {
             五条駅 6 番出口から、元悪王子・仏光寺いずれも徒歩 10 分以内。
           </p>
 
-          <div className="mt-10 flex flex-col gap-3">
+          {/* 公式の4ルート図 */}
+          <div className="mt-10 bg-cream border border-light-line overflow-hidden">
+            <Placeholder
+              label="五条駅6番出口までの4つのアクセス"
+              src={IMG.accessRoutes}
+              ratio="16/9"
+              icon={<Icon.Map />}
+            />
+          </div>
+
+          <div className="mt-8 flex flex-col gap-3">
             {ROUTES.map((r, i) => (
               <RouteRow key={i} route={r} />
             ))}

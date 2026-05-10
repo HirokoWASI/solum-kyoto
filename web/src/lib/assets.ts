@@ -28,6 +28,10 @@ export const IMG = {
   heroNews: dir("hero/news.jpg"),
   heroFaqs: dir("hero/faqs.jpg"),
 
+  /* ─── 特設の図解 ─── */
+  accessRoutes: dir("hero/access-routes.jpg"), // 公式 4 ルート図
+  areaMap: dir("area/area-map.jpg"),           // 公式エリアマップ
+
   /* ─── ホテル ─── */
   motoExterior: dir("hotels/moto-exterior.jpg"),
   motoLobby: dir("hotels/moto-lobby.jpg"),
