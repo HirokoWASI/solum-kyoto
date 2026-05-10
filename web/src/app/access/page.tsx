@@ -1,155 +1,329 @@
 import Link from "next/link";
-import { Placeholder, Icon } from "@/components/Placeholder";
 import { Eyebrow } from "@/components/Eyebrow";
+import { AccessMap } from "@/components/AccessMap";
+import { Placeholder, Icon } from "@/components/Placeholder";
 
 // 14 アクセス / route: "/access"
+// 京都の実際の街路構造（烏丸線・四条駅・五条駅・仏光寺通）をベースに、両ホテルの位置を視覚化する。
 const ROUTES = [
   {
-    origin: { icon: "✈", label: "関西国際空港" },
+    origin: { icon: "✈", label: "関西国際空港", note: "KIX" },
     legs: [
-      { mode: "はるか号", time: "約75分" },
-      { mode: "🚉 京都駅", time: "" },
-      { mode: "烏丸線", time: "約10分" },
+      { mode: "JR はるか号", time: "約75分" },
+      { mode: "京都駅", node: true },
+      { mode: "地下鉄 烏丸線", time: "約3分" },
     ],
+    dest: "五条駅",
   },
   {
-    origin: { icon: "✈", label: "伊丹空港" },
+    origin: { icon: "✈", label: "大阪国際空港", note: "ITM" },
     legs: [
       { mode: "リムジンバス", time: "約60分" },
-      { mode: "🚉 京都駅", time: "" },
-      { mode: "烏丸線", time: "約10分" },
+      { mode: "京都駅", node: true },
+      { mode: "地下鉄 烏丸線", time: "約3分" },
     ],
+    dest: "五条駅",
   },
   {
-    origin: { icon: "🚅", label: "新大阪駅" },
+    origin: { icon: "🚄", label: "新大阪駅", note: "" },
     legs: [
       { mode: "新幹線", time: "約15分" },
-      { mode: "🚉 京都駅", time: "" },
-      { mode: "烏丸線", time: "約10分" },
+      { mode: "京都駅", node: true },
+      { mode: "地下鉄 烏丸線", time: "約3分" },
     ],
+    dest: "五条駅",
   },
   {
-    origin: { icon: "🚉", label: "京都駅" },
-    legs: [{ mode: "烏丸線（北行2駅）", time: "約10分" }],
+    origin: { icon: "🚉", label: "京都駅", note: "Kyoto Station" },
+    legs: [{ mode: "地下鉄 烏丸線（国際会館行）", time: "約3分" }],
+    dest: "五条駅",
   },
 ];
 
 export default function AccessPage() {
   return (
     <>
-      <section className="relative h-[36vh] min-h-[280px] overflow-hidden">
-        <Placeholder label="HERO — 京都駅から、宿への道" fill variant="charcoal" icon={<Icon.Map />} />
-        <div className="absolute inset-0 bg-gradient-to-b from-black/15 via-black/15 to-black/55" />
-        <div className="relative z-10 h-full max-w-content mx-auto px-5 md:px-10 flex flex-col justify-end pb-14 text-cream">
-          <Eyebrow tone="light">アクセス</Eyebrow>
-          <h1 className="mt-4 h-display text-5xl md:text-6xl">アクセス</h1>
+      {/* ───────── ヒーロー ───────── */}
+      <section className="bg-warm-off pt-32 pb-16 border-b border-light-line">
+        <div className="max-w-content mx-auto px-5 md:px-10">
+          <Eyebrow>アクセス</Eyebrow>
+          <h1 className="mt-4 h-display text-5xl md:text-6xl">
+            京都の中心へ、
+            <br />
+            <em className="h-latin not-italic">静かに着く。</em>
+          </h1>
+          <p className="mt-6 max-w-xl text-[14px] md:text-[15px] text-mid leading-relaxed">
+            元悪王子・仏光寺はいずれも京都市下京区。烏丸線「五条駅」が最寄りで、
+            京都駅から地下鉄でわずか3分。新幹線・空港バス・はるか号いずれからも、
+            一度の乗り換えで宿に着きます。
+          </p>
         </div>
       </section>
 
-      <section className="max-w-content mx-auto px-5 md:px-10 py-20 grid lg:grid-cols-2 gap-12">
-        {/* 左：住所 + マップ */}
-        <div className="flex flex-col gap-8">
-          <div className="grid sm:grid-cols-2 gap-4">
-            <article className="bg-cream border border-earth/40 p-6">
-              <div className="flex items-baseline gap-3">
-                <h3 className="h-display text-xl">元悪王子</h3>
-                <span className="h-latin text-sm text-mid">moto-akuoji</span>
-              </div>
-              <div className="mt-4 text-[13px] leading-relaxed">
-                〒 600-8XXX
-                <br />
-                京都市下京区 仏光寺通 [番地]
-              </div>
-              <div className="mt-3 text-[12px] text-mid">Tel: +81 75 — — ——</div>
-              <Link href="/hotels/moto-akuoji" className="btn btn--earth mt-5 self-start">
-                施設ページ
-              </Link>
-            </article>
-            <article className="bg-cream border border-chigusa/40 p-6">
-              <div className="flex items-baseline gap-3">
-                <h3 className="h-display text-xl">仏光寺</h3>
-                <span className="h-latin text-sm text-mid">bukkoji</span>
-              </div>
-              <div className="mt-4 text-[13px] leading-relaxed">
-                〒 604-8XXX
-                <br />
-                京都市中京区 [町名・番地]
-              </div>
-              <div className="mt-3 text-[12px] text-mid">Tel: +81 75 — — ——</div>
-              <Link href="/hotels/bukkoji" className="btn btn--chigusa mt-5 self-start">
-                施設ページ
-              </Link>
-            </article>
-          </div>
-
-          <div className="relative">
-            <Placeholder label="下京区・中京区 京都 — マップ" ratio="4/5" className="!aspect-[4/3]" icon={<Icon.Map />} />
-            <div className="absolute top-[48%] left-[37%]">
-              <div className="w-3 h-3 rounded-full bg-earth ring-2 ring-cream" />
-            </div>
-            <div className="absolute top-[40%] left-[56%]">
-              <div className="w-3 h-3 rounded-full bg-chigusa ring-2 ring-cream" />
-            </div>
-          </div>
-
-          <p className="text-[13px] text-mid leading-relaxed">
-            両施設とも烏丸線から徒歩圏内。最寄り駅は五条駅（烏丸線）で、徒歩約8〜10分です。
+      {/* ───────── マップ + 住所カード ───────── */}
+      <section className="max-w-content mx-auto px-5 md:px-10 py-20 grid lg:grid-cols-[1.6fr_1fr] gap-10">
+        <div className="flex flex-col gap-4">
+          <Eyebrow>エリアマップ</Eyebrow>
+          <h2 className="h-display text-2xl md:text-3xl">下京区 元悪王子・仏光寺</h2>
+          <p className="text-[13px] text-mid leading-relaxed max-w-lg">
+            京都の中心、四条と五条の間。烏丸通を背骨に、仏光寺通・高辻通の格子が両ホテルを繋ぎます。
           </p>
+          <div className="mt-2">
+            <AccessMap />
+          </div>
         </div>
 
-        {/* 右：ルート + 出口 */}
-        <div className="flex flex-col gap-10">
-          <div>
-            <Eyebrow>アクセスルート</Eyebrow>
-            <div className="mt-6 space-y-3">
-              {ROUTES.map((r, ri) => (
-                <div key={ri} className="bg-cream border border-light-line p-4 flex flex-wrap items-center gap-3 text-[12px]">
-                  <span className="px-3 py-2 bg-warm-off border border-light-line whitespace-nowrap">
-                    <span className="mr-1">{r.origin.icon}</span>
-                    {r.origin.label}
-                  </span>
-                  {r.legs.map((leg, li) => (
-                    <span key={li} className="flex items-center gap-2">
-                      <span className="text-mid">›</span>
-                      <span className="px-3 py-2 bg-warm-off border border-light-line whitespace-nowrap">
-                        {leg.mode}
-                        {leg.time && <span className="ml-1 text-mid">/ {leg.time}</span>}
-                      </span>
-                    </span>
-                  ))}
-                  <span className="text-mid">›</span>
-                  <span className="px-3 py-2 bg-earth-bg border border-earth/40 text-earth-dark whitespace-nowrap">
-                    📍 五条駅
-                  </span>
-                </div>
-              ))}
+        <aside className="flex flex-col gap-5">
+          <article className="bg-cream border border-earth/40 p-6">
+            <div className="flex items-center gap-3">
+              <span className="w-9 h-9 rounded-full bg-earth-dark text-cream grid place-items-center text-sm font-serif">
+                元
+              </span>
+              <div>
+                <h3 className="h-display text-xl leading-none">元悪王子</h3>
+                <span className="h-latin text-xs text-mid">moto-akuoji</span>
+              </div>
             </div>
-          </div>
+            <dl className="mt-5 space-y-2 text-[13px]">
+              <div className="flex gap-3">
+                <dt className="w-16 text-mid text-[11px] tracking-widest">住所</dt>
+                <dd>京都府京都市下京区 元悪王子町</dd>
+              </div>
+              <div className="flex gap-3">
+                <dt className="w-16 text-mid text-[11px] tracking-widest">最寄駅</dt>
+                <dd>
+                  烏丸線「五条駅」<span className="text-mid">／ 徒歩 約 8 分</span>
+                </dd>
+              </div>
+              <div className="flex gap-3">
+                <dt className="w-16 text-mid text-[11px] tracking-widest">電話</dt>
+                <dd className="text-mid">+81 75 — — ——</dd>
+              </div>
+            </dl>
+            <div className="mt-5 flex flex-wrap gap-2">
+              <Link href="/hotels/moto-akuoji" className="btn btn--earth !py-2.5 !px-4 !text-[10px]">
+                施設ページ
+              </Link>
+              <a
+                href="https://maps.google.com/?q=元悪王子町+京都市下京区"
+                target="_blank"
+                rel="noreferrer"
+                className="btn btn--ghost !py-2.5 !px-4 !text-[10px]"
+              >
+                Google Maps
+              </a>
+            </div>
+          </article>
 
-          <div className="bg-cream border border-light-line">
-            <div className="px-6 py-5 border-b border-light-line flex items-center gap-3">
-              <span className="w-7 h-7 rounded-full bg-earth text-cream grid place-items-center text-[11px] font-serif">地</span>
-              <h3 className="h-display text-lg">五条駅 出口・エレベーターのご案内</h3>
-            </div>
-            <div className="p-6 grid sm:grid-cols-2 gap-4">
-              <div className="bg-warm-off p-5">
-                <div className="text-[11px] text-mid">🚪 地上出口</div>
-                <div className="mt-2 h-display text-3xl text-earth-dark">6番出口</div>
-                <div className="mt-2 text-[12px]">エレベーターあり / スーツケース対応</div>
-              </div>
-              <div className="bg-warm-off p-5">
-                <div className="text-[11px] text-mid">🛗 ホームエレベーター</div>
-                <div className="mt-2 text-[13px]">竹田・奈良方面 / ホーム先頭付近</div>
-                <div className="my-3 h-px bg-light-line" />
-                <div className="text-[11px] text-mid">大きなお荷物のある方はこちら</div>
+          <article className="bg-cream border border-chigusa/40 p-6">
+            <div className="flex items-center gap-3">
+              <span className="w-9 h-9 rounded-full bg-chigusa-dark text-cream grid place-items-center text-sm font-serif">
+                仏
+              </span>
+              <div>
+                <h3 className="h-display text-xl leading-none">仏光寺</h3>
+                <span className="h-latin text-xs text-mid">bukkoji</span>
               </div>
             </div>
-            <div className="px-6 pb-6 text-[12px] text-mid">
-              五条駅を出たら徒歩約8〜10分。両ホテルとも案内サインに従ってお越しください。
+            <dl className="mt-5 space-y-2 text-[13px]">
+              <div className="flex gap-3">
+                <dt className="w-16 text-mid text-[11px] tracking-widest">住所</dt>
+                <dd>京都府京都市下京区 仏光寺通</dd>
+              </div>
+              <div className="flex gap-3">
+                <dt className="w-16 text-mid text-[11px] tracking-widest">最寄駅</dt>
+                <dd>
+                  烏丸線「五条駅」<span className="text-mid">／ 徒歩 約 7 分</span>
+                </dd>
+              </div>
+              <div className="flex gap-3">
+                <dt className="w-16 text-mid text-[11px] tracking-widest">電話</dt>
+                <dd className="text-mid">+81 75 — — ——</dd>
+              </div>
+            </dl>
+            <div className="mt-5 flex flex-wrap gap-2">
+              <Link href="/hotels/bukkoji" className="btn btn--chigusa !py-2.5 !px-4 !text-[10px]">
+                施設ページ
+              </Link>
+              <a
+                href="https://maps.google.com/?q=仏光寺通+京都市下京区"
+                target="_blank"
+                rel="noreferrer"
+                className="btn btn--ghost !py-2.5 !px-4 !text-[10px]"
+              >
+                Google Maps
+              </a>
+            </div>
+          </article>
+
+          <div className="bg-shironeri p-6 border-l-2 border-earth">
+            <div className="eyebrow !text-[10px]">徒歩で行き来できます</div>
+            <p className="mt-3 text-[13px] leading-relaxed">
+              元悪王子 — 仏光寺の二宿は、下京区の格子状の路地を <strong className="font-medium">徒歩 約 7 分</strong>。
+              自転車レンタルでも気軽に行き来できます。
+            </p>
+          </div>
+        </aside>
+      </section>
+
+      {/* ───────── アクセスルート ───────── */}
+      <section className="bg-shironeri border-y border-light-line">
+        <div className="max-w-content mx-auto px-5 md:px-10 py-20">
+          <Eyebrow>アクセスルート</Eyebrow>
+          <h2 className="mt-4 h-display text-3xl md:text-4xl">
+            主要拠点から
+            <em className="h-latin not-italic">五条駅</em>まで
+          </h2>
+          <p className="mt-4 max-w-xl text-[13px] text-mid leading-relaxed">
+            五条駅 6 番出口から、元悪王子・仏光寺いずれも徒歩 10 分以内。
+          </p>
+
+          <div className="mt-10 flex flex-col gap-3">
+            {ROUTES.map((r, i) => (
+              <RouteRow key={i} route={r} />
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ───────── 五条駅 出口案内 ───────── */}
+      <section className="max-w-content mx-auto px-5 md:px-10 py-20 grid lg:grid-cols-2 gap-10">
+        <div>
+          <Eyebrow>五条駅 出口・エレベーター</Eyebrow>
+          <h2 className="mt-4 h-display text-3xl md:text-4xl">
+            <em className="h-latin not-italic">6 番出口</em>から、
+            <br />
+            下京の路地へ。
+          </h2>
+          <p className="mt-4 max-w-md text-[13px] text-mid leading-relaxed">
+            五条駅 6 番出口にはエレベーターがあり、スーツケースのままお越しいただけます。
+            竹田・奈良方面のホーム先頭付近のエレベーターをご利用ください。
+          </p>
+
+          <div className="mt-8 grid sm:grid-cols-2 gap-4">
+            <div className="bg-cream border border-light-line p-5">
+              <div className="text-[11px] text-mid tracking-widest">🚪 地上出口</div>
+              <div className="mt-3 flex items-baseline gap-2">
+                <span className="h-display text-5xl text-earth-dark">6</span>
+                <span className="text-base">番出口</span>
+              </div>
+              <div className="mt-3 text-[12px] text-mid leading-relaxed">
+                エレベーターあり<br />
+                大きな荷物でも安心
+              </div>
+            </div>
+            <div className="bg-cream border border-light-line p-5">
+              <div className="text-[11px] text-mid tracking-widest">🛗 ホームエレベーター</div>
+              <div className="mt-3 text-[13px] leading-relaxed">
+                竹田・奈良方面
+                <br />
+                ホーム先頭付近
+              </div>
+              <div className="my-4 h-px bg-light-line" />
+              <div className="text-[11px] text-mid">大きなお荷物のある方はこちら</div>
             </div>
           </div>
+        </div>
+
+        <div className="lg:pt-12">
+          <Placeholder
+            label="五条駅 6番出口 — 街路の眺め"
+            ratio="4/5"
+            variant="earth"
+            icon={<Icon.Lantern />}
+            className="!aspect-[4/3]"
+            rounded
+          />
+          <ul className="mt-6 space-y-3 text-[13px]">
+            <li className="flex items-start gap-3">
+              <span className="mt-1.5 w-1.5 h-1.5 rounded-full bg-earth shrink-0" />
+              <span>五条駅から元悪王子まで、烏丸通を北へ → 西洞院通を西へ。徒歩 約 8 分。</span>
+            </li>
+            <li className="flex items-start gap-3">
+              <span className="mt-1.5 w-1.5 h-1.5 rounded-full bg-chigusa shrink-0" />
+              <span>五条駅から仏光寺まで、烏丸通を北へ → 仏光寺通を東へ。徒歩 約 7 分。</span>
+            </li>
+            <li className="flex items-start gap-3">
+              <span className="mt-1.5 w-1.5 h-1.5 rounded-full bg-charcoal shrink-0" />
+              <span>京都駅から直接タクシーをご利用の場合、約 10 分・目安 1,200 円前後。</span>
+            </li>
+          </ul>
+        </div>
+      </section>
+
+      {/* ───────── タクシー / 駐車場 ───────── */}
+      <section className="bg-warm-off border-t border-light-line">
+        <div className="max-w-content mx-auto px-5 md:px-10 py-16 grid md:grid-cols-3 gap-8">
+          {[
+            {
+              title: "タクシーをご利用の場合",
+              body: "京都駅八条口・烏丸口どちらからも約10分。「下京区 仏光寺通 高倉」「下京区 西洞院通 高辻」とお伝えください。",
+            },
+            {
+              title: "お車でお越しの場合",
+              body: "提携駐車場をご案内しております（有料・1泊あたりの定額制）。ご到着前にお電話または予約フォームよりご連絡ください。",
+            },
+            {
+              title: "自転車でのご移動",
+              body: "両ホテルとも自転車レンタルをご用意。錦市場・河原町・京都駅まで、いずれも自転車 10〜15 分圏内です。",
+            },
+          ].map((c) => (
+            <article key={c.title} className="border-t border-light-line pt-6">
+              <h3 className="h-display text-lg">{c.title}</h3>
+              <p className="mt-3 text-[13px] text-mid leading-relaxed">{c.body}</p>
+            </article>
+          ))}
         </div>
       </section>
     </>
+  );
+}
+
+// 1経路を可視化する小コンポーネント。出発地 → 経由 → 到着駅 までの流れ。
+function RouteRow({ route }: { route: (typeof ROUTES)[number] }) {
+  return (
+    <div className="bg-cream border border-light-line p-5 md:p-6">
+      <div className="flex flex-col md:flex-row md:items-center gap-4">
+        {/* 出発地 */}
+        <div className="flex items-center gap-3 md:min-w-[180px]">
+          <span className="w-10 h-10 grid place-items-center text-lg bg-warm-off border border-light-line rounded">
+            {route.origin.icon}
+          </span>
+          <div>
+            <div className="h-display text-base leading-none">{route.origin.label}</div>
+            {route.origin.note && (
+              <div className="h-latin text-[10px] text-mid mt-1 tracking-widest">{route.origin.note}</div>
+            )}
+          </div>
+        </div>
+
+        {/* 経由 */}
+        <div className="flex-1 flex flex-wrap items-center gap-2 md:gap-3">
+          {route.legs.map((leg, li) => (
+            <div key={li} className="flex items-center gap-2 md:gap-3">
+              <span className="text-mid text-lg leading-none">›</span>
+              <div
+                className={`px-3 py-2 text-[11px] tracking-wide ${
+                  leg.node
+                    ? "bg-charcoal text-cream"
+                    : "bg-shironeri border border-light-line"
+                }`}
+              >
+                <span>{leg.mode}</span>
+                {leg.time && <span className="ml-2 text-mid">{leg.time}</span>}
+              </div>
+            </div>
+          ))}
+          <span className="text-mid text-lg leading-none">›</span>
+        </div>
+
+        {/* 到着駅 */}
+        <div className="flex items-center gap-2 px-4 py-2 bg-earth-bg border border-earth/50 text-earth-dark">
+          <span className="w-2 h-2 rounded-full bg-earth-dark" />
+          <span className="h-display text-base">{route.dest}</span>
+          <span className="text-[10px] tracking-widest">6番出口</span>
+        </div>
+      </div>
+    </div>
   );
 }
