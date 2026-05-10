@@ -61,7 +61,7 @@ export default function HomePage() {
       {/* ───────── ブランドコンセプト引用 ───────── */}
       <section className="bg-warm-off border-y border-light-line">
         <div className="max-w-content mx-auto px-5 md:px-10 py-20 md:py-28 text-center">
-          <Eyebrow className="!justify-center">solum kyoto について</Eyebrow>
+          <Eyebrow className="!justify-center">solmu kyoto について</Eyebrow>
           <p className="mt-8 h-display text-3xl md:text-5xl leading-[1.45]">
             「優しい縁を編む、
             <br className="md:hidden" />
@@ -84,7 +84,7 @@ export default function HomePage() {
             eyebrow="厳選された体験"
             title={
               <>
-                solumで
+                solmuで
                 <em className="h-latin not-italic text-chigusa-dark">過ごす時間</em>
               </>
             }
@@ -229,7 +229,7 @@ export default function HomePage() {
 
         <div className="grid md:grid-cols-3 gap-6">
           {[
-            { variant: "default" as const, tag: "solum kyoto", date: "2024年12月", title: "下京の冬の光：四度の訪問で見えてきた街の素顔", icon: <Icon.Camera /> },
+            { variant: "default" as const, tag: "solmu kyoto", date: "2024年12月", title: "下京の冬の光：四度の訪問で見えてきた街の素顔", icon: <Icon.Camera /> },
             { variant: "earth" as const, tag: "moto-akuoji", date: "2024年11月", title: "下京の窯元との新たな陶芸ワークショップ提携、スタート", icon: <Icon.Tea /> },
             { variant: "chigusa" as const, tag: "bukkoji", date: "2024年10月", title: "仏光寺の鐘の音：住職との対話", icon: <Icon.Lantern /> },
           ].map((n) => (
@@ -261,8 +261,8 @@ export default function HomePage() {
           <form className="md:col-span-5 grid gap-3 bg-cream/[0.04] border border-cream/15 p-6">
             <label className="text-[11px] tracking-widest text-cream/70">宿を選ぶ</label>
             <select className="bg-transparent border border-cream/20 px-4 py-3 text-sm">
-              <option className="text-charcoal">solum kyoto / 元悪王子</option>
-              <option className="text-charcoal">solum kyoto / 仏光寺</option>
+              <option className="text-charcoal">solmu kyoto / 元悪王子</option>
+              <option className="text-charcoal">solmu kyoto / 仏光寺</option>
             </select>
             <div className="grid grid-cols-2 gap-3">
               <div>

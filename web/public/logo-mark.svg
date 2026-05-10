@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 280" fill="none" role="img" aria-label="solmu kyoto monogram">
+  <!-- 透過背景 / Sマークのみ。currentColor で着色。 -->
+  <g stroke="currentColor" stroke-width="6" stroke-linecap="round" stroke-linejoin="round" fill="none">
+    <path d="M 60 50
+             C 60 25, 90 12, 120 12
+             C 156 12, 180 30, 180 54
+             C 180 84, 144 99, 114 105
+             C 78 111, 54 132, 54 159
+             C 54 189, 78 210, 114 216
+             C 150 222, 186 237, 186 270" transform="scale(1) translate(0 0)" />
+    <path d="M 60 50
+             C 45 41, 45 26, 60 20
+             C 78 14, 96 29, 87 44
+             C 81 53, 69 53, 63 47" />
+    <path d="M 186 230
+             C 201 239, 201 257, 186 263
+             C 168 269, 150 257, 159 242
+             C 165 234, 177 234, 183 240" />
+    <path d="M 65 130
+             C 98 118, 142 118, 175 132" opacity="0.5" />
+  </g>
+</svg>

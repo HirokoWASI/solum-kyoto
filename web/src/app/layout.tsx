@@ -27,9 +27,9 @@ const cormorant = Cormorant_Garamond({
 });
 
 export const metadata: Metadata = {
-  title: "solum kyoto — 京都に潜む、静謐の旅",
+  title: "solmu kyoto — 京都に潜む、静謐の旅",
   description:
-    "今井建設が手がける京都の小さな宿、solum kyoto。元悪王子と仏光寺。京町家のしつらえと、暮らすような滞在を。",
+    "今井建設が手がける京都の小さな宿、solmu kyoto。元悪王子と仏光寺。京町家のしつらえと、暮らすような滞在を。",
 };
 
 export default function RootLayout({

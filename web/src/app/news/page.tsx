@@ -23,7 +23,7 @@ export default function NewsPage() {
       <section className="max-w-content mx-auto px-5 md:px-10 py-20">
         <div className="flex items-end justify-between mb-10">
           <div>
-            <Eyebrow>solum kyoto — 全体のお知らせ</Eyebrow>
+            <Eyebrow>solmu kyoto — 全体のお知らせ</Eyebrow>
             <h2 className="mt-3 h-display text-2xl md:text-3xl">
               共通<em className="h-latin not-italic">お知らせ</em>
             </h2>

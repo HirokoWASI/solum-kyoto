@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>solum kyoto — wireframe index</title>
+<title>solmu kyoto — wireframe index</title>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300&family=Shippori+Mincho:wght@400;500&family=Noto+Sans+JP:wght@200;300;400&display=swap" rel="stylesheet">
 <style>
   :root {
@@ -24,6 +24,8 @@
     padding: 40px 20px;
   }
   .wrap { max-width: 960px; width: 100%; }
+  .logo-wrap { margin-bottom: 28px; color: var(--charcoal); }
+  .logo-wrap img { height: 160px; width: auto; display: block; }
   .eyebrow {
     font-family: 'Cormorant Garamond', serif;
     font-size: 12px; letter-spacing: 0.32em; text-transform: uppercase;
@@ -75,8 +77,10 @@
 </head>
 <body>
 <div class="wrap">
-  <div class="eyebrow">Solum Kyoto · Wireframes</div>
-  <h1>solum kyoto<br><em>ワイヤーフレーム index</em></h1>
+  <!-- ロゴは web/public 配下を参照する（差し替えはそこで一元管理） -->
+  <div class="logo-wrap"><img src="./high-wireframe/logo.svg" alt="solmu kyoto" /></div>
+  <div class="eyebrow">solmu kyoto · Wireframes</div>
+  <h1>solmu kyoto<br><em>ワイヤーフレーム index</em></h1>
   <p class="lede">
     今井建設の新しい京都ホテルブランド「solum kyoto」のWEBサイト企画。
     旧 low wireframe と、新しい high wireframe（本番サイトの試作）を以下からご覧いただけます。

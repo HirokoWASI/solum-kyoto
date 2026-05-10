@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import { PRIMARY_NAV, SITE } from "@/lib/site";
+import { Logo } from "@/components/Logo";
 
 // グローバルヘッダ。スクロール前は暗いグラデーション + 白文字、スクロール後は cream + 黒文字に切替える。
 // これによりどの背景の上でも視認性を確保する。
@@ -28,10 +29,18 @@ export function SiteHeader() {
       }`}
     >
       <div className="max-w-content mx-auto h-16 md:h-20 px-5 md:px-10 flex items-center justify-between">
-        <Link href="/" className={`flex items-baseline gap-3 transition-colors ${light ? "text-cream" : "text-charcoal"}`}>
-          <span className="font-serif text-lg md:text-xl tracking-[0.18em]">{SITE.brandJa}</span>
-          <span className={`hidden md:inline h-latin text-xs ${light ? "text-cream/65" : "text-mid"}`}>
-            {SITE.brandLatin}
+        <Link
+          href="/"
+          aria-label={`${SITE.brandJa} — ホーム`}
+          className={`flex items-center gap-3 transition-colors ${light ? "text-cream" : "text-charcoal"}`}
+        >
+          {/* Sマークの小ロゴ */}
+          <Logo variant="mark" className="h-9 md:h-11 w-auto" alt="" />
+          <span className="flex flex-col leading-none">
+            <span className="font-serif text-base md:text-lg tracking-[0.12em] lowercase">{SITE.brandJa}</span>
+            <span className={`mt-1 h-latin text-[10px] tracking-[0.3em] ${light ? "text-cream/70" : "text-mid"}`}>
+              {SITE.brandSub}
+            </span>
           </span>
         </Link>
 

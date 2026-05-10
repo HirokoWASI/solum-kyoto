@@ -31,7 +31,7 @@ const GROUPS = [
         a: "チェックインは15:00より、チェックアウトは11:00までとなります。レイトチェックアウトをご希望の場合は事前にご連絡ください。空き状況に応じてできる限り対応いたします。",
       },
       {
-        q: "solum kyotoではペットを連れて宿泊できますか？",
+        q: "solmu kyotoではペットを連れて宿泊できますか？",
         a: "申し訳ございませんが、ペット同伴のご宿泊はお断りしております。盲導犬・介助犬につきましては事前にご相談ください。",
       },
       {
@@ -84,7 +84,7 @@ export default function FAQsPage() {
             </p>
             <a href="#contact" className="btn btn--solid mt-5 self-start">お問い合わせ</a>
             <a href="mailto:info@example.com" className="btn btn--ghost mt-3 self-start">
-              info@solum-kyoto.jp
+              info@solmu-kyoto.jp
             </a>
           </div>
 
