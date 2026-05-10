@@ -45,20 +45,32 @@ const ROUTES = [
 export default function AccessPage() {
   return (
     <>
-      {/* ───────── ヒーロー ───────── */}
-      <section className="bg-warm-off pt-32 pb-16 border-b border-light-line">
-        <div className="max-w-content mx-auto px-5 md:px-10">
-          <Eyebrow>アクセス</Eyebrow>
-          <h1 className="mt-4 h-display text-5xl md:text-6xl">
+      {/* ───────── ヒーロー（五条駅 6番出口の実写） ───────── */}
+      <section className="relative h-[72vh] min-h-[540px] overflow-hidden border-b border-light-line">
+        <Placeholder
+          label="HERO — 五条駅 6番出口、宿へ向かうふたり"
+          src={IMG.heroAccess}
+          fill
+          variant="charcoal"
+          icon={<Icon.Map />}
+        />
+        {/* 暗いオーバーレイ：上下を控えめに落として文字読みやすく */}
+        <div className="absolute inset-0 bg-gradient-to-b from-black/20 via-transparent to-black/55" />
+        <div className="relative z-10 h-full max-w-content mx-auto px-5 md:px-10 flex flex-col justify-end pb-16 md:pb-24 text-cream">
+          <Eyebrow tone="light">アクセス</Eyebrow>
+          <h1 className="mt-4 h-display text-5xl md:text-7xl">
             京都の中心へ、
             <br />
             <em className="h-latin not-italic">静かに着く。</em>
           </h1>
-          <p className="mt-6 max-w-xl text-[14px] md:text-[15px] text-mid leading-relaxed">
+          <p className="mt-6 max-w-xl text-[14px] md:text-[15px] text-cream/85 leading-relaxed">
             元悪王子・仏光寺はいずれも京都市下京区。烏丸線「五条駅」が最寄りで、
             京都駅から地下鉄でわずか3分。新幹線・空港バス・はるか号いずれからも、
             一度の乗り換えで宿に着きます。
           </p>
+          <span className="mt-6 inline-flex items-center gap-2 self-start text-[11px] tracking-widest bg-cream/90 text-charcoal px-3 py-1.5">
+            五条駅 6 番出口 / Gojo Station Exit 6
+          </span>
         </div>
       </section>
 
