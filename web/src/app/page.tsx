@@ -1,21 +1,22 @@
 import Link from "next/link";
-import { Placeholder, Icon } from "@/components/Placeholder";
+import { Placeholder } from "@/components/Placeholder";
+import { Icon } from "@/components/PlaceholderIcons";
 import { SectionHeading } from "@/components/SectionHeading";
 import { Eyebrow } from "@/components/Eyebrow";
+import { HeroSlideshow } from "@/components/HeroSlideshow";
+import { IMG } from "@/lib/assets";
 
 // 01 ホーム / route: "/"
 export default function HomePage() {
   return (
     <>
-      {/* ───────── ヒーロー ───────── */}
+      {/* ───────── ヒーロー（ローテーション） ───────── */}
       <section className="relative h-[100svh] min-h-[680px] w-full overflow-hidden">
-        <Placeholder
-          label="HERO — 京町家の路地、夜明けの光"
-          variant="night"
-          fill
-          icon={<Icon.Lantern />}
+        <HeroSlideshow
+          slides={IMG.heroHome}
+          intervalMs={6500}
+          fallbackLabel="HERO — 京町家の路地（画像未着）"
         />
-        <div className="absolute inset-0 bg-gradient-to-b from-black/30 via-black/10 to-black/55" />
 
         <div className="relative z-10 h-full max-w-content mx-auto px-5 md:px-10 flex flex-col justify-end pb-24 md:pb-32 text-cream">
           <div className="max-w-xl">
@@ -41,13 +42,7 @@ export default function HomePage() {
           </div>
         </div>
 
-        {/* スライドドット */}
-        <div className="absolute z-10 left-1/2 -translate-x-1/2 bottom-6 flex gap-2">
-          <span className="w-8 h-[3px] bg-cream rounded" />
-          <span className="w-2 h-[3px] bg-cream/30 rounded" />
-          <span className="w-2 h-[3px] bg-cream/30 rounded" />
-          <span className="w-2 h-[3px] bg-cream/30 rounded" />
-        </div>
+        {/* スライドドットは HeroSlideshow が描画する */}
 
         {/* スクロール表示 */}
         <div className="absolute z-10 right-6 md:right-10 bottom-10 hidden md:flex flex-col items-center gap-3 text-cream/70">
@@ -97,13 +92,13 @@ export default function HomePage() {
 
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
           {[
-            { label: "自転車レンタル", body: "下京区・中京区を、厳選されたルートマップを手にお好きなペースで探索できます。", variant: "default" as const, tag: "両ホテル", icon: <Icon.Map /> },
-            { label: "陶芸ワークショップ", body: "四十年間この地で土を捏ねてきた下京の陶芸家との、朝のひとときを共に。", variant: "earth" as const, tag: "moto-akuoji", icon: <Icon.Tea /> },
-            { label: "季節の朝食", body: "錦市場の馴染みの生産者から仕入れた食材で丁寧に仕立てる朝食。", variant: "default" as const, tag: "両ホテル", icon: <Icon.Food /> },
-            { label: "寺院の朝散歩", body: "観光客が来る前の仏光寺界隈を、ガイドとともに歩く40分間のモーニングウォーク。", variant: "chigusa" as const, tag: "bukkoji", icon: <Icon.Garden /> },
+            { label: "自転車レンタル", body: "下京区・中京区を、厳選されたルートマップを手にお好きなペースで探索できます。", variant: "default" as const, tag: "両ホテル", icon: <Icon.Map />, src: IMG.expBike },
+            { label: "陶芸ワークショップ", body: "四十年間この地で土を捏ねてきた下京の陶芸家との、朝のひとときを共に。", variant: "earth" as const, tag: "moto-akuoji", icon: <Icon.Tea />, src: IMG.expPottery },
+            { label: "季節の朝食", body: "錦市場の馴染みの生産者から仕入れた食材で丁寧に仕立てる朝食。", variant: "default" as const, tag: "両ホテル", icon: <Icon.Food />, src: IMG.expBreakfast },
+            { label: "寺院の朝散歩", body: "観光客が来る前の仏光寺界隈を、ガイドとともに歩く40分間のモーニングウォーク。", variant: "chigusa" as const, tag: "bukkoji", icon: <Icon.Garden />, src: IMG.expTempleWalk },
           ].map((it) => (
             <article key={it.label} className="flex flex-col gap-4">
-              <Placeholder label={it.label} ratio="4/5" variant={it.variant} icon={it.icon} rounded />
+              <Placeholder label={it.label} ratio="4/5" variant={it.variant} icon={it.icon} rounded src={it.src} />
               <span className="self-start text-[10px] tracking-[0.18em] uppercase text-mid border border-light-line px-2 py-1">
                 {it.tag}
               </span>
@@ -138,6 +133,7 @@ export default function HomePage() {
                 accent: "border-earth text-earth-dark",
                 btn: "btn--earth",
                 icon: <Icon.Townhouse />,
+                src: IMG.motoExterior,
               },
               {
                 slug: "bukkoji",
@@ -148,11 +144,12 @@ export default function HomePage() {
                 accent: "border-chigusa text-chigusa-dark",
                 btn: "btn--chigusa",
                 icon: <Icon.Torii />,
+                src: IMG.bukkoExterior,
               },
             ].map((h) => (
               <article key={h.slug} className="group bg-cream border border-light-line overflow-hidden">
                 <div className="relative">
-                  <Placeholder label={`${h.name} — 外観 / 路地`} ratio="3/2" variant={h.variant} icon={h.icon} />
+                  <Placeholder label={`${h.name} — 外観 / 路地`} ratio="3/2" variant={h.variant} icon={h.icon} src={h.src} />
                 </div>
                 <div className="p-8 md:p-10 flex flex-col gap-5">
                   <div className="flex items-baseline gap-3">
@@ -229,12 +226,12 @@ export default function HomePage() {
 
         <div className="grid md:grid-cols-3 gap-6">
           {[
-            { variant: "default" as const, tag: "solmu kyoto", date: "2024年12月", title: "下京の冬の光：四度の訪問で見えてきた街の素顔", icon: <Icon.Camera /> },
-            { variant: "earth" as const, tag: "moto-akuoji", date: "2024年11月", title: "下京の窯元との新たな陶芸ワークショップ提携、スタート", icon: <Icon.Tea /> },
-            { variant: "chigusa" as const, tag: "bukkoji", date: "2024年10月", title: "仏光寺の鐘の音：住職との対話", icon: <Icon.Lantern /> },
+            { variant: "default" as const, tag: "solmu kyoto", date: "2024年12月", title: "下京の冬の光：四度の訪問で見えてきた街の素顔", icon: <Icon.Camera />, src: IMG.news["shimogyo-winter-light"], slug: "shimogyo-winter-light" },
+            { variant: "earth" as const, tag: "moto-akuoji", date: "2024年11月", title: "下京の窯元との新たな陶芸ワークショップ提携、スタート", icon: <Icon.Tea />, src: IMG.news["shimogyo-pottery-workshop"], slug: "shimogyo-pottery-workshop" },
+            { variant: "chigusa" as const, tag: "bukkoji", date: "2024年10月", title: "仏光寺の鐘の音：住職との対話", icon: <Icon.Lantern />, src: IMG.news["bukkoji-bell"], slug: "bukkoji-bell" },
           ].map((n) => (
-            <Link key={n.title} href="/news/example" className="group">
-              <Placeholder label={n.title} ratio="3/2" variant={n.variant} icon={n.icon} />
+            <Link key={n.title} href={`/news/${n.slug}`} className="group">
+              <Placeholder label={n.title} ratio="3/2" variant={n.variant} icon={n.icon} src={n.src} />
               <div className="mt-5 flex flex-col gap-2">
                 <span className="text-[10px] tracking-[0.18em] uppercase text-mid">{n.tag}</span>
                 <span className="h-latin text-sm text-mid">{n.date}</span>

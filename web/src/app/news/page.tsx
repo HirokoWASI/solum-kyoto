@@ -1,7 +1,9 @@
 import Link from "next/link";
-import { Placeholder, Icon } from "@/components/Placeholder";
+import { Placeholder } from "@/components/Placeholder";
+import { Icon } from "@/components/PlaceholderIcons";
 import { Eyebrow } from "@/components/Eyebrow";
 import { NEWS } from "@/lib/news";
+import { IMG } from "@/lib/assets";
 
 // 11 ニュース / route: "/news"
 export default function NewsPage() {
@@ -38,6 +40,7 @@ export default function NewsPage() {
             ratio="3/2"
             variant={featured.variant}
             icon={<Icon.News />}
+            src={IMG.news[featured.slug]}
           />
           <div className="flex flex-col gap-3">
             <span className="text-[10px] tracking-widest uppercase text-mid">{featured.tag}</span>
@@ -57,7 +60,7 @@ export default function NewsPage() {
           <div className="grid md:grid-cols-3 gap-6">
             {rest.map((n) => (
               <Link key={n.slug} href={`/news/${n.slug}`} className="group bg-cream border border-light-line flex flex-col">
-                <Placeholder label={n.title} ratio="3/2" variant={n.variant} icon={<Icon.News />} />
+                <Placeholder label={n.title} ratio="3/2" variant={n.variant} icon={<Icon.News />} src={IMG.news[n.slug]} />
                 <div className="p-5 flex flex-col gap-2">
                   <span className="text-[10px] tracking-widest uppercase text-mid">{n.tag}</span>
                   <span className="h-latin text-sm text-mid">{n.date}</span>
