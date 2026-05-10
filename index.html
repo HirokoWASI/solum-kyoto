@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>solum kyoto — wireframe index</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300&family=Shippori+Mincho:wght@400;500&family=Noto+Sans+JP:wght@200;300;400&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --cream:#F0EDE6; --warm-off:#E8E3DA; --shironeri:#EDE8DF;
+    --charcoal:#3A3530; --mid:#6E6560; --light-line:#D5CECC;
+    --chigusa:#7A9E8E; --earth:#B89C84;
+  }
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    background: var(--cream);
+    color: var(--charcoal);
+    font-family: 'Noto Sans JP', sans-serif;
+    font-weight: 300;
+    line-height: 1.75;
+    min-height: 100vh;
+    display: grid;
+    place-items: center;
+    padding: 40px 20px;
+  }
+  .wrap { max-width: 960px; width: 100%; }
+  .eyebrow {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 12px; letter-spacing: 0.32em; text-transform: uppercase;
+    color: var(--mid);
+  }
+  h1 {
+    font-family: 'Shippori Mincho', serif;
+    font-size: clamp(36px, 5vw, 56px);
+    font-weight: 400; letter-spacing: 0.04em; line-height: 1.2;
+    margin-top: 18px;
+  }
+  h1 em {
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic; font-weight: 300;
+  }
+  p.lede { margin-top: 18px; font-size: 14px; color: var(--mid); max-width: 580px; }
+  .cards { margin-top: 56px; display: grid; gap: 18px; grid-template-columns: 1fr; }
+  @media (min-width: 720px) { .cards { grid-template-columns: 1fr 1fr; } }
+  a.card {
+    text-decoration: none;
+    color: inherit;
+    display: block;
+    background: #fff;
+    border: 1px solid var(--light-line);
+    padding: 32px 28px;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+  }
+  a.card:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(58,53,48,0.08); }
+  .card-num {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 28px; letter-spacing: 0.04em; color: var(--mid);
+  }
+  .card h2 {
+    font-family: 'Shippori Mincho', serif;
+    font-size: 22px; font-weight: 400; margin-top: 8px;
+  }
+  .card .meta {
+    margin-top: 6px; font-size: 11px; color: var(--mid); letter-spacing: 0.08em;
+  }
+  .card p { margin-top: 14px; font-size: 13px; color: var(--mid); }
+  .card .go {
+    margin-top: 22px; display: inline-flex; align-items: center; gap: 8px;
+    font-size: 11px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--charcoal);
+    border-top: 1px solid var(--light-line); padding-top: 14px;
+  }
+  .footer { margin-top: 56px; font-size: 11px; color: var(--mid); letter-spacing: 0.06em; }
+  .strip { height: 3px; margin-top: 28px; background: linear-gradient(90deg, var(--earth), var(--chigusa)); }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="eyebrow">Solum Kyoto · Wireframes</div>
+  <h1>solum kyoto<br><em>ワイヤーフレーム index</em></h1>
+  <p class="lede">
+    今井建設の新しい京都ホテルブランド「solum kyoto」のWEBサイト企画。
+    旧 low wireframe と、新しい high wireframe（本番サイトの試作）を以下からご覧いただけます。
+  </p>
+  <div class="strip"></div>
+
+  <div class="cards">
+    <a class="card" href="./solmu-kyoto-ja_mid-wifi-ja_rev2_20260313.html">
+      <div class="card-num">01</div>
+      <h2>Low wireframe（既存）</h2>
+      <div class="meta">14ページ構成・タブ切替プレビュー</div>
+      <p>
+        ブランドガイドラインの初期適用、コピー・構成・体験フローの確認用。
+        単一HTMLファイルで全ページをタブで閲覧できます。
+      </p>
+      <div class="go">low wireframe を見る →</div>
+    </a>
+
+    <a class="card" href="./high-wireframe/">
+      <div class="card-num">02</div>
+      <h2>High wireframe（本番試作）</h2>
+      <div class="meta">Next.js + Tailwind / 本番URL構造</div>
+      <p>
+        本番サイトとして展開する想定の高精度モックアップ。
+        画像はCSSグラデーション + SVGのプレイスホルダで、後ほど nanobanana / GPT image2 で差し替え予定。
+      </p>
+      <div class="go">high wireframe を見る →</div>
+    </a>
+  </div>
+
+  <div class="footer">© Imai Kensetsu Co., Ltd. / Wireframe preview</div>
+</div>
+</body>
+</html>

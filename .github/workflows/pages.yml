@@ -15,16 +15,47 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
-  deploy:
+  build-and-deploy:
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+          cache: "npm"
+          cache-dependency-path: web/package-lock.json
+
+      - name: Install dependencies (high wireframe)
+        working-directory: web
+        run: npm ci --no-audit --no-fund
+
+      - name: Build Next.js (high wireframe)
+        working-directory: web
+        run: npm run build
+        env:
+          NODE_ENV: production
+
+      - name: Assemble deploy directory
+        run: |
+          mkdir -p deploy
+          # 既存の low wireframe HTML をルートに残す
+          cp solmu-kyoto-ja_mid-wifi-ja_rev2_20260313.html deploy/
+          # ランディング index.html（low / high の入口）
+          cp index.html deploy/
+          # high wireframe を /high-wireframe/ に配置
+          mkdir -p deploy/high-wireframe
+          cp -r web/out/* deploy/high-wireframe/
+          # Jekyll を抑止
+          touch deploy/.nojekyll
+
       - uses: actions/configure-pages@v5
       - uses: actions/upload-pages-artifact@v3
         with:
-          path: .
+          path: deploy
       - uses: actions/deploy-pages@v4
         id: deployment
