@@ -3022,6 +3022,37 @@ body {
   <label>ヒーロー画像</label>
 </div>
 
+<!-- FB対応（STARMINE 高🔴）: 体験詳細・客室詳細・施設詳細のレイアウト差別化 -->
+<!-- 体験詳細固有: 「体験の流れ」ステップ表示を追加 -->
+<div style="background:var(--charcoal);padding:36px 40px;">
+  <div style="font-size:10px;letter-spacing:0.22em;text-transform:uppercase;color:rgba(237,232,223,0.45);margin-bottom:24px;">体験の流れ</div>
+  <div style="display:flex;gap:0;align-items:flex-start;flex-wrap:wrap;">
+    <div style="flex:1;min-width:140px;padding-right:24px;position:relative;">
+      <div style="font-size:32px;font-weight:200;color:rgba(237,232,223,0.2);line-height:1;margin-bottom:8px;">01</div>
+      <div style="font-size:13px;font-weight:500;color:var(--cream);margin-bottom:6px;">チェックイン時</div>
+      <div style="font-size:11px;color:rgba(237,232,223,0.55);line-height:1.7;">フロントにて浴衣のサイズをお伝えください。スタッフが袋に入れてお部屋にお届けします。</div>
+      <div style="position:absolute;right:8px;top:16px;font-size:20px;color:rgba(237,232,223,0.15);">›</div>
+    </div>
+    <div style="flex:1;min-width:140px;padding:0 24px;position:relative;">
+      <div style="font-size:32px;font-weight:200;color:rgba(237,232,223,0.2);line-height:1;margin-bottom:8px;">02</div>
+      <div style="font-size:13px;font-weight:500;color:var(--cream);margin-bottom:6px;">着付けレクチャー</div>
+      <div style="font-size:11px;color:rgba(237,232,223,0.55);line-height:1.7;">ご希望の時間にスタッフがお部屋へ。折り方・帯の締め方を約2分でご案内します。</div>
+      <div style="position:absolute;right:8px;top:16px;font-size:20px;color:rgba(237,232,223,0.15);">›</div>
+    </div>
+    <div style="flex:1;min-width:140px;padding:0 24px;position:relative;">
+      <div style="font-size:32px;font-weight:200;color:rgba(237,232,223,0.2);line-height:1;margin-bottom:8px;">03</div>
+      <div style="font-size:13px;font-weight:500;color:var(--cream);margin-bottom:6px;">街へ</div>
+      <div style="font-size:11px;color:rgba(237,232,223,0.55);line-height:1.7;">浴衣で下京の路地へ。夕暮れの仏光寺参道や、錦市場を散策するのがおすすめです。</div>
+      <div style="position:absolute;right:8px;top:16px;font-size:20px;color:rgba(237,232,223,0.15);">›</div>
+    </div>
+    <div style="flex:1;min-width:140px;padding-left:24px;">
+      <div style="font-size:32px;font-weight:200;color:rgba(237,232,223,0.2);line-height:1;margin-bottom:8px;">04</div>
+      <div style="font-size:13px;font-weight:500;color:var(--cream);margin-bottom:6px;">お持ち帰り（任意）</div>
+      <div style="font-size:11px;color:rgba(237,232,223,0.55);line-height:1.7;">チェックアウト時にご購入可。染めのロット番号と工房名タグ付き。</div>
+    </div>
+  </div>
+</div>
+
 <!-- About + gallery + sidebar -->
 <div class="sec" style="border-bottom:1px solid var(--light-line);">
   <div class="row g40">
@@ -3495,75 +3526,39 @@ body {
   </div>
 </div>
 
-<!-- セクション② motoakuoji のニュース -->
-<div class="sec sec-moto" style="border-bottom:1px solid var(--earth-lt);">
-  <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:24px;">
-    <div>
-      <div class="sh-eyebrow" style="margin-bottom:6px;"><span>motoakuoji</span></div>
-      <div class="sh-title" style="font-size:24px;margin-bottom:0;"><em>元悪王子</em>のニュース</div>
-    </div>
-    <div class="btn btn-ghost">すべて見る →</div>
-  </div>
-  <div class="row g20">
-    <div class="news-card f1">
-      <div class="img-ph moto" style="height:160px;"><label>画像</label></div>
-      <div class="news-card-body">
-        <div class="news-date">2024年11月</div>
-        <div class="news-title">下京の窯元との新たな陶芸ワークショップ提携、スタート</div>
-        <div class="news-excerpt">今冬より、motoakuojiに滞在されるゲストは、ホテルから東へ2ブロックの地元の窯元での2時間セッションにご参加いただけます。</div>
-      </div>
-    </div>
-    <div class="news-card f1">
-      <div class="img-ph moto" style="height:160px;"><label>画像</label></div>
-      <div class="news-card-body">
-        <div class="news-date">2024年9月</div>
-        <div class="news-title">2024年秋の季節の朝食メニュー</div>
-        <div class="news-excerpt">今シーズンのメニューは、開業当初からのお付き合いの仕入れ先からの松茸と、京都の白味噌を使った新作デザートをご用意しています。</div>
-      </div>
-    </div>
-    <div class="news-card f1">
-      <div class="img-ph moto" style="height:160px;"><label>画像</label></div>
-      <div class="news-card-body">
-        <div class="news-date">2024年8月</div>
-        <div class="news-title">町家の改修完了：新しいラウンジスペース</div>
-        <div class="news-excerpt">新しい共有ラウンジが完成しました。町家の梁をそのまま活かした、温かみのある空間です。</div>
-      </div>
-    </div>
-  </div>
+<!-- 4/17確認: ホテル別ニュースはほぼないので不要。共通ページのみ残す。 -->
+<div style="background:rgba(200,100,60,0.07);border:1px solid rgba(200,100,60,0.25);border-radius:6px;padding:10px 16px;margin:0 40px;font-size:11px;color:#8b4513;">
+  💡 <strong>FB対応（今井建設 中🟡 / 4/17確認）:</strong> ホテル別ニュースセクション（②motoakuoji / ③bukkoji）は「ほぼないので不要」との確認により削除。ホテル固有のニュースは各ホテルページ（04/05）内に掲載する運用に変更。
 </div>
 
-<!-- セクション③ bukkoji のニュース -->
-<div class="sec sec-bukko" style="border-bottom:1px solid var(--chigusa-lt);">
-  <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:24px;">
-    <div>
-      <div class="sh-eyebrow chigusa" style="margin-bottom:6px;"><span>bukkoji</span></div>
-      <div class="sh-title" style="font-size:24px;margin-bottom:0;"><em class="chigusa">仏光寺</em>のニュース</div>
-    </div>
-    <div class="btn btn-ghost">すべて見る →</div>
-  </div>
+<!-- 共通ニュース追加カード -->
+<div class="sec" style="border-bottom:1px solid var(--light-line);">
   <div class="row g20">
     <div class="news-card f1">
-      <div class="img-ph bukko" style="height:160px;"><label>画像</label></div>
+      <div class="img-ph moto" style="height:160px;"></div>
       <div class="news-card-body">
+        <div class="exp-tag both" style="margin-bottom:10px;">solmu kyoto</div>
+        <div class="news-date">2024年11月</div>
+        <div class="news-title">下京の窯元との新たな体験プログラム提携、スタート</div>
+        <div class="news-excerpt">今冬より、両ホテルに滞在されるゲストは、地元の窯元での陶芸セッションにご参加いただけます。</div>
+      </div>
+    </div>
+    <div class="news-card f1">
+      <div class="img-ph bukko" style="height:160px;"></div>
+      <div class="news-card-body">
+        <div class="exp-tag both" style="margin-bottom:10px;">solmu kyoto</div>
         <div class="news-date">2024年10月</div>
-        <div class="news-title">仏光寺の鐘の音：住職との対話</div>
-        <div class="news-excerpt">毎朝5時、鐘の音から一日が始まる。四百年変わらぬその営みを知るため、仏光寺の住職とともに座りました。</div>
+        <div class="news-title">2024年秋の季節の朝食メニュー——錦市場の生産者から仕入れて</div>
+        <div class="news-excerpt">今シーズンのメニューは、松茸と京都の白味噌を使った新作デザートをご用意しています。</div>
       </div>
     </div>
     <div class="news-card f1">
-      <div class="img-ph bukko" style="height:160px;"><label>画像</label></div>
+      <div class="img-ph both" style="height:160px;"></div>
       <div class="news-card-body">
-        <div class="news-date">2024年8月</div>
-        <div class="news-title">新しい藍染めワークショップ提携のご案内</div>
-        <div class="news-excerpt">中京の染物工房との新プログラムがスタートしました。手染めの体験をお楽しみいただけます。</div>
-      </div>
-    </div>
-    <div class="news-card f1">
-      <div class="img-ph bukko" style="height:160px;"><label>画像</label></div>
-      <div class="news-card-body">
-        <div class="news-date">2024年7月</div>
-        <div class="news-title">中庭リニューアル完了のお知らせ</div>
-        <div class="news-excerpt">季節の緑を取り入れた石庭の改修が完了しました。夜明けからゲストにご開放します。</div>
+        <div class="exp-tag both" style="margin-bottom:10px;">solmu kyoto</div>
+        <div class="news-date">2024年9月</div>
+        <div class="news-title">秋の特別プランのご案内</div>
+        <div class="news-excerpt">紅葉シーズンに合わせた特別宿泊プランを期間限定でご用意しました。早期割引もございます。</div>
       </div>
     </div>
   </div>
