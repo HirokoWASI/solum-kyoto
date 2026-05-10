@@ -18,18 +18,18 @@ export default function AboutPage() {
         </div>
       </section>
 
-      {/* コンセプトギャラリー */}
+      {/* コンセプトギャラリー（提供画像4枚） */}
       <section className="border-b border-light-line">
         <div className="max-w-content mx-auto px-5 md:px-10 py-16">
           <div className="text-center eyebrow !text-[10px] mb-6">コンセプトギャラリー</div>
           <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
             {[
-              "町家の縁側",
-              "土壁のテクスチャ",
-              "茶釜の湯気",
-              "夕暮れの路地",
-            ].map((l) => (
-              <Placeholder key={l} label={l} ratio="3/4" rounded icon={<Icon.Camera />} />
+              { label: "町家の縁側", src: IMG.aboutEngawa },
+              { label: "土壁のテクスチャ", src: IMG.aboutWall },
+              { label: "茶釜の湯気", src: IMG.aboutKettle },
+              { label: "夕暮れの路地", src: IMG.aboutAlley },
+            ].map((it) => (
+              <Placeholder key={it.label} label={it.label} ratio="3/4" rounded icon={<Icon.Camera />} src={it.src} />
             ))}
           </div>
         </div>

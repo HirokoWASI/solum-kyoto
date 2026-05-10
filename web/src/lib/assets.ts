@@ -32,6 +32,12 @@ export const IMG = {
   accessRoutes: dir("hero/access-routes.jpg"), // 公式 4 ルート図
   areaMap: dir("area/area-map.jpg"),           // 公式エリアマップ
 
+  /* ─── About ページ コンセプトギャラリー 4枚 ─── */
+  aboutEngawa: dir("about/engawa.jpg"),        // 町家の縁側 / 庭の見える廊下
+  aboutWall: dir("about/wall.jpg"),            // 土壁のテクスチャ / 障子の光
+  aboutKettle: dir("about/kettle.jpg"),        // 茶釜の湯気
+  aboutAlley: dir("about/alley.jpg"),          // 夕暮れの路地 / 灯りの灯る町家
+
   /* ─── ホテル ─── */
   motoExterior: dir("hotels/moto-exterior.jpg"),
   motoLobby: dir("hotels/moto-lobby.jpg"),
