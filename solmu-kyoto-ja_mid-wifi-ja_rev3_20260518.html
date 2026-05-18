@@ -34,11 +34,11 @@
   /* Accent */
   --accent-red:  #C0392B;
 
-  /* ホテル個別カラー（各ホテルページ内のみ使用） */
+  /* ⑦ ホテル個別カラー（各ホテルページ内のみ使用） */
   --color-motoaku: #C8B49A; /* 元悪王子：砂色 */
-  --color-bukoji: #7B9E87;  /* 仏光寺：ちぐさ色 */
+  --color-bukoji: #7B9E87; /* 仏光寺：ちぐさ色 */
 
-  /* 共通UI・予約ボタン（ブランドペーパー確定後に変更） */
+  /* ⑦ 共通UI・予約ボタン（ブランドペーパー確定後に変更） */
   --color-common-accent: #333333;
   --color-booking-btn: #333333; /* ※ブランドペーパー確定後に更新 */
 }
@@ -224,8 +224,9 @@ body {
 
 .nav-sp { flex: 1; }
 
+/* ⑦ 予約ボタン：共通ページはブランドペーパー確定前の暫定カラー #333333 を使用 */
 .nav-book {
-  background: var(--chigusa);
+  background: var(--color-booking-btn, #333333);
   color: #fff;
   border-radius: 3px;
   padding: 8px 20px;
@@ -1642,8 +1643,9 @@ body {
   <button class="tab-btn active" onclick="go(0,this)">01 ホーム<span>/</span></button>
   <button class="tab-btn" onclick="go(1,this)">02 コンセプト<span>/ABOUT</span></button>
   <button class="tab-btn" onclick="go(2,this)" style="opacity:0.55;">03 ホテル ✕<span>※削除→02に統合</span></button>
-  <button class="tab-btn moto-tab" onclick="go(3,this)">04 元悪王子<span>/HOTELS/MOTO-AKUOJI</span></button>
-  <button class="tab-btn bukko-tab" onclick="go(4,this)">05 仏光寺<span>/HOTELS/BUKKOJI</span></button>
+  <!-- ⑧ ホテル名：小文字英字に統一 -->
+  <button class="tab-btn moto-tab" onclick="go(3,this)">04 motoakuoji<span>/HOTELS/MOTO-AKUOJI</span></button>
+  <button class="tab-btn bukko-tab" onclick="go(4,this)">05 bukoji<span>/HOTELS/BUKKOJI</span></button>
   <button class="tab-btn" onclick="go(5,this)">06 客室一覧<span>/ROOMS</span></button>
   <button class="tab-btn" onclick="go(6,this)">07 客室詳細<span>/ROOMS/[SLUG]</span></button>
   <button class="tab-btn" onclick="go(7,this)" style="opacity:0.55;">08 体験詳細 ✕<span>※各ホテルページに統合</span></button>
@@ -1664,7 +1666,7 @@ body {
 
 <!-- Nav -->
 <div class="wf-nav">
-  <!-- ロゴマーク例 -->
+  <!-- ① ヘッダーロゴマーク -->
   <div class="nav-brand">
     <div class="logo-area" style="display:inline-flex;align-items:center;">
       <div class="logo-mark" style="width:32px; height:32px; background:#ccc; display:inline-block; vertical-align:middle; margin-right:8px;">[LOGO]</div>
@@ -1741,6 +1743,7 @@ body {
     </div>
     <div class="col f1 g10">
       <div class="img-ph moto" style="height:220px;border-radius:6px;"><label>陶芸ワークショップ</label></div>
+      <!-- ⑧ ホテル名：小文字英字に統一 -->
       <div class="exp-tag moto" style="align-self:flex-start;">motoakuoji</div>
       <div class="card-title" style="font-size:18px;">陶芸ワークショップ</div>
       <div class="card-body">四十年間この地で土を捏ねてきた下京の陶芸家との、朝のひとときを共に。</div>
@@ -1753,7 +1756,8 @@ body {
     </div>
     <div class="col f1 g10">
       <div class="img-ph bukko" style="height:220px;border-radius:6px;"><label>寺院の朝散歩</label></div>
-      <div class="exp-tag bukko" style="align-self:flex-start;">bukkoji</div>
+      <!-- ⑧ ホテル名：小文字英字に統一（bukkoji → bukoji） TODO: 正式名称に変更 -->
+      <div class="exp-tag bukko" style="align-self:flex-start;">bukoji</div>
       <div class="card-title" style="font-size:18px;">寺院の朝散歩</div>
       <div class="card-body">観光客が来る前の仏光寺界隈を、ガイドとともに歩く40分間のモーニングウォーク。</div>
     </div>
@@ -1761,6 +1765,7 @@ body {
 </div>
 
 <!-- 施設 teasers（ブランド体験の後に配置） -->
+<!-- ② 二つの宿セクション：画像エリア高さ拡大・テキスト縮小 -->
 <div class="sec sec-surface" style="border-bottom:1px solid var(--light-line);">
   <div style="text-align:center;margin-bottom:40px;">
     <div class="sh-eyebrow" style="justify-content:center;"><span>二つの宿</span></div>
@@ -1768,17 +1773,20 @@ body {
   </div>
   <div class="row g24">
     <!-- Moto-Akuoji card -->
-    <!-- TODO: 正式名称に変更 -->
     <div class="col f1 g0" style="border-radius:8px;overflow:hidden;border:1px solid var(--light-line);background:#fff;box-shadow:0 2px 16px rgba(58,53,48,0.06);">
+      <!-- ② 画像エリア高さ：300px → 450px -->
       <div class="img-ph moto" style="height:450px;">
         <label>motoakuoji 画像</label>
       </div>
-      <div style="padding:16px 20px 20px;display:flex;flex-direction:column;gap:10px;">
+      <!-- ② テキストエリア：パディング縮小・フォントサイズ縮小 -->
+      <div style="padding:16px 18px 20px;display:flex;flex-direction:column;gap:10px;">
         <div style="display:flex;align-items:baseline;gap:12px;">
-          <div class="sh-title" style="font-size:28px;margin:0;">motoakuoji</div>
-          <div style="font-size:12px;color:var(--mid);font-family:'Noto Sans JP',sans-serif;">元悪王子</div>
+          <div class="sh-title" style="font-size:24px;margin:0;">motoakuoji</div>
+          <!-- TODO: 正式名称に変更 -->
+          <div style="font-size:11px;color:var(--mid);font-family:'Noto Sans JP',sans-serif;">元悪王子</div>
         </div>
         <div class="divider-rule"></div>
+        <!-- ② 説明テキスト：12pxに縮小 -->
         <div class="body-copy" style="font-size:12px;">
           温かな土の色と、町家のやわらかなリズム。陶芸家、織り職人、そして毎朝顔なじみの豆腐屋が暮らす街。
         </div>
@@ -1787,17 +1795,20 @@ body {
       </div>
     </div>
     <!-- Bukkoji card -->
-    <!-- TODO: 正式名称に変更 -->
     <div class="col f1 g0" style="border-radius:8px;overflow:hidden;border:1px solid var(--light-line);background:#fff;box-shadow:0 2px 16px rgba(58,53,48,0.06);">
+      <!-- ② 画像エリア高さ：300px → 450px -->
       <div class="img-ph bukko" style="height:450px;">
         <label>bukoji 画像</label>
       </div>
-      <div style="padding:16px 20px 20px;display:flex;flex-direction:column;gap:10px;">
+      <!-- ② テキストエリア：パディング縮小・フォントサイズ縮小 -->
+      <div style="padding:16px 18px 20px;display:flex;flex-direction:column;gap:10px;">
         <div style="display:flex;align-items:baseline;gap:12px;">
-          <div class="sh-title" style="font-size:28px;margin:0;">bukoji</div>
-          <div style="font-size:12px;color:var(--mid);font-family:'Noto Sans JP',sans-serif;">仏光寺</div>
+          <div class="sh-title" style="font-size:24px;margin:0;">bukoji</div>
+          <!-- TODO: 正式名称に変更 -->
+          <div style="font-size:11px;color:var(--mid);font-family:'Noto Sans JP',sans-serif;">仏光寺</div>
         </div>
         <div class="divider-rule chigusa"></div>
+        <!-- ② 説明テキスト：12pxに縮小 -->
         <div class="body-copy" style="font-size:12px;">
           鼠青色と静けさ。古寺の鐘が夕暮れに響き、街が目覚める前から小さなカフェが扉を開く路地。
         </div>
@@ -1842,16 +1853,21 @@ body {
     </div>
     <div class="btn btn-ghost" style="align-self:flex-end;">すべてのニュース →</div>
   </div>
-  <!-- 台風・緊急お知らせ -->
-  <div style="margin-bottom:24px;padding:16px 20px;background:#fff;border:1px solid #e0c0b0;border-left:4px solid var(--accent-red);border-radius:6px;">
-    <div style="display:flex;align-items:flex-start;gap:12px;">
-      <span style="background:var(--accent-red);color:#fff;font-size:9px;font-weight:600;letter-spacing:0.1em;padding:3px 8px;border-radius:3px;flex-shrink:0;margin-top:2px;">重要</span>
-      <div>
-        <div style="font-size:10px;color:var(--mid);margin-bottom:4px;letter-spacing:0.06em;">2026.09.01</div>
-        <div style="font-size:14px;color:var(--charcoal);font-weight:400;">【台風情報】台風XX号接近に伴う営業についてのお知らせ</div>
-      </div>
-    </div>
-  </div>
+  <!-- ③ 台風情報お知らせ（ホームページ） -->
+  <section class="news-section" style="margin-bottom:24px;padding:16px 20px;background:#fff;border:1px solid var(--light-line);border-radius:6px;">
+    <h3 style="font-family:'Shippori Mincho',serif;font-size:16px;font-weight:400;margin-bottom:12px;color:var(--charcoal);">お知らせ</h3>
+    <ul style="list-style:none;display:flex;flex-direction:column;gap:10px;">
+      <li style="display:flex;align-items:flex-start;gap:10px;padding:10px 0;border-bottom:1px solid var(--ink-faint);">
+        <span class="news-tag urgent" style="background:#C0392B;color:#fff;font-size:9px;letter-spacing:0.08em;padding:3px 8px;border-radius:3px;flex-shrink:0;white-space:nowrap;margin-top:2px;">重要</span>
+        <span class="news-date" style="font-size:10px;color:var(--mid);white-space:nowrap;flex-shrink:0;">2026.09.01</span>
+        <a href="#" style="font-size:13px;color:var(--charcoal);text-decoration:none;">【台風情報】台風XX号接近に伴う営業についてのお知らせ</a>
+      </li>
+      <li style="display:flex;align-items:flex-start;gap:10px;padding:10px 0;">
+        <span class="news-date" style="font-size:10px;color:var(--mid);white-space:nowrap;flex-shrink:0;">2026.08.15</span>
+        <a href="#" style="font-size:13px;color:var(--charcoal);text-decoration:none;">秋のお部屋プランのご案内</a>
+      </li>
+    </ul>
+  </section>
   <div class="row g20">
     <div class="news-card f1">
       <div class="img-ph both" style="height:160px;"><label>画像</label></div>
@@ -1939,7 +1955,7 @@ body {
   <div class="nav-link">ホーム</div><div class="nav-link on">コンセプト</div>
   <div class="nav-link">ホテル ▾</div>
   <div class="nav-link">エリア情報</div><div class="nav-link">ニュース</div><div class="nav-link">よくある質問</div><div class="nav-link">アクセス</div>
-  <div class="nav-sp"></div><div class="nav-book">ご予約</div><div class="nav-lang">JP | EN</div>
+  <div class="nav-sp"></div><!-- 予約ボタン：ブランドペーパー確定後に正式カラーを適用 --><div class="nav-book">ご予約</div><div class="nav-lang">JP | EN</div>
 </div>
 
 <div class="img-ph hero-ph" style="height:420px;position:relative;">
@@ -2031,7 +2047,8 @@ body {
 <div class="sec" style="border-bottom:1px solid var(--light-line);">
   <div style="text-align:center;margin-bottom:40px;">
     <div class="sh-eyebrow" style="justify-content:center;"><span>二つの宿</span></div>
-    <div class="sh-title" style="font-size:36px;margin-bottom:8px;">motoakuoji &amp; <em>bukkoji</em></div>
+    <!-- ⑧ ホテル名：小文字英字に統一 -->
+  <div class="sh-title" style="font-size:36px;margin-bottom:8px;">motoakuoji &amp; <em>bukoji</em></div>
     <div class="sh-body" style="max-width:520px;margin:0 auto;">それぞれ異なる世界観を持つ二つの宿。どちらも京都の日常に根ざし、旅人を街へと繋ぐ。</div>
   </div>
   <div class="row g24">
@@ -2046,11 +2063,13 @@ body {
     </div>
     <div class="f1 col g20" style="background:linear-gradient(160deg,#4A7A6A 0%,#2C5248 100%);padding:44px 40px;border-radius:8px;position:relative;overflow:hidden;">
       <div style="position:absolute;inset:0;background:linear-gradient(to bottom,transparent 40%,rgba(10,30,25,0.5));pointer-events:none;"></div>
-      <div class="prop-badge bukko" style="position:relative;z-index:2;align-self:flex-start;background:rgba(235,242,238,0.9);">bukkoji</div>
+      <!-- ⑧ ホテル名：小文字英字に統一（bukoji） -->
+      <div class="prop-badge bukko" style="position:relative;z-index:2;align-self:flex-start;background:rgba(235,242,238,0.9);">bukoji</div>
       <div style="position:relative;z-index:2;margin-top:auto;">
-        <div style="font-family:'Shippori Mincho',serif;font-size:36px;font-weight:300;color:#F0EDE6;line-height:1.1;margin-bottom:12px;margin-top:20px;">仏光寺</div>
+        <!-- TODO: 正式名称に変更 -->
+        <div style="font-family:'Shippori Mincho',serif;font-size:36px;font-weight:300;color:#F0EDE6;line-height:1.1;margin-bottom:12px;margin-top:20px;">bukoji</div>
         <div style="font-size:13px;color:rgba(240,237,230,0.75);line-height:1.8;max-width:280px;margin-bottom:20px;font-weight:300;">鼠青色と静謐。古寺の鐘が夕暮れに鳴り響き、街が目覚める前から個人経営のカフェが開く路地。</div>
-        <div class="btn btn-outline-light" style="align-self:flex-start;">bukkoji を探索 →</div>
+        <div class="btn btn-outline-light" style="align-self:flex-start;">bukoji を探索 →</div>
       </div>
     </div>
   </div>
@@ -2090,9 +2109,11 @@ body {
   <!-- Moto panel -->
   <div class="f1 col g20" style="background:linear-gradient(160deg,#A89070 0%,#7A6050 100%);padding:52px 44px;border-right:1px solid var(--light-line);position:relative;overflow:hidden;">
     <div style="position:absolute;inset:0;background:linear-gradient(to bottom,transparent 40%,rgba(30,20,10,0.5));pointer-events:none;"></div>
+    <!-- ⑧ ホテル名：小文字英字に統一 -->
     <div class="prop-badge moto" style="position:relative;z-index:2;align-self:flex-start;background:rgba(237,232,223,0.9);">motoakuoji</div>
     <div style="position:relative;z-index:2;margin-top:auto;">
-      <div style="font-family:'Shippori Mincho',serif;font-size:44px;font-weight:300;color:#F0EDE6;line-height:1.05;margin-bottom:6px;">元悪王子</div>
+      <!-- TODO: 正式名称に変更 -->
+      <div style="font-family:'Shippori Mincho',serif;font-size:44px;font-weight:300;color:#F0EDE6;line-height:1.05;margin-bottom:6px;">motoakuoji</div>
       <div style="font-size:14px;color:rgba(240,237,230,0.5);margin-bottom:20px;letter-spacing:0.06em;">元悪王子</div>
       <div style="font-size:13px;color:rgba(240,237,230,0.7);line-height:1.8;max-width:280px;margin-bottom:24px;font-weight:300;">温かな大地。町家の美学。信頼する友との会話のように、ゆっくりと姿を現す街。</div>
       <div class="btn btn-primary-earth">このホテルを探索 →</div>
@@ -2102,9 +2123,11 @@ body {
   <!-- Bukko panel -->
   <div class="f1 col g20" style="background:linear-gradient(160deg,#4A7A6A 0%,#2C5248 100%);padding:52px 44px;position:relative;overflow:hidden;">
     <div style="position:absolute;inset:0;background:linear-gradient(to bottom,transparent 40%,rgba(10,30,25,0.5));pointer-events:none;"></div>
-    <div class="prop-badge bukko" style="position:relative;z-index:2;align-self:flex-start;background:rgba(235,242,238,0.9);">bukkoji</div>
+    <!-- ⑧ ホテル名：小文字英字に統一（bukoji） -->
+    <div class="prop-badge bukko" style="position:relative;z-index:2;align-self:flex-start;background:rgba(235,242,238,0.9);">bukoji</div>
     <div style="position:relative;z-index:2;margin-top:auto;">
-      <div style="font-family:'Shippori Mincho',serif;font-size:44px;font-weight:300;color:#F0EDE6;line-height:1.05;margin-bottom:6px;">仏光寺</div>
+      <!-- TODO: 正式名称に変更 -->
+      <div style="font-family:'Shippori Mincho',serif;font-size:44px;font-weight:300;color:#F0EDE6;line-height:1.05;margin-bottom:6px;">bukoji</div>
       <div style="font-size:14px;color:rgba(240,237,230,0.5);margin-bottom:20px;letter-spacing:0.06em;">仏光寺</div>
       <div style="font-size:13px;color:rgba(240,237,230,0.7);line-height:1.8;max-width:280px;margin-bottom:24px;font-weight:300;">鼠青色と静謐。古寺の鐘が夕暮れに鳴り響き、街が目覚める前から個人経営のカフェが開く路地。</div>
       <div class="btn btn-primary">このホテルを探索 →</div>
@@ -2506,7 +2529,8 @@ body {
       <div class="sh-eyebrow chigusa"><span>お部屋</span></div>
       <div class="sh-title" style="margin-bottom:0;">客室 &amp; <em class="chigusa">スイート</em></div>
     </div>
-    <div class="btn btn-ghost" onclick="go(12,document.querySelectorAll('.tab-btn')[12])" style="cursor:pointer;">全客室を見る →</div>
+    <!-- ④ 仏光寺からの客室一覧リンク：?from=bukoji パラメータ付き -->
+    <div class="btn btn-ghost" onclick="go(5,document.querySelectorAll('.tab-btn')[5]);setTimeout(function(){var el=document.getElementById('tab-bukoji');if(el)el.click();},100);" style="cursor:pointer;">全客室を見る（bukoji表示）→</div>
   </div>
   <div class="row g20">
     <div class="room-card f1">
@@ -2679,37 +2703,19 @@ body {
   <label>ヒーロー画像</label>
 </div>
 
-<!-- Filter bar -->
-<!-- ④ URLパラメータによるタブ制御：?from=bukoji でbukoji客室を先頭表示 -->
-<div class="fbar" id="rooms-filter-bar">
-  <div class="ftag on" id="tab-all">すべて</div>
-  <div class="ftag tab-motoakuoji" id="tab-motoakuoji">motoakuoji <span style="font-size:8px;color:var(--mid);">(元悪王子)</span></div>
-  <div class="ftag tab-bukoji" id="tab-bukoji">bukoji <span style="font-size:8px;color:var(--mid);">(仏光寺)</span></div>
-  <div class="ftag">スイート</div>
+<!-- ④ フィルターバー（URLパラメータ ?from=bukoji で仏光寺タブを自動選択） -->
+<div class="fbar" id="room-filter-bar">
+  <div class="ftag on" id="tab-all" onclick="switchRoomTab('all',this)">すべて</div>
+  <div class="ftag tab-bukoji" id="tab-motoakuoji" onclick="switchRoomTab('motoakuoji',this)">motoakuoji <span style="font-size:8px;color:var(--mid);">(元悪王子)</span></div>
+  <div class="ftag tab-bukoji" id="tab-bukoji" onclick="switchRoomTab('bukoji',this)">bukoji <span style="font-size:8px;color:var(--mid);">(仏光寺)</span></div>
+  <div class="ftag" id="tab-suite" onclick="switchRoomTab('suite',this)">スイート</div>
 </div>
-<script>
-// ページ読み込み時の制御例：?from=bukoji でbukoji客室セクションを先頭にスクロール
-(function() {
-  var params = new URLSearchParams(window.location.search);
-  if (params.get('from') === 'bukoji') {
-    // bukoji タブをアクティブ表示に切り替え
-    var tabAll = document.getElementById('tab-all');
-    var tabBukoji = document.getElementById('tab-bukoji');
-    if (tabAll) tabAll.classList.remove('on');
-    if (tabBukoji) tabBukoji.classList.add('on');
-    // bukoji セクションまでスクロール
-    setTimeout(function() {
-      var bukkojiSec = document.getElementById('bukoji-rooms-section');
-      if (bukkojiSec) bukkojiSec.scrollIntoView({ behavior: 'smooth' });
-    }, 100);
-  }
-})();
-</script>
 
 <!-- Rooms grid -->
 <div class="sec" style="border-bottom:1px solid var(--light-line);">
-  <div class="sh-eyebrow" style="margin-bottom:6px;"><span>motoakuoji — 元悪王子</span></div>
-  <div class="sh-title" style="font-size:28px;margin-bottom:28px;">元悪王子の客室</div>
+  <!-- ⑧ ホテル名：小文字英字に統一 -->
+  <div class="sh-eyebrow" style="margin-bottom:6px;"><span>motoakuoji</span></div>
+  <div class="sh-title" style="font-size:28px;margin-bottom:28px;">motoakuoji の客室</div>
   <div class="row g20" style="flex-wrap:wrap;">
 
     <!-- Room 1 -->
@@ -2765,10 +2771,11 @@ body {
   </div>
 </div>
 
-<!-- bukoji客室（?from=bukoji パラメータで先頭スクロール対象） -->
-<div class="sec" id="bukoji-rooms-section" style="border-bottom:1px solid var(--light-line);">
-  <div class="sh-eyebrow" style="margin-bottom:6px;"><span>bukoji — 仏光寺</span></div>
-  <div class="sh-title" style="font-size:28px;margin-bottom:28px;"><em class="chigusa">仏光寺</em>の客室</div>
+<!-- Bukko rooms -->
+<div class="sec" style="border-bottom:1px solid var(--light-line);">
+  <!-- ⑧ ホテル名：小文字英字に統一（bukoji） -->
+  <div class="sh-eyebrow" style="margin-bottom:6px;"><span>bukoji</span></div>
+  <div class="sh-title" style="font-size:28px;margin-bottom:28px;"><em class="chigusa">bukoji</em> の客室</div>
   <div class="row g20" style="flex-wrap:wrap;">
 
     <!-- Bukko Room 1 -->
@@ -2836,8 +2843,13 @@ body {
 
 
 <!-- ═══════════════════════════════════
-  14 · NEWS ARTICLE DETAIL
+  07 · 客室詳細
+  ⑥ 07客室詳細：画像カルーセル大レイアウト
+     - ページトップに大型カルーセル
+     - スペック情報は横並びグリッド
+     - 画像ファースト構成
 ═══════════════════════════════════ -->
+<!-- ⑥ 07客室詳細：画像カルーセル大 -->
 
 <div class="page" id="p6">
 <div style="padding:24px 40px 60px;">
@@ -2979,6 +2991,117 @@ body {
   </div>
 </div>
 
+<!-- ⑤ bukoji 客室詳細セクション（ちぐさアクセント #7A9E8E） -->
+<div class="sec" style="border-bottom:1px solid var(--chigusa-lt);background:rgba(235,242,238,0.3);">
+  <div style="margin-bottom:24px;">
+    <div class="sh-eyebrow chigusa"><span>bukoji — 客室詳細</span></div>
+    <div class="sh-title" style="margin-bottom:8px;"><em class="chigusa">bukoji</em> 客室セレクション</div>
+    <div style="font-size:13px;color:var(--mid);">仏光寺の静謐と千草色に包まれた客室。<!-- TODO: 正式名称に変更 --></div>
+  </div>
+
+  <!-- bukoji ヒーロー画像（仮） -->
+  <div class="img-ph hero-bukko" style="height:420px;position:relative;border-radius:8px 8px 0 0;margin-bottom:0;">
+    <div style="position:absolute;left:20px;top:50%;transform:translateY(-50%);font-size:28px;color:rgba(237,232,223,0.4);z-index:5;">‹</div>
+    <div style="position:absolute;right:20px;top:50%;transform:translateY(-50%);font-size:28px;color:rgba(237,232,223,0.4);z-index:5;">›</div>
+    <div class="hero-content" style="bottom:40px;">
+      <div class="sh-eyebrow" style="margin-bottom:8px;"><span style="color:rgba(237,232,223,0.55);border-color:rgba(237,232,223,0.2);">スイート</span></div>
+      <div class="hero-title" style="font-size:42px;color:#F0EDE6;">町家スイート</div>
+      <div style="font-size:13px;color:rgba(237,232,223,0.55);letter-spacing:0.06em;font-family:'Noto Sans JP',sans-serif;margin-top:-2px;">bukoji · 中京区</div>
+    </div>
+    <div style="display:flex;gap:6px;position:absolute;bottom:20px;left:50%;transform:translateX(-50%);z-index:5;">
+      <div style="width:20px;height:2px;background:#fff;border-radius:2px;"></div>
+      <div style="width:8px;height:2px;background:rgba(255,255,255,0.3);border-radius:2px;"></div>
+      <div style="width:8px;height:2px;background:rgba(255,255,255,0.3);border-radius:2px;"></div>
+    </div>
+    <label>bukoji 客室画像カルーセル</label>
+  </div>
+
+  <!-- bukoji スペックバー -->
+  <div style="display:grid;grid-template-columns:repeat(4,1fr);border-top:1px solid var(--chigusa-lt);border-bottom:1px solid var(--chigusa-lt);background:rgba(235,242,238,0.8);margin-bottom:32px;">
+    <div style="padding:18px 24px;border-right:1px solid var(--chigusa-lt);">
+      <div style="font-size:9px;letter-spacing:0.18em;text-transform:uppercase;color:var(--mid);margin-bottom:6px;">客室面積</div>
+      <div style="font-size:16px;font-family:'Shippori Mincho',serif;color:var(--charcoal);">48 ㎡</div>
+    </div>
+    <div style="padding:18px 24px;border-right:1px solid var(--chigusa-lt);">
+      <div style="font-size:9px;letter-spacing:0.18em;text-transform:uppercase;color:var(--mid);margin-bottom:6px;">定員</div>
+      <div style="font-size:16px;font-family:'Shippori Mincho',serif;color:var(--charcoal);">最大2名</div>
+    </div>
+    <div style="padding:18px 24px;border-right:1px solid var(--chigusa-lt);">
+      <div style="font-size:9px;letter-spacing:0.18em;text-transform:uppercase;color:var(--mid);margin-bottom:6px;">眺望</div>
+      <div style="font-size:16px;font-family:'Shippori Mincho',serif;color:var(--charcoal);">中庭ビュー</div>
+    </div>
+    <div style="padding:18px 24px;">
+      <div style="font-size:9px;letter-spacing:0.18em;text-transform:uppercase;color:var(--mid);margin-bottom:6px;">浴室</div>
+      <div style="font-size:16px;font-family:'Shippori Mincho',serif;color:var(--charcoal);">専用バスルーム</div>
+    </div>
+  </div>
+
+  <!-- bukoji 客室説明 -->
+  <div class="row g48">
+    <div class="col" style="flex:1.6;gap:28px;">
+      <div>
+        <div class="sh-eyebrow chigusa" style="margin-bottom:8px;"><span>客室の説明</span></div>
+        <div class="sh-title">静けさの中で、<br><em class="chigusa">ここに在る。</em></div>
+      </div>
+      <div class="body-copy">
+        <p>町家スイートは、bukoji の静謐さを最も体感できる客室です。千草色のアクセントと和紙の天井が、仏光寺の朝の光を柔らかく室内へ招きます。</p>
+        <p>仏光寺スタンダードとともに、ご滞在の目的や気分に合わせてお選びいただけます。<!-- TODO: 正式名称に変更 --></p>
+      </div>
+      <!-- bukoji 客室サムネイルカルーセル -->
+      <div style="position:relative;">
+        <div style="display:flex;gap:6px;overflow:hidden;border-radius:6px;height:160px;">
+          <div class="img-ph bukko f1" style="min-width:0;flex:1;border-radius:4px;"><label>客室画像</label></div>
+          <div class="img-ph bukko f1" style="min-width:0;flex:1;border-radius:4px;"><label>浴室</label></div>
+          <div class="img-ph bukko f1" style="min-width:0;flex:1;border-radius:4px;"><label>中庭</label></div>
+        </div>
+        <div style="display:flex;gap:5px;justify-content:center;margin-top:10px;">
+          <div style="width:20px;height:2px;background:var(--chigusa);border-radius:2px;"></div>
+          <div style="width:6px;height:2px;background:var(--light-line);border-radius:2px;"></div>
+          <div style="width:6px;height:2px;background:var(--light-line);border-radius:2px;"></div>
+        </div>
+      </div>
+    </div>
+    <div class="col f1 g20">
+      <!-- アメニティ -->
+      <div>
+        <div class="sh-eyebrow chigusa" style="margin-bottom:12px;"><span>アメニティ</span></div>
+        <div style="border:1px solid var(--chigusa-lt);border-radius:6px;overflow:hidden;background:#fff;">
+          <div class="feat-row" style="padding:12px 16px;"><div class="feat-icon bukko">⊙</div><div class="feat-content"><div class="feat-title">専用バスルーム</div></div></div>
+          <div class="feat-row" style="padding:12px 16px;"><div class="feat-icon bukko">⊠</div><div class="feat-content"><div class="feat-title">中庭の眺め</div></div></div>
+          <div class="feat-row" style="padding:12px 16px;"><div class="feat-icon bukko">◎</div><div class="feat-content"><div class="feat-title">千草色の館内浴衣</div></div></div>
+          <div class="feat-row" style="padding:12px 16px;border-bottom:none;"><div class="feat-icon bukko">✦</div><div class="feat-content"><div class="feat-title">染めのテキスタイル & 陶器セット</div></div></div>
+        </div>
+      </div>
+      <!-- bukoji 客室タイプ一覧 -->
+      <div>
+        <div class="sh-eyebrow chigusa" style="margin-bottom:12px;"><span>bukoji 客室タイプ</span></div>
+        <div style="display:flex;flex-direction:column;gap:8px;">
+          <div style="padding:12px 16px;background:rgba(122,158,142,0.08);border:1px solid var(--chigusa-lt);border-radius:6px;display:flex;justify-content:space-between;align-items:center;">
+            <div>
+              <div style="font-size:11px;font-weight:500;color:var(--charcoal);">町家スイート</div>
+              <div style="font-size:10px;color:var(--mid);">スイートルーム</div>
+            </div>
+            <div style="font-family:'Shippori Mincho',serif;font-size:14px;color:var(--chigusa-dk);">48㎡</div>
+          </div>
+          <div style="padding:12px 16px;background:rgba(122,158,142,0.08);border:1px solid var(--chigusa-lt);border-radius:6px;display:flex;justify-content:space-between;align-items:center;">
+            <div>
+              <div style="font-size:11px;font-weight:500;color:var(--charcoal);">仏光寺スタンダード</div>
+              <div style="font-size:10px;color:var(--mid);">スタンダードルーム</div>
+            </div>
+            <div style="font-family:'Shippori Mincho',serif;font-size:14px;color:var(--chigusa-dk);">28㎡</div>
+          </div>
+        </div>
+      </div>
+      <!-- 予約へのリンク -->
+      <div style="padding:20px;background:rgba(122,158,142,0.08);border:1px solid var(--chigusa-lt);border-radius:6px;text-align:center;">
+        <div style="font-size:11px;color:var(--mid);margin-bottom:12px;line-height:1.7;">ご予約・お問い合わせは<br>bukoji ホテルページよりご連絡ください。</div>
+        <!-- 予約ボタン：ブランドペーパー確定後に正式カラーを適用 -->
+        <div class="btn btn-ghost" style="width:100%;justify-content:center;border-color:var(--chigusa);color:var(--chigusa-dk);">bukoji ホテルページへ →</div>
+      </div>
+    </div>
+  </div>
+</div>
+
 <div class="wf-footer">
   <div><div class="ft-logo">solmu kyoto</div><div class="ft-tagline">motoakuoji · 下京区、京都</div></div>
   <div><div class="ft-col-title">この施設</div><div class="ft-links"><div class="ft-link">概要</div><div class="ft-link">客室</div><div class="ft-link">施設・サービス</div><div class="ft-link">体験プログラム</div></div></div>
@@ -2990,8 +3113,13 @@ body {
 
 
 <!-- ═══════════════════════════════════
-  07 · EXPERIENCE DETAIL
+  08 · 体験詳細
+  ⑥ 08体験詳細：テキストファーストレイアウト
+     - ページトップに大きなタイトル・リードテキスト
+     - 画像はサイドに配置
+     - テキスト主体の構成
 ═══════════════════════════════════ -->
+<!-- ⑥ 08体験詳細：テキストファースト、画像サイド配置 -->
 
 <div class="page" id="p7">
 <div style="padding:24px 40px 60px;">
@@ -3132,8 +3260,13 @@ body {
 
 
 <!-- ═══════════════════════════════════
-  08 · FACILITY DETAIL
+  09 · 施設詳細
+  ⑥ 09施設詳細：リスト型レイアウト
+     - アイコン + テキストのリスト形式でアメニティを表示
+     - 施設情報を整理された一覧で提示
+     - スキャンしやすい縦型リスト構成
 ═══════════════════════════════════ -->
+<!-- ⑥ 09施設詳細：アイコン+テキストリスト型レイアウト -->
 
 <div class="page" id="p8">
 <div style="padding:24px 40px 60px;">
@@ -3503,6 +3636,24 @@ body {
 </div>
 
 <!-- セクション① solmu kyoto 共通お知らせ -->
+<!-- ③ 台風情報お知らせ（ニュース一覧ページ） -->
+<div class="sec" style="border-bottom:1px solid var(--light-line);padding-top:24px;padding-bottom:24px;">
+  <section class="news-section">
+    <h3 style="font-family:'Shippori Mincho',serif;font-size:16px;font-weight:400;margin-bottom:12px;color:var(--charcoal);">お知らせ</h3>
+    <ul style="list-style:none;display:flex;flex-direction:column;gap:10px;">
+      <li style="display:flex;align-items:flex-start;gap:10px;padding:10px 0;border-bottom:1px solid var(--ink-faint);">
+        <span class="news-tag urgent" style="background:#C0392B;color:#fff;font-size:9px;letter-spacing:0.08em;padding:3px 8px;border-radius:3px;flex-shrink:0;white-space:nowrap;margin-top:2px;">重要</span>
+        <span class="news-date" style="font-size:10px;color:var(--mid);white-space:nowrap;flex-shrink:0;">2026.09.01</span>
+        <a href="#" style="font-size:13px;color:var(--charcoal);text-decoration:none;">【台風情報】台風XX号接近に伴う営業についてのお知らせ</a>
+      </li>
+      <li style="display:flex;align-items:flex-start;gap:10px;padding:10px 0;">
+        <span class="news-date" style="font-size:10px;color:var(--mid);white-space:nowrap;flex-shrink:0;">2026.08.15</span>
+        <a href="#" style="font-size:13px;color:var(--charcoal);text-decoration:none;">秋のお部屋プランのご案内</a>
+      </li>
+    </ul>
+  </section>
+</div>
+
 <div class="sec" style="border-bottom:1px solid var(--light-line);">
   <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:24px;">
     <div>
@@ -4066,6 +4217,23 @@ function go(idx, btn) {
   var container = document.querySelector('.pages-container');
   if (container) container.scrollTop = 0;
 }
+
+/* ④ 客室タブ切り替え関数 */
+function switchRoomTab(tabName, btn) {
+  var tabs = document.querySelectorAll('#room-filter-bar .ftag');
+  tabs.forEach(function(t) { t.classList.remove('on'); });
+  if (btn) btn.classList.add('on');
+  /* 実際の絞り込み処理はここに実装予定 */
+}
+
+/* ④ ページ読み込み時の制御例：?from=bukoji の場合は仏光寺タブを表示 */
+(function() {
+  var params = new URLSearchParams(window.location.search);
+  if (params.get('from') === 'bukoji') {
+    var bukojiTab = document.getElementById('tab-bukoji');
+    if (bukojiTab) bukojiTab.click();
+  }
+})();
 </script>
 </body>
 </html>
