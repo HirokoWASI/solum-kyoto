@@ -45,6 +45,8 @@ jobs:
           mkdir -p deploy
           # 既存の low wireframe HTML をルートに残す
           cp solmu-kyoto-ja_mid-wifi-ja_rev2_20260313.html deploy/
+          # 最新版 rev3 を追加
+          cp solmu-kyoto-ja_mid-wifi-ja_rev3_20260518.html deploy/
           # ランディング index.html（low / high の入口）
           cp index.html deploy/
           # high wireframe を /high-wireframe/ に配置
