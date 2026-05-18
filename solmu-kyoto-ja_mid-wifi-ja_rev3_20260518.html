@@ -13,30 +13,34 @@
   /* Core */
   --cream:       #F0EDE6;
   --warm-off:    #E8E3DA;
-  --shironeri:   #EDE8DF;
+  --shironeri:   #fcfaf2;  /* 白練（元悪王子・仏光寺 共通：正式パレット） */
   --charcoal:    #3A3530;
   --mid:         #6E6560;
   --light-line:  #D5CECC;
   --ink-faint:   rgba(58,53,48,0.07);
 
-  /* Chigusa (Bukkoji) */
-  --chigusa:     #7A9E8E;
-  --chigusa-lt:  #A8C4B7;
-  --chigusa-dk:  #5A7E6E;
-  --chigusa-bg:  rgba(122,158,142,0.08);
+  /* Chigusa / 仏光寺カラーパレット（2026-05-18 正式パレット反映） */
+  --chigusa:     #9ba582;  /* 刈枯：メインアクセント */
+  --chigusa-lt:  #bdd7ca;  /* 薄緑：ライト */
+  --chigusa-dk:  #5a7561;  /* 千草緑：ダーク */
+  --chigusa-mauve: #9271a5; /* 千草 */
+  --chigusa-bg:  rgba(155,165,130,0.10);
+  --chigusa-gold: #9A8E67; /* 金：共通 */
 
-  /* Earth / Shironeri (Moto-Akuoji) */
-  --earth:       #B89C84;
-  --earth-dk:    #8A6E56;
-  --earth-lt:    #D4C8AE;
-  --earth-bg:    rgba(184,156,132,0.08);
+  /* Earth / 元悪王子カラーパレット（2026-05-18 正式パレット反映） */
+  --earth:       #d6c7b6;  /* 砂：メインアクセント */
+  --earth-dk:    #a26748;  /* 銅：ダーク */
+  --earth-lt:    #e4e5e6;  /* 白金：ライト */
+  --earth-bg:    rgba(214,199,182,0.12);
+  --earth-gold:  #9A8E67;  /* 金：共通 */
+  --earth-ink:   #373737;  /* 墨 */
 
   /* Accent */
   --accent-red:  #C0392B;
 
   /* ⑦ ホテル個別カラー（各ホテルページ内のみ使用） */
-  --color-motoaku: #C8B49A; /* 元悪王子：砂色 */
-  --color-bukoji: #7B9E87; /* 仏光寺：ちぐさ色 */
+  --color-motoaku: #a26748; /* 元悪王子：銅色（正式パレット） */
+  --color-bukoji: #5a7561;  /* 仏光寺：千草緑（正式パレット） */
 
   /* ⑦ 共通UI・予約ボタン（ブランドペーパー確定後に変更） */
   --color-common-accent: #333333;
@@ -105,7 +109,7 @@ body {
 .tab-btn.moto-tab { border-top: 2px solid var(--earth); }
 .tab-btn.bukko-tab { border-top: 2px solid var(--chigusa); }
 .tab-btn.moto-tab.active { background: var(--shironeri); }
-.tab-btn.bukko-tab.active { background: #EBF2EE; }
+.tab-btn.bukko-tab.active { background: #e8f0ec; } /* 薄緑ベース：正式パレット */
 
 .pages-container { flex: 1; overflow: hidden; position: relative; }
 .page { display: none; height: 100%; overflow-y: auto; background: var(--cream); }
