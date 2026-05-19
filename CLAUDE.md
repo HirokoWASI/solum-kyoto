@@ -101,6 +101,12 @@
 - 04・05の「ホテルの特徴s」→「ホテルの特徴」に修正
 - 12ニュースを「共通」「motoakuoji」「bukoji」の3パートに分割
 
+### rev8 → rev9 修正履歴（2026-05-19）
+- 04「全客室を見る→」リンクを14FAQから06客室一覧（go(5)）に修正
+- 05「全客室を見る→」リンクを06のbukkojiセクション（#bukko-rooms）にスクロール対応
+- 06「bukkojiの客室」見出しのem要素にYsabeau Office Regular / font-style:normalを適用（斜体解除）
+- 12ニュースの「motoakuoji」「bukoji」セクションヘッダーをYsabeau Office Regularに変更
+
 ### 正式ホテル名・表記ルール
 - ブランド名: `solmu kyoto`
 - 元悪王子ホテル: `motoakuoji`（ロゴ: shijo karasuma）
