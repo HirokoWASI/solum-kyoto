@@ -63,3 +63,52 @@
 - ⑥ 客室詳細・体験詳細・施設詳細のレイアウト差別化
 - ⑦ 共通ページのベースカラー変更・予約ボタンを#333333に統一
 - ⑧ ホテル名をアルファベット小文字（motoakuoji / bukoji / solmu kyoto）に統一
+
+### rev3 → rev4 修正履歴（2026-05-18）
+- 元悪王子・仏光寺の正式カラーパレット反映（砂#d6c7b6・銅#a26748・刈枯#9ba582・薄緑#bdd7ca等）
+- 白練#fcfaf2 を --shironeri に適用
+- フォント変更：Cormorant Garamond → Ysabeau Office、Shippori Mincho → Zen Old Mincho
+- 仏光寺ベースカラーを #92b1a5 に修正
+- 共通ページのホテルカラーを #333333 に統一（21箇所）
+- 04・05ホテルページにロゴ画像（shijo karasuma / takakura bukkoji）挿入
+
+### rev4 → rev5 修正履歴（2026-05-19）
+- 共通ページ12箇所のホテルカラーをvar(--charcoal)に変更（01・02・06・11・13）
+- 04・05の「ご予約はこちら」ボタンを白背景・charcoal枠に変更
+- 07客室詳細の「元悪王子を予約」ボタン削除
+- nav-brand: Ysabeau Office weight:200、letter-spacing:0.25em
+- 日本語項目名: Zen Old Mincho Bold 18px、本文: Noto Sans JP Regular 12px
+- ロゴに mix-blend-mode:multiply 適用
+
+### rev5 → rev6 修正履歴（2026-05-19）
+- 01ホームヒーロー「この街が、」の下に「あなたのものになる。」を白文字で追加
+- 04・05ナビバーの予約ボタン（元悪王子を予約/仏光寺を予約）削除
+- ロゴ透過改善（mix-blend-mode:multiply + filter:contrast(1.2)）
+- ロゴ下バッジ（MOTOAKUOJI/BUKKOJI）を Ysabeau Office Regular に変更
+
+### rev6 → rev7 修正履歴（2026-05-19）
+- 07客室詳細の「眺望」→「部屋」に変更
+- 全ページで "bukoji" → "bukkoji" に統一（CSS変数・JS識別子は維持）
+- 04・05の「客室タイプs」→「客室タイプ」に修正
+- 07客室詳細を2ページに分割（07:motoakuoji詳細 / 08:bukkoji詳細）
+- 旧タブ08〜14を09〜15に繰り下げ
+
+### rev7 → rev8 修正履歴（2026-05-19）
+- 03ホテルの地図・アクセス情報を04（元悪王子）・05（仏光寺）のフッター前に挿入
+- 02コンセプトの「bukkoji」フォントを Ysabeau Office Regular に修正
+- 02コンセプト緑背景の大テキスト「bukkoji」→「仏光寺」に変更
+- 04・05の「一目でわかる」〜「対応言語（中国語）」を枠ごと削除
+- 04・05の「ホテルの特徴s」→「ホテルの特徴」に修正
+- 12ニュースを「共通」「motoakuoji」「bukoji」の3パートに分割
+
+### 正式ホテル名・表記ルール
+- ブランド名: `solmu kyoto`
+- 元悪王子ホテル: `motoakuoji`（ロゴ: shijo karasuma）
+- 仏光寺ホテル: `bukkoji`（ロゴ: takakura bukkoji）
+- CSS変数・JS識別子は旧表記（`--color-bukoji`、`tab-bukoji`等）を維持してよい
+
+### GitHub Pages デプロイ手順
+修正完了後、`.github/workflows/pages.yml` の「Assemble deploy directory」に新revのコピー行を追加してPR・マージすること：
+```yaml
+cp solmu-kyoto-ja_mid-wifi-ja_rev{N}_{YYYYMMDD}.html deploy/
+```
