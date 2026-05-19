@@ -49,6 +49,8 @@ jobs:
           cp solmu-kyoto-ja_mid-wifi-ja_rev3_20260518.html deploy/
           # 最新版 rev4 を追加
           cp solmu-kyoto-ja_mid-wifi-ja_rev4_20260519.html deploy/
+          # 最新版 rev5 を追加
+          cp solmu-kyoto-ja_mid-wifi-ja_rev5_20260519.html deploy/
           # ランディング index.html（low / high の入口）
           cp index.html deploy/
           # high wireframe を /high-wireframe/ に配置
